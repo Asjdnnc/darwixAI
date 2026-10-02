@@ -79,7 +79,8 @@ PH = Flow(
                                    r"paid na|na-settle ko na)\b", re.I),
         # "Mahal masyado" is a price objection, not hardship: the playbook answers it by offering a
         # payment-mode change. Only an actual inability to pay is referred to an advisor.
-        "hardship": re.compile(r"\b(wala\s+(?:akong|ako|kaming)?\s*pera|walang pera|tight ang budget|"
+        # ASR sometimes drops the leading W of "wala", so "ala akong pera" is accepted too.
+        "hardship": re.compile(r"\b(w?ala\s+(?:akong|ako|kaming|po akong)?\s*pera|walang pera|tight ang budget|"
                                r"nahihirapan|hindi ko kaya|kapos|kulang ang budget|walang pambayad)\b", re.I),
         # "hindi ako" alone is far too broad: "hindi ako makabayad" ("I can't pay") is a question
         # about the grace period, not a dispute.

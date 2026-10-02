@@ -218,3 +218,11 @@ def test_extraction_survives_observed_taglish_asr_errors(heard, expect):
     got = extract_payment("ph", heard)
     for key, value in expect.items():
         assert got.get(key) == value
+
+
+def test_hardship_survives_a_dropped_leading_consonant(kbs, tmp_path):
+    """ASR rendered "Wala po akong pera ngayon" as "Ala po akong pera ngayon", which fell through
+    to the payment-date extractor and captured "ngayon" as a promise date."""
+    from app.reminder_agent import detect_intent
+    assert detect_intent(flow("ph"), "Ala po akong pera ngayon.") == "hardship"
+    assert detect_intent(flow("ph"), "Wala po akong pera ngayon.") == "hardship"

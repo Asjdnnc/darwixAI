@@ -1,0 +1,58 @@
+{
+  "call": "ph2",
+  "market": "ph",
+  "synthesized": true,
+  "note": "Caller audio is synthesized with facebook/mms-tts-tgl; transcription, agent and replies are the real pipeline. Not a human-recorded call.",
+  "outcome": {
+    "status": "in_progress"
+  },
+  "captured": {
+    "payment_date": "ngayon"
+  },
+  "actions": [],
+  "guards": [],
+  "transcript": [
+    {
+      "role": "agent",
+      "text": "Magandang araw po, ako po si Maya mula sa Darwix Life Philippines. Recorded po ang tawag na ito para sa quality at compliance. Okay lang po ba na mag-usap tayo sandali?"
+    },
+    {
+      "role": "customer",
+      "text": "Look,",
+      "spoken": "Opo.",
+      "asr_changed": true
+    },
+    {
+      "role": "agent",
+      "text": "Naririnig ko po kayo. Tungkol po sana ito sa premium ng policy ninyo na may due na. Nasa loob pa po tayo ng 31-day grace period, kaya active pa rin po ang coverage ninyo. Nabayaran na po ba ninyo ito, o gusto po ninyong tulungan ko kayo sa payment?",
+      "citations": [],
+      "outcome": "in_progress"
+    },
+    {
+      "role": "customer",
+      "text": "Mahal po masyado ang premium. Pwede po bang gawing ka, Tarly? Riener lalag na land.",
+      "spoken": "Mahal po masyado ang premium, pwede po bang gawing quarterly?",
+      "asr_changed": true
+    },
+    {
+      "role": "agent",
+      "text": "Naririnig ko po ang concern ninyo. Hindi po ako pwedeng magbigay ng specific amount o discount, pero pwede po kayong mag-apply for installment o review ng policy. I-connect ko po kayo sa human agent para mas ma-assist kayo. Saan po ninyo balak magbayad — sa GCash, Maya, bank branch, o sa Bayad Center?",
+      "citations": [],
+      "outcome": "in_progress"
+    },
+    {
+      "role": "customer",
+      "text": "Ala po akong pera ngayon.",
+      "spoken": "Wala po akong pera ngayon.",
+      "asr_changed": true
+    },
+    {
+      "role": "agent",
+      "text": "Naiintindihan ko po, mahirap talaga ngayon. Hanggang sa grace period pa po kayo, kaya safe pa rin ang coverage ninyo. Pwede po kayong magbayad nang paunti-unti sa GCash o Bayad Center. Saan po ninyo balak magbayad — sa GCash, Maya, bank branch, o sa Bayad Center?",
+      "citations": [
+        "docs/taglish_call_playbook.md#objection-wala-po-akong-pera-ngayon-tight-po-ngayon"
+      ],
+      "outcome": "in_progress"
+    }
+  ]
+}

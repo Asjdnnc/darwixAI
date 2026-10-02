@@ -1,0 +1,73 @@
+{
+  "call": "id1",
+  "market": "id",
+  "synthesized": true,
+  "note": "Caller audio is synthesized with facebook/mms-tts-ind; transcription, agent and replies are the real pipeline. Not a human-recorded call.",
+  "outcome": {
+    "status": "in_progress"
+  },
+  "captured": {
+    "payment_channel": "Indomaret"
+  },
+  "actions": [],
+  "guards": [
+    "unsupported_question"
+  ],
+  "transcript": [
+    {
+      "role": "agent",
+      "text": "Selamat siang, Bapak/Ibu. Saya Rani dari Darwix Finance. Panggilan ini direkam untuk keperluan kualitas dan kepatuhan. Apakah sekarang waktu yang tepat untuk berbicara sebentar?"
+    },
+    {
+      "role": "customer",
+      "text": "Ia bule.",
+      "spoken": "Iya, boleh.",
+      "asr_changed": true
+    },
+    {
+      "role": "agent",
+      "text": "Mohon maaf, saya tidak mengerti maksudnya. Saya Rani, asisten virtual dari Darwix Finance. Saya ingin menginformasikan mengenai angsuran pembiayaan Bapak/Ibu yang sudah jatuh tempo dan tercatat belum terbayar. Masih ada masa toleransi 3 hari sebelum denda mulai dihitung. Apakah angsurannya sudah dibayar, atau boleh saya bantu untuk pembayarannya?",
+      "citations": [],
+      "outcome": "in_progress"
+    },
+    {
+      "role": "customer",
+      "text": "Dendanya berapa kalau telah?",
+      "spoken": "Dendanya berapa kalau telat?",
+      "asr_changed": true
+    },
+    {
+      "role": "agent",
+      "text": "Mohon maaf, saya belum punya informasi yang terverifikasi soal itu, jadi saya tidak mau menebak. Petugas berlisensi kami bisa membantu pertanyaan itu. Rencananya mau bayar lewat mana — virtual account, Indomaret, Alfamart, atau dompet digital seperti GoPay atau OVO?",
+      "citations": [],
+      "outcome": "in_progress"
+    },
+    {
+      "role": "customer",
+      "text": "Bisa nglewat Indomaret.",
+      "spoken": "Bisa lewat Indomaret?",
+      "asr_changed": true
+    },
+    {
+      "role": "agent",
+      "text": "Bisa, Pak. Silakan ke kasir Indomaret dan sebutkan nomor kontraknya. Pembayaran akan langsung terbukukan hari ini. Kira-kira kapan rencana pembayarannya?",
+      "citations": [
+        "docs/saluran_pembayaran.md#gerai-ritel",
+        "web/faq.html#berapa-lama-pembayaran-saya-terbukukan"
+      ],
+      "outcome": "in_progress"
+    },
+    {
+      "role": "customer",
+      "text": "Menurut.",
+      "spoken": "Besok.",
+      "asr_changed": true
+    },
+    {
+      "role": "agent",
+      "text": "Mohon maaf, saya belum paham maksudnya. Silakan lanjutkan, saya siap membantu. Kira-kira kapan rencana pembayarannya?",
+      "citations": [],
+      "outcome": "in_progress"
+    }
+  ]
+}

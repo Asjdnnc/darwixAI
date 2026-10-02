@@ -1,0 +1,62 @@
+{
+  "call": "id2",
+  "market": "id",
+  "synthesized": true,
+  "note": "Caller audio is synthesized with facebook/mms-tts-ind; transcription, agent and replies are the real pipeline. Not a human-recorded call.",
+  "outcome": {
+    "status": "escalated",
+    "flow": "installment_reminder",
+    "market": "id"
+  },
+  "captured": {},
+  "actions": [
+    "escalation"
+  ],
+  "guards": [],
+  "transcript": [
+    {
+      "role": "agent",
+      "text": "Selamat siang, Bapak/Ibu. Saya Rani dari Darwix Finance. Panggilan ini direkam untuk keperluan kualitas dan kepatuhan. Apakah sekarang waktu yang tepat untuk berbicara sebentar?"
+    },
+    {
+      "role": "customer",
+      "text": "Ia bule.",
+      "spoken": "Iya, boleh.",
+      "asr_changed": true
+    },
+    {
+      "role": "agent",
+      "text": "Mohon maaf, saya tidak mengerti maksudnya. Saya Rani, asisten virtual dari Darwix Finance Indonesia. Saya ingin menginformasikan mengenai angsuran pembiayaan Bapak/Ibu yang sudah jatuh tempo dan tercatat belum terbayar. Masih ada masa toleransi 3 hari sebelum denda mulai dihitung. Apakah angsurannya sudah dibayar, atau boleh saya bantu untuk pembayarannya?",
+      "citations": [],
+      "outcome": "in_progress"
+    },
+    {
+      "role": "customer",
+      "text": "Nimbab dendanya kok mahal ya?",
+      "spoken": "Nggih Mbak, dendanya kok mahal ya?",
+      "asr_changed": true
+    },
+    {
+      "role": "agent",
+      "text": "Saya paham keberatannya, Pak. Dendanya 0,1 persen per hari dari angsuran yang tertunggak, dan berhenti dihitung begitu pembayaran diterima. Untuk nominal pastinya, saya mintakan perhitungan dari sistem dulu supaya angkanya benar. Rencananya mau bayar lewat mana — virtual account, Indomaret, Alfamart, atau dompet digital seperti GoPay atau OVO?",
+      "citations": [
+        "docs/panduan_percakapan.md#keberatan-dendanya-kok-mahal"
+      ],
+      "outcome": "in_progress"
+    },
+    {
+      "role": "customer",
+      "text": "Udah lah mau bicara dengan petugas A-nya.",
+      "spoken": "Udah lah, mau bicara dengan petugas aja.",
+      "asr_changed": true
+    },
+    {
+      "role": "agent",
+      "text": "Baik, saya hubungkan dengan petugas kami ya. Petugas tersedia Senin sampai Jumat pukul 08.00 sampai 17.00 WIB dan Sabtu pukul 09.00 sampai 13.00 WIB. Kalau sekarang tidak ada yang tersedia, petugas kami akan menghubungi dalam 1 hari kerja.",
+      "citations": [
+        "docs/kebijakan_angsuran.txt#eskalasi-ke-petugas"
+      ],
+      "outcome": "escalated"
+    }
+  ]
+}

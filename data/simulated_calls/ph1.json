@@ -1,0 +1,71 @@
+{
+  "call": "ph1",
+  "market": "ph",
+  "synthesized": true,
+  "note": "Caller audio is synthesized with facebook/mms-tts-tgl; transcription, agent and replies are the real pipeline. Not a human-recorded call.",
+  "outcome": {
+    "status": "in_progress"
+  },
+  "captured": {},
+  "actions": [],
+  "guards": [
+    "unsupported_question"
+  ],
+  "transcript": [
+    {
+      "role": "agent",
+      "text": "Magandang araw po, ako po si Maya mula sa Darwix Life Philippines. Recorded po ang tawag na ito para sa quality at compliance. Okay lang po ba na mag-usap tayo sandali?"
+    },
+    {
+      "role": "customer",
+      "text": "Poh, siguen Poh.",
+      "spoken": "Opo, sige po.",
+      "asr_changed": true
+    },
+    {
+      "role": "agent",
+      "text": "Salamat po. Ito po ang renewal lapse reminder call para sa inyong policy. Tungkol po sana ito sa premium ng policy ninyo na may due na. Nasa loob pa po tayo ng 31-day grace period, kaya active pa rin po ang coverage ninyo. Nabayaran na po ba ninyo ito, o gusto po ninyong tulungan ko kayo sa payment?",
+      "citations": [],
+      "outcome": "in_progress"
+    },
+    {
+      "role": "customer",
+      "text": "Ano po ang mangyayari kung hindi ako makabayad?",
+      "spoken": "Ano po ang mangyayari kung hindi ako makabayad?",
+      "asr_changed": false
+    },
+    {
+      "role": "agent",
+      "text": "Kung hindi po makabayad sa loob ng 31-day grace period, lalapse po ang policy at titigil ang coverage ninyo. Saan po ninyo balak magbayad — sa GCash, Maya, bank branch, o sa Bayad Center?",
+      "citations": [
+        "docs/renewal_lapse_policy.txt#grace-period",
+        "web/faq.html#what-happens-if-i-miss-my-premium-due-date"
+      ],
+      "outcome": "in_progress"
+    },
+    {
+      "role": "customer",
+      "text": "Pwede po ba sag-asi?",
+      "spoken": "Pwede po ba sa GCash?",
+      "asr_changed": true
+    },
+    {
+      "role": "agent",
+      "text": "Pasensya na, wala akong verified na impormasyon tungkol diyan, kaya hindi ako manghuhula. Matutulungan ka ng isang licensed advisor diyan. Saan po ninyo balak magbayad — sa GCash, Maya, bank branch, o sa Bayad Center?",
+      "citations": [],
+      "outcome": "in_progress"
+    },
+    {
+      "role": "customer",
+      "text": "Sakin, sinas po.",
+      "spoken": "Sa kinsenas po.",
+      "asr_changed": true
+    },
+    {
+      "role": "agent",
+      "text": "Salamat po. Matutulungan ka ng isang licensed advisor diyan. Saan po ninyo balak magbayad — sa GCash, Maya, bank branch, o sa Bayad Center?",
+      "citations": [],
+      "outcome": "in_progress"
+    }
+  ]
+}
