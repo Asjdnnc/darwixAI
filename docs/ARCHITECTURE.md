@@ -1,5 +1,9 @@
 # Architecture
 
+> A rendered version for screen-sharing and the video walkthrough is in
+> [`architecture.html`](architecture.html) — open it in a browser.
+
+
 All four questions share one FastAPI app, one browser UI and one knowledge-base pipeline. All
 content is synthetic.
 

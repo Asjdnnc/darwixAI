@@ -48,6 +48,8 @@ Evidence scripts: `python scripts/eval_retrieval.py` (Q2 retrieval table) and `p
 | [Q3_MARKETS.md](docs/Q3_MARKETS.md) | Q3: localization, ASR report, cross-lingual retrieval, native TTS |
 | [Q4_REALTIME.md](docs/Q4_REALTIME.md) | Q4: signal design, nudge control, latency, false positives |
 | [ARCHITECTURE.md](docs/ARCHITECTURE.md) | System and ingestion diagrams, design decisions |
+| [architecture.html](docs/architecture.html) | The same diagram rendered, for screen-sharing |
+| [VIDEO_SCRIPT.md](Evidence/VIDEO_SCRIPT.md) | Walkthrough script covering all four questions |
 | [KB_DESIGN.md](docs/KB_DESIGN.md) | Q2: schema, cleaning, chunking, versioning, citations |
 | [RETRIEVAL_EVAL.md](docs/RETRIEVAL_EVAL.md) | Q2: 42 queries with sources, explanations and verdicts |
 | [VOICE_AGENT.md](docs/VOICE_AGENT.md) | Q1: flow, qualification rules, safety guards, API |
