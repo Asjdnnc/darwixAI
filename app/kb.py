@@ -102,7 +102,8 @@ PH_EXPANSIONS = {
     r"mag-?lapse|nag-?lapse|lapse|matitigil|mawawala": "lapse coverage stops riders denied",
     r"rider|riders|dagdag na benefit": "rider accidental critical illness waiver hospital",
     r"beneficiary|benepisyaryo|palitan.*beneficiary": "beneficiary change revocable irrevocable consent",
-    r"saan.*(?:bayad|magbayad)|gcash|maya|bayad center|bangko|bank|7-?eleven|palawan": "payment channels bank e-wallet over-the-counter",
+    r"saan.*(?:bayad|magbayad)|gcash|maya|bayad center|bangko|bank|7-?eleven|palawan|sm bills|auto-?debit":
+        "payment channels bank e-wallet over-the-counter posting banking days",
     r"kailan|due|deadline|huling araw": "due date grace period premium",
     r"ibalik|balikan|reinstate|buhayin": "reinstate reinstatement unpaid premiums interest underwriting",
     r"grace period|palugit": "grace period thirty-one days",
@@ -118,6 +119,8 @@ ID_EXPANSIONS = {
     r"keringanan|diringankan|dibantu|restruktur|relaksasi": "keringanan restrukturisasi perpanjangan tenor penjadwalan ulang",
     r"denda|telat|terlambat|kena ?denda": "denda keterlambatan persen angsuran tertunggak",
     r"bayar di ?mana|lewat mana|transfer|saluran": "saluran pembayaran virtual account gerai dompet digital",
+    r"indomaret|alfamart|gopay|ovo|shopee ?pay|virtual account|\bva\b|bca|mandiri|bni|bri|autodebet":
+        "saluran pembayaran gerai ritel dompet digital virtual account terbukukan",
     r"lunas|pelunasan|lunasi": "pelunasan dipercepat biaya administrasi",
     r"jam berapa|ditelepon|ditagih|nagih": "penagihan pukul etika petugas",
     r"jatuh tempo|tanggal bayar": "jatuh tempo angsuran tenor",

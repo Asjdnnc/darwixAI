@@ -420,9 +420,12 @@
         .lead-card td:first-child { color: var(--text-muted); width: 45%; padding-right: 0.5rem; }
         .lead-card td:last-child { font-weight: 500; word-break: break-word; }
         .lead-status { font-size: 0.72rem; font-weight: 600; padding: 2px 9px; border-radius: 999px; background: #e5e7eb; text-transform: capitalize; white-space: nowrap; }
-        .lead-status.qualified, .lead-status.qualified_partial { background: #d1fae5; color: #065f46; }
-        .lead-status.referred, .lead-status.escalated { background: #fef3c7; color: #92400e; }
-        .lead-status.not_eligible, .lead-status.no_consent, .lead-status.recording_declined { background: #fee2e2; color: #991b1b; }
+        .lead-status.qualified, .lead-status.qualified_partial,
+        .lead-status.promise_to_pay, .lead-status.already_paid { background: #d1fae5; color: #065f46; }
+        .lead-status.referred, .lead-status.escalated,
+        .lead-status.hardship_referred, .lead-status.disputed { background: #fef3c7; color: #92400e; }
+        .lead-status.not_eligible, .lead-status.no_consent, .lead-status.recording_declined,
+        .lead-status.refused, .lead-status.wrong_person { background: #fee2e2; color: #991b1b; }
         .lead-note { margin-top: 0.5rem; color: var(--text-muted); font-size: 0.8rem; }
 
         /* Features */
@@ -559,9 +562,9 @@
 
                     <div class="controls">
                         <select id="market" aria-label="Market">
-                            <option value="en">English (Groq TTS)</option>
-                            <option value="ph">Philippines Taglish (OpenAI)</option>
-                            <option value="id">Indonesia Bahasa (OpenAI)</option>
+                            <option value="en">🇺🇸 US — English, health lead qualification</option>
+                            <option value="ph">🇵🇭 Philippines — Taglish, renewal reminder</option>
+                            <option value="id">🇮🇩 Indonesia — Bahasa, installment reminder</option>
                         </select>
                         <button class="btn-start" id="btnStartCall">Start Live Call</button>
                         <button class="btn-speak" id="btnSpeakMic">Tap to Speak</button>
@@ -717,15 +720,24 @@
 
         const setStatus = (msg) => { callStatus.textContent = msg; };
 
-        const FIELD_LABELS = {age: 'Age', state: 'State', household_size: 'People to cover', tobacco_use: 'Tobacco use',
-            medical_conditions: 'Medical conditions', current_insurance: 'Current insurance',
-            callback_time: 'Callback time', consent_to_contact: 'Consent to contact'};
+        const MARKET_FIELDS = {
+            en: {age: 'Age', state: 'State', household_size: 'People to cover', tobacco_use: 'Tobacco use',
+                 medical_conditions: 'Medical conditions', current_insurance: 'Current insurance',
+                 callback_time: 'Callback time', consent_to_contact: 'Consent to contact'},
+            ph: {payment_channel: 'Saan magbabayad', payment_date: 'Kailan magbabayad',
+                 callback_number: 'Contact number'},
+            id: {payment_channel: 'Saluran pembayaran', payment_date: 'Rencana bayar',
+                 callback_number: 'Nomor telepon'},
+        };
+        const PANEL_TITLE = {en: 'Lead qualification', ph: 'Renewal / lapse reminder',
+                             id: 'Pengingat angsuran'};
         const leadCard = document.querySelector('#leadCard');
         const esc = (v) => String(v).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
         const renderLead = (r) => {
             if(!r || !r.outcome) return;
             const status = r.outcome.status;
-            const rows = Object.entries(FIELD_LABELS).map(([k, label]) => {
+            const fields = MARKET_FIELDS[r.market] || MARKET_FIELDS.en;
+            const rows = Object.entries(fields).map(([k, label]) => {
                 let v = r.lead && k in r.lead ? r.lead[k] : '—';
                 if(v === true) v = 'yes'; if(v === false) v = 'no';
                 const conflict = r.conflicts && r.conflicts[k] ? ` ⚠️ conflict: ${esc(r.conflicts[k].previous)} vs ${esc(r.conflicts[k].new)}` : '';
@@ -734,7 +746,8 @@
             const plans = r.outcome.plans && r.outcome.plans.length ? `<div class="lead-note">Possible plans: ${esc(r.outcome.plans.join(', '))}</div>` : '';
             const reason = r.outcome.reason ? `<div class="lead-note">${esc(r.outcome.reason)}</div>` : '';
             const actions = r.actions && r.actions.length ? `<div class="lead-note">CRM: ${r.actions.map(a => esc(a.type + ' ' + a.operation)).join(', ')}</div>` : '';
-            leadCard.innerHTML = `<h4>Lead qualification <span class="lead-status ${esc(status)}">${esc(status.replace(/_/g, ' '))}</span></h4><table>${rows}</table>${plans}${reason}${actions}`;
+            const title = PANEL_TITLE[r.market] || PANEL_TITLE.en;
+            leadCard.innerHTML = `<h4>${esc(title)} <span class="lead-status ${esc(status)}">${esc(status.replace(/_/g, ' '))}</span></h4><table>${rows}</table>${plans}${reason}${actions}`;
             leadCard.style.display = 'block';
         };
 
@@ -788,7 +801,9 @@
                         afterSpeech(endAfter);
                     });
                 } else {
-                    const reason = a.status === 429 ? 'Groq TTS daily quota reached' : `server TTS failed (${a.status})`;
+                    const reason = a.status === 429 ? 'Groq TTS daily quota reached'
+                        : a.status === 501 ? 'no native voice for this market'
+                        : `server TTS failed (${a.status})`;
                     console.warn(`${reason}. Falling back to browser TTS.`);
                     const utterance = new SpeechSynthesisUtterance(text);
                     utterance.lang = market === 'ph' ? 'tl-PH' : (market === 'id' ? 'id-ID' : 'en-US');

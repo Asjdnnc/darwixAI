@@ -1,0 +1,38 @@
+{
+  "ptp_8a21876d": {
+    "call_id": "8a21876d-e4e9-4614-adbb-bc6a93bebff2",
+    "market": "ph",
+    "channel": "GCash",
+    "date": "kinsenas",
+    "flow": "renewal_lapse_reminder",
+    "updated_at": "2026-10-02T19:14:12+00:00",
+    "created_at": "2026-10-02T19:14:12+00:00"
+  },
+  "ptp_9dda5b4f": {
+    "call_id": "9dda5b4f-79f4-48c0-962a-c785ee524b9a",
+    "market": "id",
+    "channel": "Indomaret",
+    "date": "Besok",
+    "flow": "installment_reminder",
+    "updated_at": "2026-10-02T19:14:14+00:00",
+    "created_at": "2026-10-02T19:14:14+00:00"
+  },
+  "ptp_d7bf6e85": {
+    "call_id": "d7bf6e85-9455-40b5-afab-ae51e240574c",
+    "market": "ph",
+    "channel": "GCash",
+    "date": "kinsenas",
+    "flow": "renewal_lapse_reminder",
+    "updated_at": "2026-10-02T19:15:23+00:00",
+    "created_at": "2026-10-02T19:15:23+00:00"
+  },
+  "ptp_918020b1": {
+    "call_id": "918020b1-8604-4c25-869f-c3eb051c213f",
+    "market": "id",
+    "channel": "Indomaret",
+    "date": "Besok",
+    "flow": "installment_reminder",
+    "updated_at": "2026-10-02T19:15:26+00:00",
+    "created_at": "2026-10-02T19:15:26+00:00"
+  }
+}

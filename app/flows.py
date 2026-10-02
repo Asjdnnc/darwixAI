@@ -77,16 +77,16 @@ PH = Flow(
                                     r"makausap|kausapin ko|ibigay mo sa)\b", re.I),
         "already_paid": re.compile(r"\b(nagbayad na|bayad na|nabayaran ko na|na-pay ko na|binayaran ko na|"
                                    r"paid na|na-settle ko na)\b", re.I),
-        "hardship": re.compile(r"\b(wala akong pera|walang pera|wala pong pera|tight|hirap|nahihirapan|"
-                               r"hindi ko kaya|mahal masyado|mahal po masyado|kapos)\b", re.I),
+        "hardship": re.compile(r"\b(wala\s+(?:akong|ako|kaming)?\s*pera|walang pera|tight|hirap|nahihirapan|"
+                               r"hindi ko kaya|mahal masyado|kapos|kulang ang budget)\b", re.I),
         "dispute": re.compile(r"\b(mali|hindi ko utang|hindi ko policy|reklamo|complaint|hindi ako|"
                               r"bakit ako|nagkamali kayo)\b", re.I),
         "refuse": re.compile(r"\b(ayoko na|ayaw ko na|cancel ko na|huwag na|wag na|hindi na ako interesado|"
                              r"itigil n?[iy]o)\b", re.I),
         "promise": re.compile(r"\b(magbabayad|babayaran ko|babayaran na|sige|oo nga|magbabayad na ako|"
                               r"this week|bukas|sa|next week)\b", re.I),
-        "decline_recording": re.compile(r"\b(ayaw kong ma-?record|huwag n?[iy]ong i-?record|ayoko ma-?record|"
-                                        r"hindi ako pumapayag na i-?record)\b", re.I),
+        "decline_recording": re.compile(r"\b(?:ayaw|ayoko|huwag|wag|hindi)\b[^.!?]{0,25}"
+                                        r"\b(?:i-?record|ma-?record|irecord|nire-?record|record)\b", re.I),
         "wrong_person": re.compile(r"\b(mali po kayo ng tawag|wala dito|hindi ko kilala|wrong number|"
                                    r"hindi ako si)\b", re.I),
         "agree": re.compile(r"^\W*(opo|oo|sige|okay|ok|yes|pwede|go ahead|tuloy)\b", re.I),

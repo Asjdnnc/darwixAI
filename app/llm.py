@@ -67,7 +67,77 @@ def failed_generation(exc: BadRequestError) -> str | None:
     return text.strip() if isinstance(text, str) and text.strip() else None
 
 
+REMINDER_PROMPT = """You are {agent_name}, a virtual servicing assistant for {company}, a {sector} \
+company. You are on a recorded outbound {flow} call. You are an AI and say so if asked.
+
+LANGUAGE — THIS IS THE MOST IMPORTANT RULE
+- Reply ONLY in {language}
+- Never switch to English sentences. English words appear ONLY as the finance/banking loanwords that \
+customers themselves use. A whole sentence in English is wrong, even when apologising, even when you \
+do not know something, even when escalating.
+- Match the caller's level of formality.
+
+GROUNDING
+- Facts about amounts, dates, penalties, policies, channels and procedures may come ONLY from the \
+numbered EXCERPTS. Put the index of every excerpt you used in "citations".
+- If the excerpts do not answer the question, say so in {language} and offer a human agent. Never guess.
+- NEVER state a specific amount owed, penalty or settlement figure: those are computed by the system.
+- Never threaten, never promise that an application or concession will be approved.
+
+CONVERSATION
+- Spoken style: at most 2 short sentences, under 40 words. No lists, no markdown.
+- Acknowledge what the caller said and answer their question. Do NOT ask a question and do NOT end \
+with a question: the system appends the next question itself.
+
+Return ONLY JSON:
+{{"reply": str, "citations": [int], "caller_intent": "provide_info|ask_question|objection|out_of_scope|\
+human_request|already_paid|hardship|dispute|refuse|promise|small_talk|end_call", "answered_from_excerpts": bool}}"""
+
+AGENTS = {"ph": ("Maya", "Darwix Life Philippines"), "id": ("Rani", "Darwix Finance Indonesia")}
+
+
 class GroqService:
+    def converse_reminder(self, session, text: str, context, expected, flw) -> dict:
+        """Q3 turn: the market flow supplies the language, sector and register."""
+        if not settings.groq_api_key:
+            return {"reply": "", "citations": [], "intent": "provide_info", "extracted": {}}
+        agent_name, company = AGENTS[flw.market]
+        system = REMINDER_PROMPT.format(agent_name=agent_name, company=company, sector=flw.sector,
+                                        flow=flw.name.replace("_", " "), language=flw.language)
+        excerpts = [{"index": i, "title": c.title, "text": c.content} for i, c in enumerate(context)]
+        history = [{"role": "assistant" if t["role"] == "agent" else "user", "content": t["text"]}
+                   for t in session.transcript[-8:-1]]
+        user = (f"EXCERPTS: {json.dumps(excerpts, ensure_ascii=False) if excerpts else '[] (none retrieved)'}\n"
+                f"ALREADY CAPTURED: {json.dumps(session.lead, ensure_ascii=False)}\n"
+                f"LATEST CALLER MESSAGE: {text}\n\nRespond with the JSON object only, in {flw.language}.")
+        reasoning = {"reasoning_effort": "low"} if "gpt-oss" in settings.groq_model else {}
+        raw = None
+        for attempt in range(2):
+            try:
+                response = Groq(api_key=settings.groq_api_key, timeout=20, max_retries=4).chat.completions.create(
+                    model=settings.groq_model, temperature=0.2 if attempt == 0 else 0.0,
+                    response_format={"type": "json_object"}, max_completion_tokens=1200, **reasoning,
+                    messages=[{"role": "system", "content": system}, *history, {"role": "user", "content": user}])
+                raw = response.choices[0].message.content or "{}"
+                break
+            except BadRequestError as exc:
+                prose = failed_generation(exc)
+                if prose:
+                    raw = prose
+                    break
+                if attempt == 1:
+                    raise
+        try:
+            data = json.loads(raw)
+            if not isinstance(data, dict):
+                raise ValueError
+        except ValueError:
+            data = {"reply": raw.strip(), "citations": [], "recovered_prose": True}
+        data["intent"] = data.pop("caller_intent", None) or "provide_info"
+        data["citations"] = [i for i in data.get("citations", []) if isinstance(i, int)]
+        data.setdefault("reply", "")
+        return data
+
     def converse(self, session, text: str, context: list[Chunk], expected: str | None, rules: dict) -> dict:
         """One structured LLM call per turn. Raises on provider errors; the agent falls back to rules."""
         if not settings.groq_api_key:

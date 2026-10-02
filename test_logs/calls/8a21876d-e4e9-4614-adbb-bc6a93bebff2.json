@@ -1,0 +1,90 @@
+{
+  "call_id": "8a21876d-e4e9-4614-adbb-bc6a93bebff2",
+  "market": "ph",
+  "started_at": "2026-10-02T19:14:08+00:00",
+  "transcript": [
+    {
+      "at": "2026-10-02T19:14:08+00:00",
+      "role": "agent",
+      "text": "Magandang araw po, ako po si Maya mula sa Darwix Life Philippines. Recorded po ang tawag na ito para sa quality at compliance. Okay lang po ba na mag-usap tayo sandali?"
+    },
+    {
+      "at": "2026-10-02T19:14:08+00:00",
+      "role": "customer",
+      "text": "Opo sige po."
+    },
+    {
+      "at": "2026-10-02T19:14:09+00:00",
+      "role": "agent",
+      "text": "Sure, thank you. Tungkol po sana ito sa premium ng policy ninyo na may due na. Nasa loob pa po tayo ng 31-day grace period, kaya active pa rin po ang coverage ninyo. Nabayaran na po ba ninyo ito, o gusto po ninyong tulungan ko kayo sa payment?",
+      "citations": [],
+      "intent": "provide_info"
+    },
+    {
+      "at": "2026-10-02T19:14:09+00:00",
+      "role": "customer",
+      "text": "Magkano po ang babayaran ko?"
+    },
+    {
+      "at": "2026-10-02T19:14:09+00:00",
+      "role": "agent",
+      "text": "I\u2019m sorry, I don\u2019t have the exact amount due in my records. A licensed advisor can give you the precise figure. Saan po ninyo balak magbayad \u2014 sa GCash, Maya, bank branch, o sa Bayad Center?",
+      "citations": [],
+      "intent": "provide_info"
+    },
+    {
+      "at": "2026-10-02T19:14:10+00:00",
+      "role": "customer",
+      "text": "Sa GCash po."
+    },
+    {
+      "at": "2026-10-02T19:14:10+00:00",
+      "role": "agent",
+      "text": "Sure, you can pay via GCash under the Bills Payment menu, Insurance category. Your payment will post within one banking day. Kailan po ninyo balak magbayad?",
+      "citations": [
+        "docs/payment_channels.md#e-wallets-and-online",
+        "web/faq.html#how-long-does-payment-posting-take"
+      ],
+      "intent": "provide_info"
+    },
+    {
+      "at": "2026-10-02T19:14:10+00:00",
+      "role": "customer",
+      "text": "Sa kinsenas po."
+    },
+    {
+      "at": "2026-10-02T19:14:12+00:00",
+      "role": "agent",
+      "text": "Salamat po! Para po sa record ko, magbabayad po kayo sa GCash sa kinsenas, tama po ba? Maraming salamat po at ingat po kayo.",
+      "citations": []
+    }
+  ],
+  "lead": {
+    "payment_channel": "GCash",
+    "payment_date": "kinsenas"
+  },
+  "conflicts": {},
+  "recording_consent": true,
+  "underwriting_disclosed": false,
+  "outcome": {
+    "status": "promise_to_pay",
+    "flow": "renewal_lapse_reminder",
+    "market": "ph"
+  },
+  "actions": [
+    {
+      "type": "promise",
+      "id": "ptp_8a21876d",
+      "operation": "created"
+    }
+  ],
+  "guard_events": [],
+  "escalated": false,
+  "ended": true,
+  "attempts": {},
+  "last_asked": null,
+  "mode": "discovery",
+  "quote_offered": false,
+  "pending_non_us": null,
+  "qualifying_started_turn": false
+}

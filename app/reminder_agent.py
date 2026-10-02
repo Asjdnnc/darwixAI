@@ -52,11 +52,26 @@ DATE_PHRASES = {
 }
 
 
+POLITENESS_PH = re.compile(r"\bpong\b", re.I), re.compile(r"\b(?:po|ho|opo)\b", re.I)
+
+
+def strip_politeness(market: str, text: str) -> str:
+    """Filipino inserts 'po'/'ho' anywhere in a sentence as a respect marker, so intent patterns
+    would otherwise need a variant for every position: "wala po akong pera" vs "wala akong pera".
+    The particle carries no meaning for intent, so it is removed before matching."""
+    if market != "ph":
+        return text
+    pong, particle = POLITENESS_PH
+    stripped = particle.sub(" ", pong.sub("ng", text))
+    return re.sub(r"\s+", " ", stripped).strip()
+
+
 def detect_intent(flw: Flow, text: str) -> str | None:
     """Deterministic read of the caller's words; the model never overrides these."""
+    candidate = strip_politeness(flw.market, text)
     for name in ("decline_recording", "wrong_person", "already_paid", "human_request", "dispute",
                  "hardship", "refuse", "promise"):
-        if flw.intents[name].search(text):
+        if flw.intents[name].search(text) or flw.intents[name].search(candidate):
             return name
     return None
 
@@ -72,6 +87,21 @@ def extract_payment(market: str, text: str) -> dict:
         # Keep only the time expression itself, so the closing line reads naturally.
         found["payment_date"] = (match.group(1) if match.groups() else match.group(0)).strip()
     return found
+
+
+# If a reply of any length contains none of these, it is not in the caller's language any more.
+LANGUAGE_MARKERS = {
+    "ph": re.compile(r"\b(po|opo|ninyo|niyo|ang|ng|sa|ko|kayo|natin|namin|naming|ay|mga|ito|iyan|kung|"
+                     r"salamat|pasensya|maaari|pwede|hindi|oo)\b", re.I),
+    "id": re.compile(r"\b(yang|dan|untuk|dengan|saya|kami|anda|bapak|ibu|pak|bu|bisa|dapat|tidak|sudah|"
+                     r"belum|akan|terima kasih|mohon|silakan|ya|ini|itu|pada|dari)\b", re.I),
+}
+
+
+def switched_language(market: str, text: str) -> bool:
+    """True when the agent has drifted into English, which the market brief forbids."""
+    words = re.findall(r"[A-Za-z']+", text)
+    return len(words) >= 5 and not LANGUAGE_MARKERS[market].search(text)
 
 
 def is_question(market: str, text: str) -> bool:
@@ -140,7 +170,7 @@ class ReminderAgent:
         context = self.kbs[session.market].retrieve(text, grounded_only=True).chunks
         expected = next((f for f in flw.collect_order if f not in session.lead), None)
         try:
-            brain = self.brain.converse(session, text, context, expected, {"questions": flw.questions})
+            brain = self.brain.converse_reminder(session, text, context, expected, flw)
         except Exception as exc:
             session.guard_events.append({"guard": "llm_error", "error": type(exc).__name__, "detail": str(exc)[:200]})
             brain = {"reply": "", "citations": [], "intent": "provide_info", "extracted": {}}
@@ -212,13 +242,19 @@ class ReminderAgent:
                 reply = pattern.sub(replacement, reply).strip()
                 extra.append(flw.policy_refs["conduct"])
 
-        # 4. Never repeat the previous reply word for word.
+        # 4. Staying in the caller's language is a hard requirement of this flow, so an English
+        #    sentence is dropped rather than spoken.
+        if reply.strip() and switched_language(session.market, reply):
+            session.guard_events.append({"guard": "language_switch", "original": reply})
+            reply = unavailable if is_question(session.market, caller_text) else ""
+
+        # 5. Never repeat the previous reply word for word.
         previous = next((t["text"] for t in reversed(session.transcript[:-1]) if t["role"] == "agent"), "")
         if reply.strip() and reply.strip() in previous:
             session.guard_events.append({"guard": "repeated_reply"})
             reply = ""
 
-        # 5. Code decides what is asked next; drop any question the model appended.
+        # 6. Code decides what is asked next; drop any question the model appended.
         sentences = [s for s in re.split(r"(?<=[.!?])\s+", reply.strip()) if s and not s.endswith("?")]
         return " ".join(sentences + [prompt]).strip(), extra
 
@@ -232,6 +268,9 @@ class ReminderAgent:
     @staticmethod
     def _response(session: CallSession, text: str, citations: list) -> dict:
         return {"call_id": session.call_id, "market": session.market, "text": text, "citations": citations,
-                "outcome": session.outcome, "captured": session.lead, "actions": session.actions,
+                # "lead" is the key the browser panel reads for every market; "captured" is its
+                # flow-accurate name here (a reminder captures a commitment, not a lead).
+                "outcome": session.outcome, "captured": session.lead, "lead": session.lead,
+                "conflicts": {}, "actions": session.actions,
                 "escalated": session.escalated, "end_call": session.ended,
                 "guard_events": session.guard_events[-3:]}

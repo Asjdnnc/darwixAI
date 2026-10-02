@@ -17,15 +17,34 @@ from app.crm import MockCRM
 from app.kb import KnowledgeBase
 from app.llm import GroqService
 from app.models import AgentTurn, TranscriptEvent
+from app.flows import FLOWS, flow
+from app.ingest import load_records
 from app.nudges import NudgeEngine
-from app.openai_service import OpenAIQ3Q4Service
+from app.reminder_agent import ReminderAgent
 from app.seed import seed
 
-app = FastAPI(title="AI Engineer Assessment API", version="0.2.0")
-kb, groq, openai_q3_q4, nudge_engine = KnowledgeBase(), GroqService(), OpenAIQ3Q4Service(), NudgeEngine()
+app = FastAPI(title="AI Engineer Assessment API", version="0.3.0")
+kb, groq, nudge_engine = KnowledgeBase(), GroqService(), NudgeEngine()
 seed(kb)
 crm = MockCRM()
 agent = LeadQualificationAgent(kb, groq, crm)
+
+# Q3: one knowledge base per market, each with its own language settings.
+market_kbs: dict[str, KnowledgeBase] = {}
+for _market in FLOWS:
+    _kb = KnowledgeBase(market=_market)
+    for _record in load_records(market=_market):
+        _kb.upsert(_record)
+    market_kbs[_market] = _kb
+reminder_agent = ReminderAgent(market_kbs, groq, crm)
+
+# Whisper language codes per market; Filipino is "tl".
+ASR_LANGUAGE = {"en": "en", "ph": "tl", "id": "id"}
+
+
+def agent_for(market: str):
+    """Q1 lead qualification for en; the Q3 reminder flows for ph and id."""
+    return reminder_agent if market in FLOWS else agent
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 app.mount("/kb-sources", StaticFiles(directory="data/raw"), name="kb-sources")
 app.mount("/kb-docs", StaticFiles(directory="docs"), name="kb-docs")
@@ -39,42 +58,57 @@ def browser_voice_ui():
 
 @app.get("/health")
 def health() -> dict:
-    return {"status": "ok", "knowledge_chunks": len(kb.chunks)}
+    return {"status": "ok", "knowledge_chunks": len(kb.chunks),
+            "markets": {m: {"records": len(k.records), "chunks": len(k.chunks), "flow": flow(m).name,
+                            "sector": flow(m).sector} for m, k in market_kbs.items()}}
+
+
+@app.get("/markets")
+def markets() -> dict:
+    """What each market bot is configured to do, for the UI and the demo."""
+    return {"en": {"sector": "US health insurance", "flow": "lead_qualification", "language": "English",
+                   "asr": ASR_LANGUAGE["en"], "records": len(kb.records)},
+            **{m: {"sector": flow(m).sector, "flow": flow(m).name, "language": flow(m).language,
+                   "asr": ASR_LANGUAGE[m], "records": len(market_kbs[m].records)} for m in FLOWS}}
 
 
 @app.get("/retrieve")
-def retrieve(q: str, limit: int = 3, grounded_only: bool = False, category: str | None = None):
-    return kb.retrieve(q, limit=limit, grounded_only=grounded_only, category=category)
+def retrieve(q: str, limit: int = 3, grounded_only: bool = False, category: str | None = None,
+             market: str = "en"):
+    base = market_kbs.get(market, kb)
+    return base.retrieve(q, limit=limit, grounded_only=grounded_only, category=category)
 
 
 @app.post("/calls/start")
 def start_call(market: str = "en"):
     """Open a call session; returns the greeting with the recording disclosure."""
-    return agent.start(str(uuid4()), market)
+    return agent_for(market).start(str(uuid4()), market)
 
 
 @app.post("/agent/turn")
 def agent_turn(turn: AgentTurn):
     """One caller utterance -> grounded, guarded reply plus the updated lead state."""
-    return agent.turn(turn.call_id, turn.customer_text, turn.market)
+    return agent_for(turn.market).turn(turn.call_id, turn.customer_text, turn.market)
 
 
 @app.get("/calls/{call_id}")
 def get_call(call_id: str):
-    if call_id not in agent.sessions:
-        raise HTTPException(status_code=404, detail="Unknown call")
-    return agent.sessions[call_id].snapshot()
+    for handler in (agent, reminder_agent):
+        if call_id in handler.sessions:
+            return handler.sessions[call_id].snapshot()
+    raise HTTPException(status_code=404, detail="Unknown call")
 
 
 @app.post("/calls/{call_id}/end")
 def end_call(call_id: str):
-    return agent.end(call_id)
+    handler = reminder_agent if call_id in reminder_agent.sessions else agent
+    return handler.end(call_id)
 
 
 @app.get("/crm/{kind}")
 def crm_records(kind: str):
-    if kind not in {"leads", "callbacks", "escalations"}:
-        raise HTTPException(status_code=404, detail="Use leads, callbacks or escalations")
+    if kind not in {"leads", "callbacks", "escalations", "promises", "notes"}:
+        raise HTTPException(status_code=404, detail="Use leads, callbacks, escalations, promises or notes")
     return crm.list(kind)
 
 
@@ -94,19 +128,22 @@ async def transcribe_audio(request: Request, language: str | None = None):
     if not audio:
         raise HTTPException(status_code=400, detail="Audio body is required")
     try:
-        if language in {"tl", "id"}:
-            market = "ph" if language == "tl" else "id"
-            if not settings.openai_api_key:
-                raise HTTPException(status_code=503, detail="OPENAI_API_KEY is required for Philippines and Indonesia transcription")
-            return {"text": openai_q3_q4.transcribe(audio, market)}
         if not settings.groq_api_key:
-            raise HTTPException(status_code=503, detail="GROQ_API_KEY is required for English transcription")
+            raise HTTPException(status_code=503, detail="GROQ_API_KEY is required for transcription")
+        # A language-specific prompt measurably improves code-switched audio: it primes Whisper to
+        # keep English finance loanwords in English instead of transliterating them.
+        hints = {
+            "tl": "Taglish customer call about life insurance. Keep English terms: premium, policy, "
+                  "coverage, rider, lapse, grace period, due date, beneficiary, GCash, Bayad Center.",
+            "id": "Percakapan nasabah pembiayaan. Pertahankan istilah: angsuran, cicilan, tenor, denda, "
+                  "jatuh tempo, DP, pembiayaan, virtual account, Indomaret, Alfamart, GoPay, OVO.",
+        }
         client = Groq(api_key=settings.groq_api_key)
         result = client.audio.transcriptions.create(
             file=("recording.webm", audio), model=settings.groq_stt_model,
-            language=language, response_format="json",
+            language=language, prompt=hints.get(language, ""), response_format="json",
         )
-        return {"text": result.text}
+        return {"text": result.text, "language": language}
     except Exception as exc:
         raise HTTPException(status_code=502, detail="Groq transcription failed") from exc
 
@@ -117,11 +154,22 @@ def speak_text(turn: AgentTurn):
     text_to_speak = turn.customer_text
     try:
         if turn.market in {"ph", "id"}:
-            if not settings.openai_api_key:
-                raise HTTPException(status_code=503, detail="OPENAI_API_KEY is required for Philippines and Indonesia speech synthesis")
-            with NamedTemporaryFile(prefix="openai-voice-", suffix=".wav", delete=False) as temp:
-                openai_q3_q4.speak(text_to_speak, turn.market, temp.name)
-                return FileResponse(temp.name, media_type="audio/wav", filename="agent-reply.wav")
+            # Groq Orpheus speaks English only, so a Taglish or Bahasa line sent to it would come
+            # back as English-accented nonsense. The browser has a native Indonesian voice and no
+            # Filipino one, so we hand synthesis to the browser and say exactly why.
+            # See "Native TTS" in docs/Q3_MARKETS.md.
+            if settings.openai_api_key:
+                try:
+                    with NamedTemporaryFile(prefix="openai-voice-", suffix=".wav", delete=False) as temp:
+                        openai_q3_q4.speak(text_to_speak, turn.market, temp.name)
+                        return FileResponse(temp.name, media_type="audio/wav", filename="agent-reply.wav",
+                                            headers={"X-TTS-Engine": f"openai:{settings.openai_tts_voice}"})
+                except Exception:
+                    pass
+            raise HTTPException(
+                status_code=501,
+                detail=("No native " + ("Filipino" if turn.market == "ph" else "Indonesian") +
+                        " voice is available from the configured providers; using the browser voice."))
         if not settings.groq_api_key:
             raise HTTPException(status_code=503, detail="GROQ_API_KEY is required for English speech synthesis")
         try:
