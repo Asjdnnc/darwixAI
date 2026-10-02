@@ -1,0 +1,106 @@
+{
+  "market": "id",
+  "language": "Bahasa Indonesia",
+  "generated_at": "2026-10-02T18:57:36+00:00",
+  "sources": [
+    {
+      "path": "docs/kebijakan_angsuran.txt",
+      "source_type": "pdf_extract",
+      "status": "ok",
+      "sections": 8
+    },
+    {
+      "path": "docs/panduan_percakapan.md",
+      "source_type": "markdown",
+      "status": "ok",
+      "sections": 13
+    },
+    {
+      "path": "docs/saluran_pembayaran.md",
+      "source_type": "markdown",
+      "status": "ok",
+      "sections": 6
+    },
+    {
+      "path": "web/faq.html",
+      "source_type": "web_page",
+      "status": "ok",
+      "sections": 8
+    }
+  ],
+  "extraction_failures": [],
+  "superseded": [],
+  "irrelevant_sections": [
+    {
+      "source_ref": "docs/panduan_percakapan.md#keberatan-saya-lagi-kerja-nanti-saja",
+      "reason": "no domain content"
+    },
+    {
+      "source_ref": "web/faq.html#masih-ada-pertanyaan",
+      "reason": "irrelevant heading"
+    }
+  ],
+  "boilerplate_removed": {},
+  "pii_redactions": {},
+  "terminology_normalizations": {
+    "VA -> virtual account": 1,
+    "auto debet -> autodebet": 2
+  },
+  "date_normalizations": [
+    {
+      "raw": "01/02/2026",
+      "iso": "2026-02-01",
+      "source": "docs/kebijakan_angsuran.txt"
+    },
+    {
+      "raw": "18 Februari 2026",
+      "iso": "2026-02-18",
+      "source": "docs/panduan_percakapan.md"
+    },
+    {
+      "raw": "12 Februari 2026",
+      "iso": "2026-02-12",
+      "source": "docs/saluran_pembayaran.md"
+    },
+    {
+      "raw": "12 Feb 2026",
+      "iso": "2026-02-12",
+      "source": "web/faq.html"
+    }
+  ],
+  "quarantined": [],
+  "duplicates": [
+    {
+      "level": "sentence",
+      "dropped": "docs/panduan_percakapan.md#eskalasi-ke-petugas",
+      "kept": "docs/kebijakan_angsuran.txt#eskalasi-ke-petugas",
+      "text": "Petugas tersedia Senin sampai Jumat pukul 08.00 sampai 17.00 WIB dan Sabtu pukul 09.00 sampai 13.00 WIB."
+    },
+    {
+      "level": "record",
+      "dropped": "web/faq.html#berapa-denda-kalau-saya-telat-bayar-angsuran-2",
+      "kept": "web/faq.html#berapa-denda-kalau-saya-telat-bayar-angsuran",
+      "similarity": 1.0
+    }
+  ],
+  "unmapped_form_fields": [],
+  "form_schema": [],
+  "totals": {
+    "sources": 4,
+    "sources_failed": 0,
+    "sources_superseded": 0,
+    "sections_extracted": 35,
+    "irrelevant_sections_dropped": 2,
+    "quarantined": 0,
+    "duplicate_records_dropped": 1,
+    "duplicate_sentences_dropped": 1,
+    "records_published": 32,
+    "categories": {
+      "faq": 6,
+      "objection": 5,
+      "policy": 9,
+      "process": 6,
+      "product": 6
+    }
+  }
+}

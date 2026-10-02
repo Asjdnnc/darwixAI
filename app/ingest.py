@@ -28,12 +28,21 @@ from datetime import date, datetime, timezone
 from html.parser import HTMLParser
 from pathlib import Path
 
+from app.market_vocab import PAGE_MARKER_RE, vocab
 from app.models import KnowledgeRecord
 
 ROOT = Path(__file__).resolve().parent.parent
 RAW_DIR = ROOT / "data" / "raw"
 KB_DIR = ROOT / "data" / "kb"
 RECORDS_PATH = KB_DIR / "records.jsonl"
+
+
+def market_dir(market: str) -> Path:
+    return KB_DIR if market == "en" else KB_DIR / market
+
+
+def records_path(market: str) -> Path:
+    return market_dir(market) / "records.jsonl"
 
 
 class ExtractionError(Exception):
@@ -57,25 +66,9 @@ class Document:
 
 # --------------------------------------------------------------------------- vocabularies
 
-MONTHS = {m: i + 1 for i, m in enumerate(
-    ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"])}
-MONTH_RE = r"(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|June?|July?|Aug(?:ust)?|Sep(?:t(?:ember)?)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)"
 
 # canonical term -> raw variants observed across sources
-GLOSSARY = {
-    "pre-existing condition": ["pre existing disease", "pre-existing disease", "pre-existing illness",
-                               "pre existing illness", "preexisting condition", "prior medical condition"],
-    "premium": ["monthly fee", "premium amount", "monthly cost"],
-    "deductible": ["deductable"],
-    "out-of-pocket maximum": ["out of pocket limit", "out-of-pocket limit", "oop max", "max out-of-pocket"],
-    "in-network provider": ["network hospital", "network provider", "empanelled hospital"],
-    "waiting period": ["waiting time"],
-    "medical underwriting": ["health underwriting", "med underwriting"],
-    "dependent": ["dependant"],
-    "Family Shield": ["FamilyShield", "Family-Shield"],
-    "license": ["licence"],
-}
-PLANS = ["Essential Care", "Family Shield", "Senior Secure"]
+
 
 # canonical form field -> label variants (matched as substrings of the normalized label)
 FORM_FIELDS = {
@@ -98,16 +91,6 @@ SKIP_CLASS_RE = re.compile(r"cookie|banner|breadcrumb|newsletter|sidebar|promo|t
 VOID_TAGS = {"br", "img", "input", "meta", "link", "hr", "source", "wbr"}
 BLOCK_TAGS = {"p", "li", "dd", "dt", "td", "th", "div", "section", "article"}
 
-BOILERPLATE_RE = re.compile(
-    r"all rights reserved|privacy policy|terms of use|we use cookies|skip to (main )?content|"
-    r"share on |back to top|subscribe|call us today|do not distribute", re.I)
-IRRELEVANT_HEADING_RE = re.compile(
-    r"share this|subscribe|what our members say|testimonial|still have questions|open roles|"
-    r"how to apply|join our team|internal notes|^purpose$", re.I)
-DOMAIN_RE = re.compile(
-    r"\b(plans?|coverage|covered|covers|premiums?|deductible|polic(y|ies)|claims?|underwriting|eligib\w*|"
-    r"enrol\w*|quotes?|copay|dependents?|advisors?|disclosures?|waiting periods?|out-of-pocket|applications?|"
-    r"in-network|callback|qualif\w*|insur\w*|caller|lead)\b", re.I)
 
 PII_PATTERNS = [
     ("email", re.compile(r"[\w.+-]+@[\w-]+(?:\.[\w-]+)+"), "[EMAIL]"),
@@ -129,13 +112,13 @@ def slugify(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", text.lower())[:60].strip("-")
 
 
-def standardize_heading(text: str) -> str:
+def standardize_heading(text: str, market: str = "en") -> str:
     text = re.sub(r"^\s*(#+|\d+(\.\d+)*\.?)\s*", "", text).strip().rstrip(":.")
     if text.isupper():
         text = text.lower()
     text = re.sub(r"\s+", " ", text)
     text = text[:1].upper() + text[1:]
-    for plan in PLANS:  # proper nouns keep their canonical casing
+    for plan in vocab(market)["proper_nouns"]:  # proper nouns keep their canonical casing
         text = re.sub(re.escape(plan), plan, text, flags=re.I)
     return text
 
@@ -150,12 +133,19 @@ def ensure_period(text: str) -> str:
     return text if not text or text[-1] in ".!?" else text + "."
 
 
-def parse_date(text: str) -> tuple[str | None, str | None]:
-    """Return (iso_date, error) for the first date-like expression in text."""
+def parse_date(text: str, market: str = "en") -> tuple[str | None, str | None]:
+    """Return (iso_date, error) for the first date-like expression in text.
+
+    Numeric order is market-specific: Indonesian sources write DD/MM/YYYY, so 01/02/2026
+    is 1 February, while US and Philippine sources write MM/DD/YYYY.
+    """
+    v = vocab(market)
+    months, month_re = v["months"], v["month_re"]
+    numeric = ((lambda m: (m[3], m[2], m[1])) if v["day_first"] else (lambda m: (m[3], m[1], m[2])))
     patterns = [
-        (rf"\b(\d{{1,2}})(?:st|nd|rd|th)?\s+{MONTH_RE}\.?,?\s+(\d{{4}})\b", lambda m: (m[3], MONTHS[m[2][:3].lower()], m[1])),
-        (rf"\b{MONTH_RE}\.?\s+(\d{{1,2}})(?:st|nd|rd|th)?,?\s+(\d{{4}})\b", lambda m: (m[3], MONTHS[m[1][:3].lower()], m[2])),
-        (r"\b(\d{1,2})/(\d{1,2})/(\d{4})\b", lambda m: (m[3], m[1], m[2])),  # US sources: MM/DD/YYYY
+        (rf"\b(\d{{1,2}})(?:st|nd|rd|th)?\s+{month_re}\.?,?\s+(\d{{4}})\b", lambda m: (m[3], months[m[2][:3].lower()], m[1])),
+        (rf"\b{month_re}\.?\s+(\d{{1,2}})(?:st|nd|rd|th)?,?\s+(\d{{4}})\b", lambda m: (m[3], months[m[1][:3].lower()], m[2])),
+        (r"\b(\d{1,2})/(\d{1,2})/(\d{4})\b", numeric),
         (r"\b(\d{4})-(\d{2})-(\d{2})\b", lambda m: (m[1], m[2], m[3])),
     ]
     for pattern, parts in patterns:
@@ -169,20 +159,15 @@ def parse_date(text: str) -> tuple[str | None, str | None]:
     return None, None
 
 
-METADATA_PART_RE = re.compile(
-    r"^(?:(?P<date_key>last updated|updated|effective date|effective)\s*:?\s*(?P<date>.+)|"
-    r"document version\s+(?P<version>[\d.]+)|owner\s*:.+)$", re.I)
-
-
-def parse_metadata_line(line: str) -> dict | None:
+def parse_metadata_line(line: str, market: str = "en") -> dict | None:
     """Recognize lines such as 'Document version 2.0 | Effective date: 05/01/2026'."""
     meta = {}
     for part in (p.strip() for p in line.split("|")):
-        match = METADATA_PART_RE.match(part)
+        match = vocab(market)["metadata_re"].match(part)
         if not match:
             return None
         if match["date"]:
-            iso, _ = parse_date(match["date"])
+            iso, _ = parse_date(match["date"], market)
             if not iso:
                 return None
             meta["effective_date"], meta["effective_date_raw"] = iso, match["date"]
@@ -274,7 +259,7 @@ class _HTMLExtractor(HTMLParser):
         self.text_buf = []
 
 
-def extract_html(raw: str) -> tuple[Document, list[dict]]:
+def extract_html(raw: str, market: str = "en") -> tuple[Document, list[dict]]:
     parser = _HTMLExtractor()
     parser.feed(raw)
     parser._flush()
@@ -282,7 +267,7 @@ def extract_html(raw: str) -> tuple[Document, list[dict]]:
     for heading, blocks in parser.sections:
         kept = []
         for block in blocks:
-            meta = parse_metadata_line(block)
+            meta = parse_metadata_line(block, market)
             if meta is not None:
                 metadata.update(meta)
             else:
@@ -296,7 +281,7 @@ def extract_html(raw: str) -> tuple[Document, list[dict]]:
     return Document(page_title, sections, metadata), fields
 
 
-def extract_text(raw: str) -> Document:
+def extract_text(raw: str, market: str = "en") -> Document:
     """Markdown and PDF-text exports: strip running headers/footers, fix wrapping, split on headings."""
     lines = [line.rstrip() for line in raw.splitlines()]
     counts = Counter(line.strip() for line in lines if line.strip())
@@ -321,11 +306,11 @@ def extract_text(raw: str) -> Document:
         if not stripped:
             end_paragraph()
             continue
-        if re.fullmatch(r"page \d+ of \d+", stripped, re.I) or counts[stripped] > 1:
+        if PAGE_MARKER_RE.fullmatch(stripped) or counts[stripped] > 1:
             continue  # page numbers and running headers/footers repeated on every page
         if stripped.lstrip("# ") == title and not sections[-1][1] and len(sections) == 1:
             continue
-        meta = parse_metadata_line(stripped)
+        meta = parse_metadata_line(stripped, market)
         if meta is not None:
             metadata.update(meta)
             continue
@@ -335,9 +320,10 @@ def extract_text(raw: str) -> Document:
             continue
         paragraph.append(stripped)
     end_paragraph()
-    result = [Section(standardize_heading(h), " ".join(ensure_period(b) for b in blocks), slugify(standardize_heading(h)))
+    result = [Section(standardize_heading(h, market), " ".join(ensure_period(b) for b in blocks),
+                      slugify(standardize_heading(h, market)))
               for h, blocks in sections if blocks]
-    return Document(standardize_heading(title), result, metadata)
+    return Document(standardize_heading(title, market), result, metadata)
 
 
 TABLE_COLUMNS = {
@@ -364,7 +350,7 @@ def extract_csv(raw: str) -> Document:
     return Document("Plan Comparison Table", sections)
 
 
-def extract_pdf(data: bytes) -> Document:
+def extract_pdf(data: bytes, market: str = "en") -> Document:
     """Minimal text-layer reader. Image-only (scanned) PDFs are reported, never silently indexed."""
     if not data.startswith(b"%PDF"):
         raise ExtractionError("not a PDF file")
@@ -379,13 +365,13 @@ def extract_pdf(data: bytes) -> Document:
     text = " ".join(t.decode("latin-1") for s in streams for t in re.findall(rb"\((.*?)\)\s*Tj", s))
     if not text.strip():
         raise ExtractionError("PDF has no extractable text layer (scanned image); route to OCR or manual review")
-    return extract_text(text)
+    return extract_text(text, market)
 
 
 # --------------------------------------------------------------------------- cleaning
 
-def normalize_terms(text: str, counter: Counter) -> str:
-    for canonical, variants in GLOSSARY.items():
+def normalize_terms(text: str, counter: Counter, market: str = "en") -> str:
+    for canonical, variants in vocab(market)["glossary"].items():
         for variant in sorted(variants, key=len, reverse=True):
             pattern = re.compile(rf"(?<![\w-]){re.escape(variant)}(?P<plural>e?s)?(?![\w-])", re.I)
 
@@ -397,16 +383,17 @@ def normalize_terms(text: str, counter: Counter) -> str:
     return text
 
 
-def normalize_dates(text: str, log: list, errors: list) -> str:
+def normalize_dates(text: str, log: list, errors: list, market: str = "en") -> str:
     def repl(match):
-        iso, error = parse_date(match[0])
+        iso, error = parse_date(match[0], market)
         if error:
             errors.append(f"invalid date: '{error}'")
             return match[0]
         log.append({"raw": match[0], "iso": iso})
         return iso
-    pattern = (rf"\b\d{{1,2}}(?:st|nd|rd|th)?\s+{MONTH_RE}\.?,?\s+\d{{4}}\b|"
-               rf"\b{MONTH_RE}\.?\s+\d{{1,2}}(?:st|nd|rd|th)?,?\s+\d{{4}}\b|\b\d{{1,2}}/\d{{1,2}}/\d{{4}}\b")
+    month_re = vocab(market)["month_re"]
+    pattern = (rf"\b\d{{1,2}}(?:st|nd|rd|th)?\s+{month_re}\.?,?\s+\d{{4}}\b|"
+               rf"\b{month_re}\.?\s+\d{{1,2}}(?:st|nd|rd|th)?,?\s+\d{{4}}\b|\b\d{{1,2}}/\d{{1,2}}/\d{{4}}\b")
     return re.sub(pattern, repl, text)
 
 
@@ -432,22 +419,17 @@ def validate(section: Section, text: str) -> list[str]:
     return errors
 
 
-def infer_category(heading: str, default: str) -> str:
-    rules = [
-        ("objection", r"^objection"),
-        ("qualification", r"eligib|qualif|intake|quote form"),
-        ("policy", r"disclosure|prohibited|escalation|compliance|errata"),
-        ("process", r"script|opening"),
-    ]
-    for category, pattern in rules:
+def infer_category(heading: str, default: str, market: str = "en") -> str:
+    for category, pattern in vocab(market)["category_rules"]:
         if re.search(pattern, heading, re.I):
-            return category
+            # A single-purpose FAQ page stays FAQ; only an objection heading may override it.
+            return category if default != "faq" or category == "objection" else default
     return default
 
 
-def detect_plan(*texts: str) -> str | None:
+def detect_plan(*texts: str, market: str = "en") -> str | None:
     for text in texts:
-        hits = [plan for plan in PLANS if plan.lower() in text.lower()]
+        hits = [plan for plan in vocab(market)["proper_nouns"] if plan.lower() in text.lower()]
         if len(hits) == 1:
             return hits[0]
     return None
@@ -489,10 +471,13 @@ def form_section(fields: list[dict], report: dict) -> Section | None:
 
 # --------------------------------------------------------------------------- pipeline
 
-def build(raw_dir: Path = RAW_DIR) -> tuple[list[KnowledgeRecord], dict]:
+def build(raw_dir: Path | None = None, market: str = "en") -> tuple[list[KnowledgeRecord], dict]:
+    raw_dir = raw_dir or (RAW_DIR if market == "en" else RAW_DIR / market)
+    v = vocab(market)
     manifest = json.loads((raw_dir / "manifest.json").read_text())["sources"]
     superseded = {s["supersedes"]: s["path"] for s in manifest if s.get("supersedes")}
     report: dict = {
+        "market": market, "language": v["language"],
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "sources": [], "extraction_failures": [], "superseded": [], "irrelevant_sections": [],
         "boilerplate_removed": Counter(), "pii_redactions": Counter(), "terminology_normalizations": Counter(),
@@ -514,13 +499,13 @@ def build(raw_dir: Path = RAW_DIR) -> tuple[list[KnowledgeRecord], dict]:
                 raise ExtractionError("file listed in manifest is missing")
             fields: list[dict] = []
             if src["source_type"] in {"web_page", "form"}:
-                doc, fields = extract_html(path.read_text(encoding="utf-8"))
+                doc, fields = extract_html(path.read_text(encoding="utf-8"), market)
             elif src["source_type"] == "table":
                 doc = extract_csv(path.read_text(encoding="utf-8"))
             elif src["source_type"] == "pdf":
-                doc = extract_pdf(path.read_bytes())
+                doc = extract_pdf(path.read_bytes(), market)
             else:
-                doc = extract_text(path.read_text(encoding="utf-8"))
+                doc = extract_text(path.read_text(encoding="utf-8"), market)
         except (ExtractionError, UnicodeDecodeError, csv.Error, KeyError, StopIteration) as exc:
             entry["status"] = "failed"
             report["extraction_failures"].append({"path": src["path"], "error": str(exc) or type(exc).__name__,
@@ -537,18 +522,19 @@ def build(raw_dir: Path = RAW_DIR) -> tuple[list[KnowledgeRecord], dict]:
 
         for index, section in enumerate(sections):
             source_ref = f"{src['path']}#{section.anchor}"
-            heading = standardize_heading(section.heading)
-            if IRRELEVANT_HEADING_RE.search(heading):
+            heading = standardize_heading(section.heading, market)
+            if v["irrelevant_heading_re"].search(heading):
                 report["irrelevant_sections"].append({"source_ref": source_ref, "reason": "irrelevant heading"})
                 continue
             kept = []
             for sentence in split_sentences(section.text):
-                if BOILERPLATE_RE.search(sentence) or (sentence.endswith("!") and not re.search(r"\d", sentence)):
+                marketing_shout = v["drop_exclamations"] and sentence.endswith("!") and not re.search(r"\d", sentence)
+                if v["boilerplate_re"].search(sentence) or marketing_shout:
                     report["boilerplate_removed"][sentence] += 1
                     continue
                 kept.append(sentence)
             text = " ".join(kept)
-            if len(DOMAIN_RE.findall(text)) < 1 and not validate(section, text) and not parse_date(text)[1]:
+            if len(v["domain_re"].findall(text)) < 1 and not validate(section, text) and not parse_date(text, market)[1]:
                 report["irrelevant_sections"].append({"source_ref": source_ref, "reason": "no domain content"})
                 continue
 
@@ -559,17 +545,17 @@ def build(raw_dir: Path = RAW_DIR) -> tuple[list[KnowledgeRecord], dict]:
                             if len(PLACEHOLDER_RE.findall(s)) < 2 or len(PLACEHOLDER_RE.sub("", s).split()) >= 8)
             report["pii_redactions"].update(pii)
 
-            text = normalize_terms(text, report["terminology_normalizations"])
+            text = normalize_terms(text, report["terminology_normalizations"], market)
             text = re.sub(r"\b(\d{1,2}) ?a\.m\.", r"\1 AM", text)
             text = re.sub(r"\b(\d{1,2}) ?p\.m\.", r"\1 PM", text)
-            heading = normalize_terms(heading, report["terminology_normalizations"])
+            heading = normalize_terms(heading, report["terminology_normalizations"], market)
             errors = validate(section, text)
-            text = normalize_dates(text, report["date_normalizations"], errors)
+            text = normalize_dates(text, report["date_normalizations"], errors, market)
             if not text.strip():
                 continue
 
-            category = infer_category(heading, src["default_category"])
-            plan = detect_plan(heading, doc.title, text) if category == "product" else None
+            category = infer_category(heading, src["default_category"], market)
+            plan = detect_plan(heading, doc.title, text, market=market) if category == "product" and market == "en" else None
             title = heading if not plan or plan.lower() in heading.lower() else f"{plan} - {heading}"
             candidate = {
                 "title": title, "content": text, "category": category,
@@ -619,7 +605,7 @@ def build(raw_dir: Path = RAW_DIR) -> tuple[list[KnowledgeRecord], dict]:
             subcategory=cand["subcategory"], source_ref=cand["source_ref"], source_type=cand["source_type"],
             source_origin=cand["source_origin"], version=cand["version"], effective_date=cand["effective_date"],
             pii=any(p.search(cand["content"]) for _, p, _ in PII_PATTERNS), pii_redacted=cand["pii_redacted"],
-            terms=sorted(t for t in [*GLOSSARY, *PLANS] if t.lower() in cand["content"].lower()),
+            terms=sorted(t for t in [*v["glossary"], *v["proper_nouns"]] if t.lower() in cand["content"].lower()),
             content_hash=hashlib.sha256(cand["content"].encode()).hexdigest()[:16],
         ))
 
@@ -639,7 +625,8 @@ def build(raw_dir: Path = RAW_DIR) -> tuple[list[KnowledgeRecord], dict]:
     return records, report
 
 
-def write(records: list[KnowledgeRecord], report: dict, out_dir: Path = KB_DIR) -> None:
+def write(records: list[KnowledgeRecord], report: dict, out_dir: Path | None = None) -> None:
+    out_dir = out_dir or market_dir(report.get("market", "en"))
     out_dir.mkdir(parents=True, exist_ok=True)
     with (out_dir / "records.jsonl").open("w") as fh:
         for record in records:
@@ -648,12 +635,15 @@ def write(records: list[KnowledgeRecord], report: dict, out_dir: Path = KB_DIR) 
     (out_dir / "form_schema.json").write_text(json.dumps(report["form_schema"], indent=2))
 
 
-def load_records(path: Path = RECORDS_PATH) -> list[KnowledgeRecord]:
+def load_records(path: Path | None = None, market: str = "en") -> list[KnowledgeRecord]:
+    path = path or records_path(market)
     return [KnowledgeRecord.model_validate_json(line) for line in path.read_text().splitlines() if line.strip()]
 
 
 if __name__ == "__main__":
-    records, report = build()
-    write(records, report)
-    print(json.dumps(report["totals"], indent=2))
-    print(f"Wrote {RECORDS_PATH.relative_to(ROOT)}")
+    import sys
+    for mkt in (sys.argv[1:] or ["en", "ph", "id"]):
+        records, report = build(market=mkt)
+        write(records, report)
+        print(f"[{mkt}] {json.dumps(report['totals'])}")
+        print(f"      -> {records_path(mkt).relative_to(ROOT)}")

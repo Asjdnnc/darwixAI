@@ -1,0 +1,40 @@
+{
+  "_comment": "Indonesia market sources, written in Bahasa Indonesia as a multifinance company publishes them. Collections conduct follows OJK-style rules. All content is synthetic.",
+  "market": "id",
+  "sources": [
+    {
+      "path": "docs/kebijakan_angsuran.txt",
+      "source_type": "pdf_extract",
+      "origin": "Operasi Pembiayaan > Kebijakan_Angsuran_v2.3.pdf",
+      "doc_version": "2.3",
+      "authority": 1,
+      "default_category": "policy"
+    },
+    {
+      "path": "docs/panduan_percakapan.md",
+      "source_type": "markdown",
+      "origin": "Confluence > Layanan Nasabah > Panduan Percakapan Pengingat Angsuran",
+      "doc_version": "2.1",
+      "effective_date": "2026-02-18",
+      "authority": 2,
+      "default_category": "process"
+    },
+    {
+      "path": "docs/saluran_pembayaran.md",
+      "source_type": "markdown",
+      "origin": "Confluence > Layanan Nasabah > Saluran Pembayaran Angsuran",
+      "doc_version": "1.4",
+      "effective_date": "2026-02-12",
+      "authority": 2,
+      "default_category": "product"
+    },
+    {
+      "path": "web/faq.html",
+      "source_type": "web_page",
+      "origin": "https://www.darwixfinance.example.id/faq",
+      "doc_version": "1.0",
+      "authority": 3,
+      "default_category": "faq"
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "market": "ph",
+  "language": "Taglish (Filipino with English insurance terms)",
+  "generated_at": "2026-10-02T18:57:36+00:00",
+  "sources": [
+    {
+      "path": "docs/renewal_lapse_policy.txt",
+      "source_type": "pdf_extract",
+      "status": "ok",
+      "sections": 8
+    },
+    {
+      "path": "docs/taglish_call_playbook.md",
+      "source_type": "markdown",
+      "status": "ok",
+      "sections": 12
+    },
+    {
+      "path": "docs/payment_channels.md",
+      "source_type": "markdown",
+      "status": "ok",
+      "sections": 6
+    },
+    {
+      "path": "web/faq.html",
+      "source_type": "web_page",
+      "status": "ok",
+      "sections": 9
+    }
+  ],
+  "extraction_failures": [],
+  "superseded": [],
+  "irrelevant_sections": [
+    {
+      "source_ref": "docs/renewal_lapse_policy.txt#overview",
+      "reason": "no domain content"
+    },
+    {
+      "source_ref": "docs/taglish_call_playbook.md#objection-tatanungin-ko-muna-po-ang-asawa-ko",
+      "reason": "no domain content"
+    },
+    {
+      "source_ref": "docs/taglish_call_playbook.md#closing-after-a-commitment-to-pay",
+      "reason": "no domain content"
+    },
+    {
+      "source_ref": "web/faq.html#still-have-questions",
+      "reason": "irrelevant heading"
+    }
+  ],
+  "boilerplate_removed": {},
+  "pii_redactions": {},
+  "terminology_normalizations": {
+    "attached rider -> rider": 2,
+    "riders attached -> rider": 1
+  },
+  "date_normalizations": [
+    {
+      "raw": "01/15/2026",
+      "iso": "2026-01-15",
+      "source": "docs/renewal_lapse_policy.txt"
+    },
+    {
+      "raw": "February 18, 2026",
+      "iso": "2026-02-18",
+      "source": "docs/taglish_call_playbook.md"
+    },
+    {
+      "raw": "February 10, 2026",
+      "iso": "2026-02-10",
+      "source": "docs/payment_channels.md"
+    },
+    {
+      "raw": "10 Feb 2026",
+      "iso": "2026-02-10",
+      "source": "web/faq.html"
+    }
+  ],
+  "quarantined": [],
+  "duplicates": [
+    {
+      "level": "record",
+      "dropped": "web/faq.html#what-happens-if-i-miss-my-premium-due-date-2",
+      "kept": "web/faq.html#what-happens-if-i-miss-my-premium-due-date",
+      "similarity": 1.0
+    }
+  ],
+  "unmapped_form_fields": [],
+  "form_schema": [],
+  "totals": {
+    "sources": 4,
+    "sources_failed": 0,
+    "sources_superseded": 0,
+    "sections_extracted": 35,
+    "irrelevant_sections_dropped": 4,
+    "quarantined": 0,
+    "duplicate_records_dropped": 1,
+    "duplicate_sentences_dropped": 0,
+    "records_published": 30,
+    "categories": {
+      "faq": 7,
+      "objection": 5,
+      "policy": 7,
+      "process": 5,
+      "product": 6
+    }
+  }
+}

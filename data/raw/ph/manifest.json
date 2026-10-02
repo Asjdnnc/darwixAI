@@ -1,0 +1,40 @@
+{
+  "_comment": "Philippines market sources. Policy and product documents are in English because that is how Philippine insurers publish them; the call itself is conducted in Taglish, per the call playbook. All content is synthetic.",
+  "market": "ph",
+  "sources": [
+    {
+      "path": "docs/renewal_lapse_policy.txt",
+      "source_type": "pdf_extract",
+      "origin": "Policy Administration > Renewal_Grace_Reinstatement_v3.1.pdf",
+      "doc_version": "3.1",
+      "authority": 1,
+      "default_category": "policy"
+    },
+    {
+      "path": "docs/taglish_call_playbook.md",
+      "source_type": "markdown",
+      "origin": "Confluence > Sales Enablement > Taglish Renewal Call Playbook",
+      "doc_version": "2.4",
+      "effective_date": "2026-02-18",
+      "authority": 2,
+      "default_category": "process"
+    },
+    {
+      "path": "docs/payment_channels.md",
+      "source_type": "markdown",
+      "origin": "Confluence > Customer Servicing > Premium Payment Channels",
+      "doc_version": "1.6",
+      "effective_date": "2026-02-10",
+      "authority": 2,
+      "default_category": "product"
+    },
+    {
+      "path": "web/faq.html",
+      "source_type": "web_page",
+      "origin": "https://www.darwixlife.example.ph/faq",
+      "doc_version": "1.0",
+      "authority": 3,
+      "default_category": "faq"
+    }
+  ]
+}
