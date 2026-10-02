@@ -8,17 +8,17 @@
     ],
     "reason": "Age and state match at least one plan and the caller consented to contact",
     "fields": {
+      "household_size": 2,
       "age": 42,
       "state": "TX",
-      "household_size": 2,
       "tobacco_use": false,
       "medical_conditions": "none",
       "current_insurance": "none",
       "callback_time": "Weekday evenings after 6 would be best.",
       "consent_to_contact": true
     },
-    "summary": "Outcome: qualified. Age and state match at least one plan and the caller consented to contact. Possible plans: Essential Care, Family Shield. Details: age=42; state=Texas; household size=2; tobacco use=no; medical conditions=none; current insurance=none; callback time=Weekday evenings after 6 would be best.; consent to contact=yes.",
-    "updated_at": "2026-10-02T18:37:25+00:00",
+    "summary": "Outcome: qualified. Age and state match at least one plan and the caller consented to contact. Possible plans: Essential Care, Family Shield. Details: household size=2; age=42; state=Texas; tobacco use=no; medical conditions=none; current insurance=none; callback time=Weekday evenings after 6 would be best.; consent to contact=yes.",
+    "updated_at": "2026-10-02T19:25:18+00:00",
     "created_at": "2026-10-02T11:46:29+00:00"
   },
   "lead_test-s2": {
@@ -48,11 +48,10 @@
       "age": 48,
       "state": "OH",
       "household_size": 4,
-      "tobacco_use": "not provided",
-      "medical_conditions": "declined to share"
+      "tobacco_use": "not provided"
     },
-    "summary": "Outcome: in progress. Possible plans: Essential Care, Family Shield. Details: age=48; state=Ohio; household size=4; tobacco use=not provided; medical conditions=declined to share.",
-    "updated_at": "2026-10-02T18:38:55+00:00",
+    "summary": "Outcome: in progress. Possible plans: Essential Care, Family Shield. Details: age=48; state=Ohio; household size=4; tobacco use=not provided.",
+    "updated_at": "2026-10-02T19:26:47+00:00",
     "created_at": "2026-10-02T11:48:41+00:00"
   },
   "lead_test-s5": {
@@ -64,7 +63,7 @@
       "age": 60
     },
     "summary": "Outcome: escalated. Caller asked for a human advisor. Details: age=60.",
-    "updated_at": "2026-10-02T18:39:38+00:00",
+    "updated_at": "2026-10-02T19:28:12+00:00",
     "created_at": "2026-10-02T11:49:49+00:00"
   },
   "lead_test-s6": {

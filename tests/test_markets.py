@@ -177,3 +177,12 @@ def test_pipeline_survives_the_observed_sundanese_asr_errors(kbs, tmp_path):
     assert extract_payment("id", garbled)["payment_date"].lower() == "gajian"
     from app.reminder_agent import detect_intent
     assert detect_intent(flow("id"), garbled) == "promise"
+
+
+def test_playbook_placeholders_are_never_spoken(kbs, tmp_path):
+    """Both gpt-oss models echoed the playbook slot "[grace end date]" verbatim."""
+    brain = Scripted([{"reply": "Naiintindihan ko po. Hanggang [grace end date] pa po ang grace period ninyo."}])
+    agent = make(kbs, tmp_path, brain)
+    out = run(agent, "ph", ["Ano po ang grace period?"])[-1]   # a plain turn, so the guard runs
+    assert "[" not in out["text"] and "grace end date" not in out["text"]
+    assert any(g["guard"] == "unfilled_placeholder" for g in agent.sessions["c"].guard_events)

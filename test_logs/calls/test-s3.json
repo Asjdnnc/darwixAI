@@ -1,10 +1,10 @@
 {
   "call_id": "test-s3",
   "market": "en",
-  "started_at": "2026-10-02T18:38:03+00:00",
+  "started_at": "2026-10-02T19:25:18+00:00",
   "transcript": [
     {
-      "at": "2026-10-02T18:38:03+00:00",
+      "at": "2026-10-02T19:25:18+00:00",
       "role": "agent",
       "text": "Hi, this is Austin, a virtual health insurance advisor with Darwix Health. This call is recorded for quality and compliance purposes. Is it okay if we continue?",
       "citations": [
@@ -12,117 +12,113 @@
       ]
     },
     {
-      "at": "2026-10-02T18:38:07+00:00",
+      "at": "2026-10-02T19:25:22+00:00",
       "role": "customer",
       "text": "Yes."
     },
     {
-      "at": "2026-10-02T18:38:07+00:00",
+      "at": "2026-10-02T19:25:28+00:00",
       "role": "agent",
       "text": "Thank you. How can I help you today? I can answer questions about our health plans, or check which plan might fit you.",
       "citations": [],
       "intent": "provide_info"
     },
     {
-      "at": "2026-10-02T18:38:11+00:00",
+      "at": "2026-10-02T19:25:32+00:00",
       "role": "customer",
       "text": "I'm 38."
     },
     {
-      "at": "2026-10-02T18:38:12+00:00",
+      "at": "2026-10-02T19:25:38+00:00",
       "role": "agent",
-      "text": "Thanks for sharing your age. I can help you learn about our plans or answer any questions you have. Which state do you live in?",
+      "text": "Thanks for sharing that. Which state do you live in?",
       "citations": [],
       "intent": "provide_info"
     },
     {
-      "at": "2026-10-02T18:38:16+00:00",
+      "at": "2026-10-02T19:25:42+00:00",
       "role": "customer",
       "text": "Ohio."
     },
     {
-      "at": "2026-10-02T18:38:17+00:00",
+      "at": "2026-10-02T19:25:49+00:00",
       "role": "agent",
-      "text": "Great, you\u2019re in Ohio. I can help you see which plans fit you. How many people would need coverage, including you?",
+      "text": "Great, we have plans available in Ohio. How many people would need coverage, including you?",
       "citations": [
         "web/faq.html#in-which-states-are-plans-available"
       ],
-      "intent": "ask_question"
+      "intent": "provide_info"
     },
     {
-      "at": "2026-10-02T18:38:21+00:00",
+      "at": "2026-10-02T19:25:53+00:00",
       "role": "customer",
       "text": "Four of us."
     },
     {
-      "at": "2026-10-02T18:38:21+00:00",
+      "at": "2026-10-02T19:26:00+00:00",
       "role": "agent",
-      "text": "Just so you know, final coverage and premiums are subject to medical underwriting and depend on verified medical history. Thanks for letting me know. With four people, we can look at the Family Shield plan, which covers up to four dependent children under 26 and starts at $520 per month for a family of four. Does anyone who would be covered use tobacco?",
-      "citations": [
-        "web/plans_overview.html#family-shield",
-        "docs/underwriting_policy_v2.txt#mandatory-disclosures"
-      ],
+      "text": "Thanks. Does anyone who would be covered use tobacco?",
+      "citations": [],
       "intent": "provide_info"
     },
     {
-      "at": "2026-10-02T18:38:25+00:00",
+      "at": "2026-10-02T19:26:04+00:00",
       "role": "customer",
       "text": "Sorry, I said that wrong, I'm actually 48."
     },
     {
-      "at": "2026-10-02T18:38:26+00:00",
+      "at": "2026-10-02T19:26:11+00:00",
       "role": "agent",
-      "text": "Thanks for the update. I\u2019ve noted you\u2019re 48. I can still help you explore plans for your family of four. Just to make sure I have this right, earlier I noted your age as 38, and just now I heard 48. Which one is correct?",
+      "text": "No problem, I have updated your age to 48. Just to make sure I have this right, earlier I noted your age as 38, and just now I heard 48. Which one is correct?",
       "citations": [],
       "intent": "provide_info"
     },
     {
-      "at": "2026-10-02T18:38:30+00:00",
+      "at": "2026-10-02T19:26:15+00:00",
       "role": "customer",
       "text": "48 is right."
     },
     {
-      "at": "2026-10-02T18:38:36+00:00",
+      "at": "2026-10-02T19:26:22+00:00",
       "role": "agent",
-      "text": "Got it, you\u2019re 48. I\u2019ll keep that in mind as we look at plans for your family of four. Do you, or anyone who would be covered, have any current medical conditions? You're welcome to skip this one.",
+      "text": "Thanks for confirming. Do you, or anyone who would be covered, have any current medical conditions? You're welcome to skip this one.",
       "citations": [],
       "intent": "provide_info"
     },
     {
-      "at": "2026-10-02T18:38:40+00:00",
+      "at": "2026-10-02T19:26:26+00:00",
       "role": "customer",
       "text": "I'd rather not say."
     },
     {
-      "at": "2026-10-02T18:38:48+00:00",
+      "at": "2026-10-02T19:26:35+00:00",
       "role": "agent",
-      "text": "I understand. We\u2019ll proceed with the information you\u2019ve shared. Do you have any health insurance right now?",
+      "text": "That is completely fine. We will proceed without that information for now. Is there anything else I can help with, or would you like me to check which plans might fit you?",
       "citations": [],
-      "intent": "provide_info"
+      "intent": "decline_questions"
     },
     {
-      "at": "2026-10-02T18:38:52+00:00",
+      "at": "2026-10-02T19:26:39+00:00",
       "role": "customer",
       "text": "Not sure, maybe?"
     },
     {
-      "at": "2026-10-02T18:38:55+00:00",
+      "at": "2026-10-02T19:26:47+00:00",
       "role": "agent",
-      "text": "I'm sorry, I don't have verified information about that, so I won't guess. A licensed advisor can help with that question. Do you have any health insurance right now?",
+      "text": "No problem. I can check which plans might fit your family. Happy to help with that. I'll ask a few quick questions to see which plans might fit. Do you, or anyone who would be covered, have any current medical conditions? You're welcome to skip this one.",
       "citations": [],
-      "intent": "ask_question"
+      "intent": "wants_quote"
     }
   ],
   "lead": {
     "age": 48,
     "state": "OH",
     "household_size": 4,
-    "tobacco_use": "not provided",
-    "medical_conditions": "declined to share"
+    "tobacco_use": "not provided"
   },
   "conflicts": {},
   "recording_consent": true,
-  "underwriting_disclosed": true,
+  "underwriting_disclosed": false,
   "outcome": {
     "status": "in_progress",
     "plans": [
@@ -140,24 +136,10 @@
   ],
   "guard_events": [
     {
-      "guard": "unsupported_extraction",
-      "field": "medical_conditions",
-      "value": "none"
-    },
-    {
-      "guard": "unsupported_extraction",
-      "field": "current_insurance",
-      "value": "none"
-    },
-    {
-      "guard": "not_an_answer",
-      "field": "medical_conditions",
-      "intent": "ask_question"
-    },
-    {
-      "guard": "not_an_answer",
-      "field": "current_insurance",
-      "intent": "ask_question"
+      "guard": "caller_words_override",
+      "field": "state",
+      "model": "Ohio",
+      "used": "OH"
     },
     {
       "guard": "caller_words_override",
@@ -166,50 +148,13 @@
       "used": "four of us."
     },
     {
-      "guard": "unsupported_extraction",
-      "field": "medical_conditions",
-      "value": "none"
-    },
-    {
-      "guard": "unsupported_extraction",
-      "field": "current_insurance",
-      "value": "none"
-    },
-    {
-      "guard": "disclosure_injected"
-    },
-    {
-      "guard": "unsupported_extraction",
-      "field": "medical_conditions",
-      "value": "none"
-    },
-    {
-      "guard": "unsupported_extraction",
-      "field": "current_insurance",
-      "value": "none"
-    },
-    {
-      "guard": "unsupported_extraction",
-      "field": "medical_conditions",
-      "value": "none"
-    },
-    {
-      "guard": "unsupported_extraction",
-      "field": "current_insurance",
-      "value": "none"
-    },
-    {
       "guard": "field_abandoned",
       "field": "tobacco_use"
     },
     {
       "guard": "not_an_answer",
-      "field": "current_insurance",
-      "intent": "ask_question"
-    },
-    {
-      "guard": "unsupported_question",
-      "original": "I see you\u2019re not sure about current insurance. That\u2019s fine\u2014let\u2019s keep going."
+      "field": "medical_conditions",
+      "intent": "decline_questions"
     }
   ],
   "escalated": false,
@@ -217,9 +162,9 @@
   "attempts": {
     "tobacco_use": 3
   },
-  "last_asked": "current_insurance",
+  "last_asked": "medical_conditions",
   "mode": "qualifying",
-  "quote_offered": false,
+  "quote_offered": true,
   "pending_non_us": null,
-  "qualifying_started_turn": false
+  "qualifying_started_turn": true
 }

@@ -242,6 +242,13 @@ class ReminderAgent:
                 reply = pattern.sub(replacement, reply).strip()
                 extra.append(flw.policy_refs["conduct"])
 
+        # 3b. The playbooks use slots like "[grace end date]" and "[nominal]"; a model that echoes
+        #     one would read it aloud, so any sentence still containing a placeholder is dropped.
+        if re.search(r"\[[^\]]{2,40}\]", reply):
+            session.guard_events.append({"guard": "unfilled_placeholder", "original": reply})
+            reply = " ".join(x for x in re.split(r"(?<=[.!?])\s+", reply)
+                             if not re.search(r"\[[^\]]{2,40}\]", x)).strip()
+
         # 4. Staying in the caller's language is a hard requirement of this flow, so an English
         #    sentence is dropped rather than spoken.
         if reply.strip() and switched_language(session.market, reply):

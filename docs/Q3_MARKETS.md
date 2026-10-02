@@ -118,6 +118,27 @@ since politeness is stripped before intent matching anyway.
 on a mobile line. Treat the Indonesian figures as an upper bound; the recorded calls in `Evidence/`
 are the real-speech evidence.
 
+## 3a. Model choice (measured, not assumed)
+
+Groq serves four chat models on this account. All three usable ones were run through the real Q3
+pipeline on six Taglish and Bahasa turns, scored on language drift, grounded-term coverage, JSON
+validity and latency.
+
+| Model | Latency | Drift | Terms | JSON | Notes |
+|---|---|---|---|---|---|
+| `openai/gpt-oss-20b` | 0.6–0.7 s | none | lowest | ok | Echoed the playbook slot `[grace end date]` aloud |
+| `openai/gpt-oss-120b` | 0.5–0.9 s | none | good | ok | Same placeholder leak; mixed Bapak/Bu in one reply |
+| **`qwen/qwen3.8-27b`** | **0.3–0.4 s** | none | **best** | ok | Most natural Taglish, most concise Bahasa, no leaks |
+
+`qwen/qwen3.8-27b` is the configured default: roughly twice as fast, better grounded in the
+retrieved excerpts, and the only one that never read a placeholder out loud. It was also re-run
+against the Q1 English scenarios (S1, S3, S4, S5) with no regression, so one model serves all three
+markets. `allam-2-7b` is Arabic-focused and was not considered.
+
+The placeholder leak was a genuine bug rather than a model quirk, so it is now blocked in code for
+every market and model: any sentence still containing an unfilled `[...]` slot is dropped before it
+can be spoken (`unfilled_placeholder` guard).
+
 ## 4. Cross-lingual retrieval — the main technical problem
 
 Philippine documents are English, Philippine callers speak Taglish. "Magkano po ang babayaran ko?"

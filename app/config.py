@@ -6,7 +6,7 @@ class Settings(BaseSettings):
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
     groq_api_key: str | None = None
-    groq_model: str = "llama-3.3-70b-versatile"
+    groq_model: str = "qwen/qwen3.8-27b"  # see docs/Q3_MARKETS.md for the model comparison
     groq_stt_model: str = "whisper-large-v3-turbo"
     groq_tts_model: str = "canopylabs/orpheus-v1-english"
     groq_tts_voice: str = "austin"  # orpheus: autumn, diana, hannah (female); austin, daniel, troy (male)

@@ -448,6 +448,12 @@ def guard_reply(session: CallSession, reply: str, context: list[Chunk], cited: l
         session.guard_events.append({"guard": "repeated_reply"})
         reply = ""
 
+    # 1d. Playbook placeholders ("[grace end date]", "[amount]") must never reach the caller.
+    if re.search(r"\[[^\]]{2,40}\]", reply):
+        session.guard_events.append({"guard": "unfilled_placeholder", "original": reply})
+        kept = [x for x in re.split(r"(?<=[.!?])\s+", reply) if not re.search(r"\[[^\]]{2,40}\]", x)]
+        reply = " ".join(kept).strip()
+
     # 2. Every number in the reply must exist in the evidence, the conversation, or the lead record.
     invented = [n for n in NUMBER_RE.findall(reply) if n.strip("$%").replace(",", "") not in allowed_numbers(session, context)]
     if invented:

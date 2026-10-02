@@ -1,10 +1,10 @@
 {
   "call_id": "test-s1",
   "market": "en",
-  "started_at": "2026-10-02T18:36:23+00:00",
+  "started_at": "2026-10-02T19:23:52+00:00",
   "transcript": [
     {
-      "at": "2026-10-02T18:36:23+00:00",
+      "at": "2026-10-02T19:23:52+00:00",
       "role": "agent",
       "text": "Hi, this is Austin, a virtual health insurance advisor with Darwix Health. This call is recorded for quality and compliance purposes. Is it okay if we continue?",
       "citations": [
@@ -12,159 +12,160 @@
       ]
     },
     {
-      "at": "2026-10-02T18:36:27+00:00",
+      "at": "2026-10-02T19:23:56+00:00",
       "role": "customer",
       "text": "Yes, that's fine."
     },
     {
-      "at": "2026-10-02T18:36:27+00:00",
+      "at": "2026-10-02T19:23:56+00:00",
       "role": "agent",
       "text": "Thank you. How can I help you today? I can answer questions about our health plans, or check which plan might fit you.",
       "citations": [],
       "intent": "provide_info"
     },
     {
-      "at": "2026-10-02T18:36:31+00:00",
+      "at": "2026-10-02T19:24:00+00:00",
       "role": "customer",
       "text": "Hi, I'm looking for health insurance for me and my wife."
     },
     {
-      "at": "2026-10-02T18:36:32+00:00",
+      "at": "2026-10-02T19:24:01+00:00",
       "role": "agent",
-      "text": "Great, I can help you explore options for you and your wife. Happy to help with that. I'll ask a few quick questions to see which plans might fit. May I ask how old you are?",
+      "text": "Thanks for letting me know. I can help you find a plan that fits your needs. May I ask how old you are?",
       "citations": [],
-      "intent": "provide_info"
+      "intent": "wants_quote"
     },
     {
-      "at": "2026-10-02T18:36:36+00:00",
+      "at": "2026-10-02T19:24:05+00:00",
       "role": "customer",
       "text": "I'm 42."
     },
     {
-      "at": "2026-10-02T18:36:37+00:00",
+      "at": "2026-10-02T19:24:05+00:00",
       "role": "agent",
-      "text": "Thanks for sharing your age. I can help you find a plan for you and your wife. Which state do you live in?",
+      "text": "Thanks, 42 is noted. Which state do you live in?",
       "citations": [],
       "intent": "provide_info"
     },
     {
-      "at": "2026-10-02T18:36:41+00:00",
+      "at": "2026-10-02T19:24:09+00:00",
       "role": "customer",
       "text": "We live in Austin, Texas."
     },
     {
-      "at": "2026-10-02T18:36:42+00:00",
+      "at": "2026-10-02T19:24:10+00:00",
       "role": "agent",
-      "text": "Thanks for letting me know you\u2019re in Texas. I can help you find a plan that fits you and your wife. How many people would need coverage, including you?",
+      "text": "Thanks, Texas is noted. Does anyone who would be covered use tobacco?",
       "citations": [
         "docs/underwriting_policy_v2.txt#eligibility-rules"
       ],
       "intent": "provide_info"
     },
     {
-      "at": "2026-10-02T18:36:46+00:00",
+      "at": "2026-10-02T19:24:14+00:00",
       "role": "customer",
       "text": "Just the two of us."
     },
     {
-      "at": "2026-10-02T18:36:47+00:00",
+      "at": "2026-10-02T19:24:14+00:00",
       "role": "agent",
-      "text": "Thanks for letting me know you\u2019re a two\u2011person household. I can help you find a plan that fits you and your wife. Does anyone who would be covered use tobacco?",
+      "text": "Thanks, that is noted. Does anyone who would be covered use tobacco?",
       "citations": [],
       "intent": "provide_info"
     },
     {
-      "at": "2026-10-02T18:36:51+00:00",
+      "at": "2026-10-02T19:24:18+00:00",
       "role": "customer",
       "text": "How much does the Family Shield plan cost?"
     },
     {
-      "at": "2026-10-02T18:36:52+00:00",
+      "at": "2026-10-02T19:24:19+00:00",
       "role": "agent",
-      "text": "Just so you know, final coverage and premiums are subject to medical underwriting and depend on verified medical history. The Family Shield plan starts at about $520 per month for a family of two. Does anyone who would be covered use tobacco?",
+      "text": "Just so you know, final coverage and premiums are subject to medical underwriting and depend on verified medical history. Family Shield starts from $520 per month. Final premiums depend on age, location, and underwriting results. Does anyone who would be covered use tobacco?",
       "citations": [
+        "web/family_shield.html#costs-at-a-glance",
         "tables/plan_comparison.csv#row-2",
         "docs/underwriting_policy_v2.txt#mandatory-disclosures"
       ],
-      "intent": "provide_info"
+      "intent": "ask_question"
     },
     {
-      "at": "2026-10-02T18:36:56+00:00",
+      "at": "2026-10-02T19:24:23+00:00",
       "role": "customer",
       "text": "No, neither of us smokes."
     },
     {
-      "at": "2026-10-02T18:36:56+00:00",
+      "at": "2026-10-02T19:24:23+00:00",
       "role": "agent",
-      "text": "Thanks for confirming you and your wife do not use tobacco. I can proceed with the next steps to help you get a quote for the Family Shield plan. Do you, or anyone who would be covered, have any current medical conditions? You're welcome to skip this one.",
+      "text": "Thanks, that is noted. Do you, or anyone who would be covered, have any current medical conditions? You're welcome to skip this one.",
       "citations": [],
       "intent": "provide_info"
     },
     {
-      "at": "2026-10-02T18:37:00+00:00",
+      "at": "2026-10-02T19:24:27+00:00",
       "role": "customer",
       "text": "No, we're both healthy."
     },
     {
-      "at": "2026-10-02T18:37:01+00:00",
+      "at": "2026-10-02T19:24:28+00:00",
       "role": "agent",
-      "text": "Thanks for letting me know you\u2019re both healthy. I\u2019ll move forward with the quote for the Family Shield plan. Do you have any health insurance right now?",
+      "text": "Thanks for sharing that. I have all the details I need to check which plans might fit. Do you have any health insurance right now?",
       "citations": [],
       "intent": "provide_info"
     },
     {
-      "at": "2026-10-02T18:37:05+00:00",
+      "at": "2026-10-02T19:24:32+00:00",
       "role": "customer",
       "text": "No, I lost my coverage when I left my job."
     },
     {
-      "at": "2026-10-02T18:37:06+00:00",
+      "at": "2026-10-02T19:24:39+00:00",
       "role": "agent",
-      "text": "I\u2019m sorry to hear you lost coverage. I can help you get a new plan. What's the best time for a licensed advisor to call you back with a quote?",
+      "text": "Thanks for letting me know. I have all the information I need to check which plans might fit for you and your spouse. What's the best time for a licensed advisor to call you back with a quote?",
       "citations": [],
       "intent": "provide_info"
     },
     {
-      "at": "2026-10-02T18:37:10+00:00",
+      "at": "2026-10-02T19:24:43+00:00",
       "role": "customer",
       "text": "Weekday evenings after 6 would be best."
     },
     {
-      "at": "2026-10-02T18:37:10+00:00",
+      "at": "2026-10-02T19:24:52+00:00",
       "role": "agent",
-      "text": "Got it, weekday evenings after 6 works. A licensed advisor will call you then to discuss the Family Shield plan and next steps. And do I have your permission for Darwix Health to contact you about your quote?",
+      "text": "Weekday evenings after 6 works for me. I will have a licensed advisor call you then with your quote. And do I have your permission for Darwix Health to contact you about your quote?",
       "citations": [],
       "intent": "provide_info"
     },
     {
-      "at": "2026-10-02T18:37:14+00:00",
+      "at": "2026-10-02T19:24:56+00:00",
       "role": "customer",
       "text": "Yes, that's fine."
     },
     {
-      "at": "2026-10-02T18:37:15+00:00",
+      "at": "2026-10-02T19:25:04+00:00",
       "role": "agent",
-      "text": "Thank you for giving permission. A licensed advisor will call you on weekday evenings after 6 to discuss the Family Shield plan and next steps. Thank you, that's everything I need. Based on what you've told me, you may be a fit for Essential Care or Family Shield. A licensed advisor will call you with a personalized quote. Is there anything else I can help with?",
+      "text": "Thanks for confirming. A licensed advisor will call you on a weekday evening after 6 with your quote. Thank you, that's everything I need. Based on what you've told me, you may be a fit for Essential Care or Family Shield. A licensed advisor will call you with a personalized quote. Is there anything else I can help with?",
       "citations": [],
       "intent": "provide_info"
     },
     {
-      "at": "2026-10-02T18:37:19+00:00",
+      "at": "2026-10-02T19:25:08+00:00",
       "role": "customer",
       "text": "No, that's all. Thanks!"
     },
     {
-      "at": "2026-10-02T18:37:25+00:00",
+      "at": "2026-10-02T19:25:18+00:00",
       "role": "agent",
-      "text": "Thank you for confirming. A licensed advisor will call you on weekday evenings after 6 to discuss the Family Shield or Essential Care plans. Have a great day!",
+      "text": "You're welcome. Have a great day!",
       "citations": [],
       "intent": "end_call"
     }
   ],
   "lead": {
+    "household_size": 2,
     "age": 42,
     "state": "TX",
-    "household_size": 2,
     "tobacco_use": false,
     "medical_conditions": "none",
     "current_insurance": "none",
@@ -199,53 +200,13 @@
   ],
   "guard_events": [
     {
-      "guard": "unsupported_extraction",
-      "field": "medical_conditions",
-      "value": "none"
-    },
-    {
-      "guard": "unsupported_extraction",
-      "field": "current_insurance",
-      "value": "none"
-    },
-    {
-      "guard": "unsupported_extraction",
-      "field": "medical_conditions",
-      "value": "none"
-    },
-    {
-      "guard": "unsupported_extraction",
-      "field": "current_insurance",
-      "value": "none"
-    },
-    {
       "guard": "caller_words_override",
-      "field": "household_size",
-      "model": 2,
-      "used": "just the two of us."
-    },
-    {
-      "guard": "unsupported_extraction",
-      "field": "medical_conditions",
-      "value": "none"
-    },
-    {
-      "guard": "unsupported_extraction",
-      "field": "current_insurance",
-      "value": "none"
+      "field": "state",
+      "model": "Texas",
+      "used": "TX"
     },
     {
       "guard": "disclosure_injected"
-    },
-    {
-      "guard": "unsupported_extraction",
-      "field": "medical_conditions",
-      "value": "none"
-    },
-    {
-      "guard": "unsupported_extraction",
-      "field": "current_insurance",
-      "value": "none"
     },
     {
       "guard": "caller_words_override",
