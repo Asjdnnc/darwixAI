@@ -168,3 +168,12 @@ def test_market_compliance_rewrites(kbs, tmp_path, market, reply, banned):
     out = run(make(kbs, tmp_path, Scripted([{"reply": reply}])), market, ["Opo."])[-1]
     assert banned.lower() not in out["text"].lower()
     assert any(g["guard"] == "prohibited_statement" for g in out["guard_events"])
+
+
+def test_pipeline_survives_the_observed_sundanese_asr_errors(kbs, tmp_path):
+    """Whisper merges Sundanese word boundaries ("Punten Teh" -> "Puntenteh"); the terms the flow
+    depends on still survive, so the call continues. Measured in data/eval/asr_results.json."""
+    garbled = "Puntenteh, Abdi Tuacan Gajian, Mangga Minggu Depan."
+    assert extract_payment("id", garbled)["payment_date"].lower() == "gajian"
+    from app.reminder_agent import detect_intent
+    assert detect_intent(flow("id"), garbled) == "promise"
