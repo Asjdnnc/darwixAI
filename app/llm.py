@@ -195,6 +195,18 @@ class GroqService:
         data["extracted"] = data.get("extracted") or {}
         return data
 
+    def classify_signals(self, system_prompt: str, chunk: str) -> list[dict]:
+        """Q4 second-pass classifier. Raises on provider errors; the caller falls back to rules."""
+        if not settings.groq_api_key:
+            return []
+        reasoning = {"reasoning_effort": "low"} if "gpt-oss" in settings.groq_model else {}
+        response = Groq(api_key=settings.groq_api_key, timeout=8, max_retries=0).chat.completions.create(
+            model=settings.groq_model, temperature=0, response_format={"type": "json_object"},
+            max_completion_tokens=400, **reasoning,
+            messages=[{"role": "system", "content": system_prompt}, {"role": "user", "content": chunk}])
+        data = json.loads(response.choices[0].message.content or "{}")
+        return data.get("signals", []) if isinstance(data, dict) else []
+
     def detect_signals(self, event_text: str) -> list[Signal]:
         text = event_text.lower()
         # Deterministic rules are the resilient baseline and test oracle; Groq can be

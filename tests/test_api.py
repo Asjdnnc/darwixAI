@@ -26,11 +26,16 @@ def test_unknown_question_says_unavailable_instead_of_hallucinating():
 
 
 def test_nudge_is_created_and_duplicate_is_suppressed():
+    """Both signals fire, but they share the "relationship" theme, so only one nudge is shown;
+    repeating the same chunk is then suppressed by the cooldown."""
     event = {"call_id": "test-call", "speaker": "customer", "text": "I am angry because I cannot pay this month"}
-    first = client.post("/calls/transcript", json=event).json()["nudges"]
+    first = client.post("/calls/transcript", json=event).json()
     second = client.post("/calls/transcript", json=event).json()["nudges"]
-    assert {item["topic"] for item in first} == {"frustration", "payment_difficulty"}
+    assert {s["topic"] for s in first["signals"]} == {"frustration", "payment_difficulty"}
+    assert [n["topic"] for n in first["nudges"]] == ["frustration"]
     assert second == []
+    report = client.get("/calls/test-call/report").json()
+    assert report["nudges"]["suppression_reasons"]["topic_group_occupied"] >= 1
 
 
 def test_voice_transcription_requires_groq_credentials():

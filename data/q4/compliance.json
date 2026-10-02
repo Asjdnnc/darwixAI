@@ -1,0 +1,105 @@
+{
+  "call_id": "replay-compliance",
+  "market": "en",
+  "latency_ms": {
+    "chunks": 6,
+    "nudges": 3,
+    "audio_seconds": 20.0,
+    "asr_ms": {
+      "p50": 0.0,
+      "p95": 0.0,
+      "mean": 0.0,
+      "max": 0.0
+    },
+    "signal_ms": {
+      "p50": 0.2,
+      "p95": 4.1,
+      "mean": 1.0,
+      "max": 4.1
+    },
+    "llm_ms": {
+      "p50": 215.1,
+      "p95": 246.5,
+      "mean": 218.7,
+      "max": 246.5
+    },
+    "nudge_ms": {
+      "p50": 0.1,
+      "p95": 0.3,
+      "mean": 0.1,
+      "max": 0.3
+    },
+    "delivery_ms": {
+      "p50": 0.1,
+      "p95": 0.2,
+      "mean": 0.1,
+      "max": 0.2
+    },
+    "total_ms": {
+      "p50": 215.5,
+      "p95": 251.0,
+      "mean": 219.9,
+      "max": 251.0
+    }
+  },
+  "nudges": {
+    "fired": 3,
+    "suppressed": 2,
+    "suppression_reasons": {
+      "cooldown": 2
+    },
+    "topics": [
+      "buying_signal",
+      "compliance_gap",
+      "risky_statement"
+    ]
+  },
+  "suppressed": [
+    {
+      "topic": "buying_signal",
+      "confidence": 0.85,
+      "reason": "cooldown",
+      "evidence": "That sounds reasonable. Am I definitely going to be approved?",
+      "at": "2026-10-02T20:39:24+00:00"
+    },
+    {
+      "topic": "buying_signal",
+      "confidence": 0.88,
+      "reason": "cooldown",
+      "evidence": "Customer said 'how do I sign up'",
+      "at": "2026-10-02T20:39:32+00:00"
+    }
+  ],
+  "transcript": [
+    {
+      "speaker": "agent",
+      "text": "Hi, this is Sam from Darwix Health, thanks for taking my call.",
+      "offset_seconds": 0.0
+    },
+    {
+      "speaker": "customer",
+      "text": "Hi, I'm looking at health cover for myself.",
+      "offset_seconds": 4.0
+    },
+    {
+      "speaker": "agent",
+      "text": "Great. Essential Care is $189 per month for someone your age.",
+      "offset_seconds": 8.0
+    },
+    {
+      "speaker": "customer",
+      "text": "That sounds reasonable. Am I definitely going to be approved?",
+      "offset_seconds": 12.0
+    },
+    {
+      "speaker": "agent",
+      "text": "Yes, you're definitely approved, don't worry about the medical questions.",
+      "offset_seconds": 16.0
+    },
+    {
+      "speaker": "customer",
+      "text": "Okay, how do I sign up?",
+      "offset_seconds": 20.0
+    }
+  ]
+}

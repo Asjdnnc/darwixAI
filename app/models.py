@@ -58,12 +58,19 @@ class TranscriptEvent(BaseModel):
     market: Literal["en", "ph", "id"] = "en"
     text: str
     received_at: datetime = Field(default_factory=utc_now)
+    # Wall-clock offset of this chunk inside the call, used for the latency report.
+    offset_seconds: float | None = None
+
+
+SignalTopic = Literal["compliance_gap", "risky_statement", "frustration", "payment_difficulty",
+                      "callback", "missed_cross_sell", "buying_signal", "topic_shift"]
 
 
 class Signal(BaseModel):
-    topic: Literal["compliance_gap", "cross_sell", "frustration", "payment_difficulty", "callback"]
+    topic: SignalTopic
     confidence: float = Field(ge=0, le=1)
     evidence: str
+    source: Literal["rule", "llm"] = "rule"
 
 
 class Nudge(BaseModel):

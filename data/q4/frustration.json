@@ -1,0 +1,104 @@
+{
+  "call_id": "replay-frustration",
+  "market": "en",
+  "latency_ms": {
+    "chunks": 6,
+    "nudges": 1,
+    "audio_seconds": 20.0,
+    "asr_ms": {
+      "p50": 0.0,
+      "p95": 0.0,
+      "mean": 0.0,
+      "max": 0.0
+    },
+    "signal_ms": {
+      "p50": 0.1,
+      "p95": 2.8,
+      "mean": 0.6,
+      "max": 2.8
+    },
+    "llm_ms": {
+      "p50": 209.6,
+      "p95": 244.0,
+      "mean": 211.5,
+      "max": 244.0
+    },
+    "nudge_ms": {
+      "p50": 0.0,
+      "p95": 0.2,
+      "mean": 0.1,
+      "max": 0.2
+    },
+    "delivery_ms": {
+      "p50": 0.1,
+      "p95": 0.1,
+      "mean": 0.1,
+      "max": 0.1
+    },
+    "total_ms": {
+      "p50": 210.2,
+      "p95": 244.5,
+      "mean": 212.3,
+      "max": 244.5
+    }
+  },
+  "nudges": {
+    "fired": 1,
+    "suppressed": 2,
+    "suppression_reasons": {
+      "below_confidence_threshold": 1,
+      "topic_group_occupied": 1
+    },
+    "topics": [
+      "frustration"
+    ]
+  },
+  "suppressed": [
+    {
+      "topic": "frustration",
+      "confidence": 0.72,
+      "reason": "below_confidence_threshold",
+      "evidence": "\"I've already told you\" (occurrence 1)",
+      "at": "2026-10-02T20:39:57+00:00"
+    },
+    {
+      "topic": "payment_difficulty",
+      "confidence": 0.9,
+      "reason": "topic_group_occupied",
+      "evidence": "Customer said \"can't pay\"",
+      "at": "2026-10-02T20:40:13+00:00"
+    }
+  ],
+  "transcript": [
+    {
+      "speaker": "agent",
+      "text": "Thanks for holding, how can I help?",
+      "offset_seconds": 0.0
+    },
+    {
+      "speaker": "customer",
+      "text": "I've already told you twice, I'm calling about my claim.",
+      "offset_seconds": 4.0
+    },
+    {
+      "speaker": "agent",
+      "text": "Let me pull that up for you.",
+      "offset_seconds": 8.0
+    },
+    {
+      "speaker": "customer",
+      "text": "This is ridiculous, I've been waiting three weeks.",
+      "offset_seconds": 12.0
+    },
+    {
+      "speaker": "agent",
+      "text": "I understand, let me check the status now.",
+      "offset_seconds": 16.0
+    },
+    {
+      "speaker": "customer",
+      "text": "I can't pay the premium this month either, I lost my job.",
+      "offset_seconds": 20.0
+    }
+  ]
+}

@@ -1,0 +1,186 @@
+{
+  "call_id": "replay-id1",
+  "market": "id",
+  "latency_ms": {
+    "chunks": 24,
+    "nudges": 1,
+    "audio_seconds": 92.0,
+    "asr_ms": {
+      "p50": 293.0,
+      "p95": 368.3,
+      "mean": 299.8,
+      "max": 380.2
+    },
+    "signal_ms": {
+      "p50": 0.1,
+      "p95": 2.7,
+      "mean": 0.3,
+      "max": 2.9
+    },
+    "llm_ms": {
+      "p50": 173.1,
+      "p95": 232.3,
+      "mean": 161.8,
+      "max": 265.7
+    },
+    "nudge_ms": {
+      "p50": 0.0,
+      "p95": 0.1,
+      "mean": 0.0,
+      "max": 0.2
+    },
+    "delivery_ms": {
+      "p50": 0.1,
+      "p95": 0.1,
+      "mean": 0.1,
+      "max": 0.2
+    },
+    "total_ms": {
+      "p50": 471.5,
+      "p95": 542.7,
+      "mean": 462.0,
+      "max": 558.8
+    }
+  },
+  "nudges": {
+    "fired": 1,
+    "suppressed": 1,
+    "suppression_reasons": {
+      "cooldown": 1
+    },
+    "topics": [
+      "payment_difficulty"
+    ]
+  },
+  "suppressed": [
+    {
+      "topic": "payment_difficulty",
+      "confidence": 0.85,
+      "reason": "cooldown",
+      "evidence": "Pembayaran melalui Indomaret pada besok.",
+      "at": "2026-10-02T20:42:24+00:00"
+    }
+  ],
+  "transcript": [
+    {
+      "speaker": "agent",
+      "text": "Selamat siang Bapak Ibu. Saya Rani dari Darwisham.",
+      "offset_seconds": 0.0
+    },
+    {
+      "speaker": "customer",
+      "text": "Pertahankan istilah yang terkait. Pangilan ini direkam untuk keperluan kualitas",
+      "offset_seconds": 4.0
+    },
+    {
+      "speaker": "agent",
+      "text": "dan kepatuhan. Apakah sekarang waktu yang tepat untuk",
+      "offset_seconds": 8.0
+    },
+    {
+      "speaker": "customer",
+      "text": "untuk berbicara sebentar. Iya, boleh.",
+      "offset_seconds": 12.0
+    },
+    {
+      "speaker": "agent",
+      "text": "Terima kasih Bapak Ibu. Saya ingin mengintamkan Anda.",
+      "offset_seconds": 16.0
+    },
+    {
+      "speaker": "customer",
+      "text": "Jadual jatuh tempat cicilan Aisabah.",
+      "offset_seconds": 20.0
+    },
+    {
+      "speaker": "agent",
+      "text": "Saya ingin menginformasikan mengenai angsuran pendiajian.",
+      "offset_seconds": 24.0
+    },
+    {
+      "speaker": "customer",
+      "text": "Pembiayaan bapak ibu yang sudah jatuh tempo dan tercatat belum terbayar.",
+      "offset_seconds": 28.0
+    },
+    {
+      "speaker": "agent",
+      "text": "Masih ada masa toleransi hari sebelum benda mulai dikacau.",
+      "offset_seconds": 32.0
+    },
+    {
+      "speaker": "customer",
+      "text": "Apakah angsurannya sudah dibayar?",
+      "offset_seconds": 36.0
+    },
+    {
+      "speaker": "agent",
+      "text": "Atau boleh saya bantu untuk pembayarannya?",
+      "offset_seconds": 40.0
+    },
+    {
+      "speaker": "customer",
+      "text": "Pertahankan istilahnya berapa kalau telat?",
+      "offset_seconds": 44.0
+    },
+    {
+      "speaker": "agent",
+      "text": "Pertahankan istilah hari dari angsuran tertunggap maksimal ke hari.",
+      "offset_seconds": 48.0
+    },
+    {
+      "speaker": "customer",
+      "text": "Ada masa toleransi hari setelah jatuh tempo sebelum berjalan.",
+      "offset_seconds": 52.0
+    },
+    {
+      "speaker": "agent",
+      "text": "Pertahankan istilah yang berpindah di situ. Rencananya mau bayar lewat mana?",
+      "offset_seconds": 56.0
+    },
+    {
+      "speaker": "customer",
+      "text": "Pertahankan istilah yang terdapat di dalam periode penggunaan.",
+      "offset_seconds": 60.0
+    },
+    {
+      "speaker": "agent",
+      "text": "Bisa lewat Indomaret.",
+      "offset_seconds": 64.0
+    },
+    {
+      "speaker": "customer",
+      "text": "Buleh pambu, silakan ke kasir Indomaret, dan berjalan.",
+      "offset_seconds": 68.0
+    },
+    {
+      "speaker": "agent",
+      "text": "Pertahankan sebutkan nomor kontra Ana. Pembayaran akan langsung berlaku.",
+      "offset_seconds": 72.0
+    },
+    {
+      "speaker": "customer",
+      "text": "Pertahankan istilah yang terbukukan hari ini. Kira-kira kapan rencana pembayaran",
+      "offset_seconds": 76.0
+    },
+    {
+      "speaker": "agent",
+      "text": "Pertahankan istilahnya. Besok.",
+      "offset_seconds": 80.0
+    },
+    {
+      "speaker": "customer",
+      "text": "Pembayaran melalui Indomaret pada besok.",
+      "offset_seconds": 84.0
+    },
+    {
+      "speaker": "agent",
+      "text": "Terima kasih banyak selamat beraktihitas kembali.",
+      "offset_seconds": 88.0
+    },
+    {
+      "speaker": "customer",
+      "text": "Kembali.",
+      "offset_seconds": 92.0
+    }
+  ]
+}

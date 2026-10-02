@@ -5,7 +5,7 @@ import re
 import wave
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Request, WebSocket, WebSocketDisconnect
 from fastapi.responses import FileResponse, Response
 from fastapi.staticfiles import StaticFiles
 from groq import Groq, RateLimitError
@@ -22,6 +22,7 @@ from app.flows import FLOWS, flow
 from app.ingest import load_records
 from app.nudges import NudgeEngine
 from app.reminder_agent import ReminderAgent
+from app.stream import RealtimePipeline
 from app.seed import seed
 
 log = logging.getLogger("uvicorn.error")
@@ -42,6 +43,29 @@ reminder_agent = ReminderAgent(market_kbs, groq, crm)
 
 if local_tts.available():  # load the native voices in the background so the first call is not slow
     local_tts.warm()
+
+
+def _transcribe_chunk(audio: bytes, market: str) -> str:
+    """ASR for a live Q4 chunk, using the same model and prompts as the voice agent."""
+    language = ASR_LANGUAGE.get(market, "en")
+    result = Groq(api_key=settings.groq_api_key, max_retries=0).audio.transcriptions.create(
+        file=("chunk.wav", audio), model=settings.groq_stt_model, language=language,
+        prompt=ASR_PROMPTS.get(language, ""), response_format="json")
+    return result.text.strip()
+
+
+# Q4: one pipeline instance serves the API, the WebSocket dashboard and the replay harness.
+pipeline = RealtimePipeline(transcriber=_transcribe_chunk, classifier=groq, engine=nudge_engine)
+# call_id -> dashboards currently watching it
+watchers: dict[str, list[WebSocket]] = {}
+
+
+async def _broadcast(call_id: str, payload: dict) -> None:
+    for socket in list(watchers.get(call_id, [])):
+        try:
+            await socket.send_json(payload)
+        except Exception:
+            watchers.get(call_id, []).remove(socket)
 
 # Whisper language codes per market; Filipino is "tl".
 ASR_LANGUAGE = {"en": "en", "ph": "tl", "id": "id"}
@@ -129,12 +153,60 @@ def crm_records(kind: str):
 
 
 @app.post("/calls/transcript")
-def transcript(event: TranscriptEvent):
-    """Called for every live/replayed transcript chunk, never only after a call ends."""
-    # Q3/Q4 local-market calls use OpenAI for language-aware detection.
-    signals = groq.detect_signals(event.text)
-    nudges = [nudge for signal in signals if (nudge := nudge_engine.create(event.call_id, signal))]
-    return {"event": event, "nudges": nudges}
+async def transcript(event: TranscriptEvent):
+    """One transcript chunk of a call that is still in progress; never a finished upload."""
+    result = pipeline.on_text(event.call_id, event.text, speaker=event.speaker, market=event.market,
+                              offset_seconds=event.offset_seconds or 0.0)
+    await _broadcast(event.call_id, result)
+    return result
+
+
+@app.post("/calls/{call_id}/audio")
+async def transcript_audio(call_id: str, request: Request, speaker: str = "unknown",
+                           market: str = "en", offset_seconds: float = 0.0):
+    """One chunk of live call audio: transcribed, analysed and nudged in a single pass."""
+    audio = await request.body()
+    if not audio:
+        raise HTTPException(status_code=400, detail="Audio body is required")
+    if not settings.groq_api_key:
+        raise HTTPException(status_code=503, detail="GROQ_API_KEY is required for transcription")
+    try:
+        result = pipeline.on_audio(call_id, audio, speaker=speaker, market=market,
+                                   offset_seconds=offset_seconds)
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail=f"chunk transcription failed: {exc}") from exc
+    await _broadcast(call_id, result)
+    return result
+
+
+@app.get("/calls/{call_id}/nudges")
+def live_nudges(call_id: str):
+    """Polling alternative to the WebSocket: what the agent should see right now."""
+    return {"call_id": call_id,
+            "active": [n.model_dump(mode="json") for n in nudge_engine.active(call_id)],
+            "summary": nudge_engine.summary(call_id)}
+
+
+@app.get("/calls/{call_id}/report")
+def live_report(call_id: str):
+    """Measured latency, nudge counts and every suppression with its reason."""
+    return pipeline.report(call_id)
+
+
+@app.websocket("/ws/nudges/{call_id}")
+async def nudge_socket(websocket: WebSocket, call_id: str):
+    """Live nudge feed for the agent dashboard."""
+    await websocket.accept()
+    watchers.setdefault(call_id, []).append(websocket)
+    await websocket.send_json({"active": [n.model_dump(mode="json") for n in nudge_engine.active(call_id)]})
+    try:
+        while True:
+            await websocket.receive_text()
+    except WebSocketDisconnect:
+        pass
+    finally:
+        if websocket in watchers.get(call_id, []):
+            watchers[call_id].remove(websocket)
 
 
 @app.post("/voice/transcribe")

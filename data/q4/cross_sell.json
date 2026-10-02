@@ -1,0 +1,106 @@
+{
+  "call_id": "replay-cross_sell",
+  "market": "en",
+  "latency_ms": {
+    "chunks": 5,
+    "nudges": 1,
+    "audio_seconds": 16.0,
+    "asr_ms": {
+      "p50": 0.0,
+      "p95": 0.0,
+      "mean": 0.0,
+      "max": 0.0
+    },
+    "signal_ms": {
+      "p50": 0.2,
+      "p95": 4.9,
+      "mean": 1.2,
+      "max": 4.9
+    },
+    "llm_ms": {
+      "p50": 189.8,
+      "p95": 246.1,
+      "mean": 196.2,
+      "max": 246.1
+    },
+    "nudge_ms": {
+      "p50": 0.0,
+      "p95": 0.2,
+      "mean": 0.1,
+      "max": 0.2
+    },
+    "delivery_ms": {
+      "p50": 0.1,
+      "p95": 0.4,
+      "mean": 0.2,
+      "max": 0.4
+    },
+    "total_ms": {
+      "p50": 190.4,
+      "p95": 251.7,
+      "mean": 197.6,
+      "max": 251.7
+    }
+  },
+  "nudges": {
+    "fired": 1,
+    "suppressed": 3,
+    "suppression_reasons": {
+      "topic_group_occupied": 1,
+      "cooldown": 2
+    },
+    "topics": [
+      "missed_cross_sell"
+    ]
+  },
+  "suppressed": [
+    {
+      "topic": "buying_signal",
+      "confidence": 0.85,
+      "reason": "topic_group_occupied",
+      "evidence": "I need cover for myself, and my wife just lost her employer plan too.",
+      "at": "2026-10-02T20:39:41+00:00"
+    },
+    {
+      "topic": "missed_cross_sell",
+      "confidence": 0.78,
+      "reason": "cooldown",
+      "evidence": "Customer mentioned family earlier; no multi-person plan offered yet",
+      "at": "2026-10-02T20:39:45+00:00"
+    },
+    {
+      "topic": "missed_cross_sell",
+      "confidence": 0.78,
+      "reason": "cooldown",
+      "evidence": "Customer mentioned family earlier; no multi-person plan offered yet",
+      "at": "2026-10-02T20:39:53+00:00"
+    }
+  ],
+  "transcript": [
+    {
+      "speaker": "agent",
+      "text": "Thanks for calling Darwix Health, how can I help?",
+      "offset_seconds": 0.0
+    },
+    {
+      "speaker": "customer",
+      "text": "I need cover for myself, and my wife just lost her employer plan too.",
+      "offset_seconds": 4.0
+    },
+    {
+      "speaker": "agent",
+      "text": "Understood. Let me take your date of birth first.",
+      "offset_seconds": 8.0
+    },
+    {
+      "speaker": "customer",
+      "text": "Sure, it's the fourth of March.",
+      "offset_seconds": 12.0
+    },
+    {
+      "speaker": "agent",
+      "text": "Thank you. And which state do you live in?",
+      "offset_seconds": 16.0
+    }
+  ]
+}
