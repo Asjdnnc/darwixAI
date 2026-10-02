@@ -1,0 +1,62 @@
+{
+  "call_id": "0eab00a9-a9e7-40e4-9ce1-72df1ed6655d",
+  "market": "ph",
+  "started_at": "2026-10-02T19:40:36+00:00",
+  "transcript": [
+    {
+      "at": "2026-10-02T19:40:36+00:00",
+      "role": "agent",
+      "text": "Magandang araw po, ako po si Maya mula sa Darwix Life Philippines. Recorded po ang tawag na ito para sa quality at compliance. Okay lang po ba na mag-usap tayo sandali?"
+    },
+    {
+      "at": "2026-10-02T19:40:36+00:00",
+      "role": "customer",
+      "text": "Opo."
+    },
+    {
+      "at": "2026-10-02T19:40:36+00:00",
+      "role": "agent",
+      "text": "Salamat po. Ito po ay renewal lapse reminder call para sa inyong policy. Tungkol po sana ito sa premium ng policy ninyo na may due na. Nasa loob pa po tayo ng 31-day grace period, kaya active pa rin po ang coverage ninyo. Nabayaran na po ba ninyo ito, o gusto po ninyong tulungan ko kayo sa payment?",
+      "citations": [],
+      "intent": "small_talk"
+    },
+    {
+      "at": "2026-10-02T19:40:36+00:00",
+      "role": "customer",
+      "text": "Mahal po masyado ang premium, pwede po bang gawing quarterly?"
+    },
+    {
+      "at": "2026-10-02T19:40:36+00:00",
+      "role": "agent",
+      "text": "Naiintindihan ko po, mahirap talaga ngayon. Para po matulungan kayo nang maayos, ikokonekta ko po kayo sa licensed advisor namin na pwedeng mag-check ng options tulad ng pagpapalit ng payment mode. Hindi po ako pwedeng mangako ng approval.",
+      "citations": [
+        "docs/renewal_lapse_policy.txt#human-escalation"
+      ]
+    }
+  ],
+  "lead": {},
+  "conflicts": {},
+  "recording_consent": true,
+  "underwriting_disclosed": false,
+  "outcome": {
+    "status": "hardship_referred",
+    "flow": "renewal_lapse_reminder",
+    "market": "ph"
+  },
+  "actions": [
+    {
+      "type": "escalation",
+      "id": "esc_0eab00a9",
+      "operation": "created"
+    }
+  ],
+  "guard_events": [],
+  "escalated": true,
+  "ended": true,
+  "attempts": {},
+  "last_asked": null,
+  "mode": "discovery",
+  "quote_offered": false,
+  "pending_non_us": null,
+  "qualifying_started_turn": false
+}

@@ -1,0 +1,92 @@
+{
+  "call_id": "d23c6ce3-ec6e-41ed-800b-11a1a2e86c65",
+  "market": "ph",
+  "started_at": "2026-10-02T19:40:34+00:00",
+  "transcript": [
+    {
+      "at": "2026-10-02T19:40:34+00:00",
+      "role": "agent",
+      "text": "Magandang araw po, ako po si Maya mula sa Darwix Life Philippines. Recorded po ang tawag na ito para sa quality at compliance. Okay lang po ba na mag-usap tayo sandali?"
+    },
+    {
+      "at": "2026-10-02T19:40:34+00:00",
+      "role": "customer",
+      "text": "Opo, sige po."
+    },
+    {
+      "at": "2026-10-02T19:40:34+00:00",
+      "role": "agent",
+      "text": "Salamat po. Nandito po kami para tumulong sa inyo na ma-avoid ang lapse ng policy ninyo. Tungkol po sana ito sa premium ng policy ninyo na may due na. Nasa loob pa po tayo ng 31-day grace period, kaya active pa rin po ang coverage ninyo. Nabayaran na po ba ninyo ito, o gusto po ninyong tulungan ko kayo sa payment?",
+      "citations": [],
+      "intent": "promise"
+    },
+    {
+      "at": "2026-10-02T19:40:34+00:00",
+      "role": "customer",
+      "text": "Ano po ang mangyayari kung hindi ako makabayad?"
+    },
+    {
+      "at": "2026-10-02T19:40:35+00:00",
+      "role": "agent",
+      "text": "Kung hindi po nababayaran ang premium pagkatapos ng 31-day grace period, lalapse po ang policy at titigil ang coverage. Nasa loob pa po tayo ng grace period, kaya active pa rin po ang coverage ninyo. Saan po ninyo balak magbayad \u2014 sa GCash, Maya, bank branch, o sa Bayad Center?",
+      "citations": [
+        "docs/renewal_lapse_policy.txt#grace-period",
+        "web/faq.html#what-happens-if-i-miss-my-premium-due-date"
+      ],
+      "intent": "ask_question"
+    },
+    {
+      "at": "2026-10-02T19:40:35+00:00",
+      "role": "customer",
+      "text": "Pwede po ba sa GCash?"
+    },
+    {
+      "at": "2026-10-02T19:40:35+00:00",
+      "role": "agent",
+      "text": "Opo, pwede po sa GCash. Piliin po ninyo ang Bills Payment menu at ang Insurance category para i-post ang premium ninyo. Kailan po ninyo balak magbayad?",
+      "citations": [
+        "docs/payment_channels.md#e-wallets-and-online"
+      ],
+      "intent": "ask_question"
+    },
+    {
+      "at": "2026-10-02T19:40:35+00:00",
+      "role": "customer",
+      "text": "Sa kinsenas po."
+    },
+    {
+      "at": "2026-10-02T19:40:36+00:00",
+      "role": "agent",
+      "text": "Salamat po! Para po sa record ko, magbabayad po kayo sa GCash sa kinsenas, tama po ba? Maraming salamat po at ingat po kayo.",
+      "citations": []
+    }
+  ],
+  "lead": {
+    "payment_channel": "GCash",
+    "payment_date": "kinsenas"
+  },
+  "conflicts": {},
+  "recording_consent": true,
+  "underwriting_disclosed": false,
+  "outcome": {
+    "status": "promise_to_pay",
+    "flow": "renewal_lapse_reminder",
+    "market": "ph"
+  },
+  "actions": [
+    {
+      "type": "promise",
+      "id": "ptp_d23c6ce3",
+      "operation": "created"
+    }
+  ],
+  "guard_events": [],
+  "escalated": false,
+  "ended": true,
+  "attempts": {},
+  "last_asked": null,
+  "mode": "discovery",
+  "quote_offered": false,
+  "pending_non_us": null,
+  "qualifying_started_turn": false
+}

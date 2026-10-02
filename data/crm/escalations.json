@@ -84,5 +84,37 @@
     "last_customer_text": "Opo. Ano po ang mangyayari kung hindi ako makabayad?",
     "updated_at": "2026-10-02T19:32:22+00:00",
     "created_at": "2026-10-02T19:32:22+00:00"
+  },
+  "esc_0eab00a9": {
+    "call_id": "0eab00a9-a9e7-40e4-9ce1-72df1ed6655d",
+    "reason": "Caller reports payment difficulty; refer for keringanan / payment-mode review",
+    "market": "ph",
+    "last_customer_text": "Mahal po masyado ang premium, pwede po bang gawing quarterly?",
+    "updated_at": "2026-10-02T19:40:36+00:00",
+    "created_at": "2026-10-02T19:40:36+00:00"
+  },
+  "esc_339e4e24": {
+    "call_id": "339e4e24-a2a9-429e-bac9-02f696c77bd8",
+    "reason": "Caller reports payment difficulty; refer for keringanan / payment-mode review",
+    "market": "ph",
+    "last_customer_text": "Wala po akong pera ngayon.",
+    "updated_at": "2026-10-02T19:41:15+00:00",
+    "created_at": "2026-10-02T19:41:15+00:00"
+  },
+  "esc_af1fd62d": {
+    "call_id": "af1fd62d-7cb0-462c-bf3f-9114c71d101c",
+    "reason": "Caller reports payment difficulty; refer for keringanan / payment-mode review",
+    "market": "id",
+    "last_customer_text": "Nggih Mbak, belum ada uang nih.",
+    "updated_at": "2026-10-02T19:41:16+00:00",
+    "created_at": "2026-10-02T19:41:16+00:00"
+  },
+  "esc_6d3062e2": {
+    "call_id": "6d3062e2-2b28-4cb4-92fa-1086fbbda553",
+    "reason": "Caller asked for a human agent",
+    "market": "id",
+    "last_customer_text": "Udah lah, mau bicara dengan petugas aja.",
+    "updated_at": "2026-10-02T19:41:45+00:00",
+    "created_at": "2026-10-02T19:41:45+00:00"
   }
 }

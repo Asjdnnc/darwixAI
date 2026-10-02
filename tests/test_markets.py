@@ -197,3 +197,12 @@ def test_playbook_placeholders_are_never_spoken(kbs, tmp_path):
 def test_dispute_is_not_triggered_by_ordinary_negation(text, expected):
     from app.reminder_agent import detect_intent
     assert detect_intent(flow("ph"), text) == expected
+
+
+def test_price_objection_is_answered_not_escalated(kbs, tmp_path):
+    """"Mahal masyado" asks for a cheaper payment mode; only real hardship is referred."""
+    from app.reminder_agent import detect_intent
+    assert detect_intent(flow("ph"), "Mahal po masyado ang premium, pwede po bang gawing quarterly?") is None
+    assert detect_intent(flow("ph"), "Wala po akong pera ngayon.") == "hardship"
+    assert detect_intent(flow("id"), "Dendanya kok mahal ya?") is None
+    assert detect_intent(flow("id"), "Belum ada uang nih Mbak.") == "hardship"

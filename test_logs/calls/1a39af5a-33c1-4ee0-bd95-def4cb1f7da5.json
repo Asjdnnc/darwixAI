@@ -1,0 +1,92 @@
+{
+  "call_id": "1a39af5a-33c1-4ee0-bd95-def4cb1f7da5",
+  "market": "id",
+  "started_at": "2026-10-02T19:41:15+00:00",
+  "transcript": [
+    {
+      "at": "2026-10-02T19:41:15+00:00",
+      "role": "agent",
+      "text": "Selamat siang, Bapak/Ibu. Saya Rani dari Darwix Finance. Panggilan ini direkam untuk keperluan kualitas dan kepatuhan. Apakah sekarang waktu yang tepat untuk berbicara sebentar?"
+    },
+    {
+      "at": "2026-10-02T19:41:15+00:00",
+      "role": "customer",
+      "text": "Iya, boleh."
+    },
+    {
+      "at": "2026-10-02T19:41:15+00:00",
+      "role": "agent",
+      "text": "Terima kasih, Bapak/Ibu. Saya akan sampaikan informasi terkait tagihan cicilan Anda. Saya ingin menginformasikan mengenai angsuran pembiayaan Bapak/Ibu yang sudah jatuh tempo dan tercatat belum terbayar. Masih ada masa toleransi 3 hari sebelum denda mulai dihitung. Apakah angsurannya sudah dibayar, atau boleh saya bantu untuk pembayarannya?",
+      "citations": [],
+      "intent": "provide_info"
+    },
+    {
+      "at": "2026-10-02T19:41:15+00:00",
+      "role": "customer",
+      "text": "Dendanya berapa kalau telat?"
+    },
+    {
+      "at": "2026-10-02T19:41:15+00:00",
+      "role": "agent",
+      "text": "Dendanya 0,1% per hari dari angsuran tertunggak, maksimal 30 hari. Ada toleransi 3 hari setelah jatuh tempo. Rencananya mau bayar lewat mana \u2014 virtual account, Indomaret, Alfamart, atau dompet digital seperti GoPay atau OVO?",
+      "citations": [
+        "web/faq.html#berapa-denda-kalau-saya-telat-bayar-angsuran",
+        "docs/kebijakan_angsuran.txt#denda-keterlambatan"
+      ],
+      "intent": "ask_question"
+    },
+    {
+      "at": "2026-10-02T19:41:15+00:00",
+      "role": "customer",
+      "text": "Bisa lewat Indomaret?"
+    },
+    {
+      "at": "2026-10-02T19:41:16+00:00",
+      "role": "agent",
+      "text": "Bisa, Pak/Bu. Silakan ke kasir Indomaret dan sebutkan nomor kontrak Anda. Pembayaran akan langsung terbukukan di hari yang sama. Kira-kira kapan rencana pembayarannya?",
+      "citations": [
+        "docs/saluran_pembayaran.md#gerai-ritel"
+      ],
+      "intent": "ask_question"
+    },
+    {
+      "at": "2026-10-02T19:41:16+00:00",
+      "role": "customer",
+      "text": "Besok."
+    },
+    {
+      "at": "2026-10-02T19:41:16+00:00",
+      "role": "agent",
+      "text": "Baik, saya catat ya: pembayaran melalui Indomaret pada Besok. Benar begitu, Pak/Bu? Terima kasih banyak, selamat beraktivitas kembali.",
+      "citations": []
+    }
+  ],
+  "lead": {
+    "payment_channel": "Indomaret",
+    "payment_date": "Besok"
+  },
+  "conflicts": {},
+  "recording_consent": true,
+  "underwriting_disclosed": false,
+  "outcome": {
+    "status": "promise_to_pay",
+    "flow": "installment_reminder",
+    "market": "id"
+  },
+  "actions": [
+    {
+      "type": "promise",
+      "id": "ptp_1a39af5a",
+      "operation": "created"
+    }
+  ],
+  "guard_events": [],
+  "escalated": false,
+  "ended": true,
+  "attempts": {},
+  "last_asked": null,
+  "mode": "discovery",
+  "quote_offered": false,
+  "pending_non_us": null,
+  "qualifying_started_turn": false
+}

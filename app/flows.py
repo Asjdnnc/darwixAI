@@ -77,8 +77,10 @@ PH = Flow(
                                     r"makausap|kausapin ko|ibigay mo sa)\b", re.I),
         "already_paid": re.compile(r"\b(nagbayad na|bayad na|nabayaran ko na|na-pay ko na|binayaran ko na|"
                                    r"paid na|na-settle ko na)\b", re.I),
-        "hardship": re.compile(r"\b(wala\s+(?:akong|ako|kaming)?\s*pera|walang pera|tight|hirap|nahihirapan|"
-                               r"hindi ko kaya|mahal masyado|kapos|kulang ang budget)\b", re.I),
+        # "Mahal masyado" is a price objection, not hardship: the playbook answers it by offering a
+        # payment-mode change. Only an actual inability to pay is referred to an advisor.
+        "hardship": re.compile(r"\b(wala\s+(?:akong|ako|kaming)?\s*pera|walang pera|tight ang budget|"
+                               r"nahihirapan|hindi ko kaya|kapos|kulang ang budget|walang pambayad)\b", re.I),
         # "hindi ako" alone is far too broad: "hindi ako makabayad" ("I can't pay") is a question
         # about the grace period, not a dispute.
         "dispute": re.compile(r"\b(mali ang (?:record|bill|singil)|hindi ko utang|hindi ko policy|reklamo|"

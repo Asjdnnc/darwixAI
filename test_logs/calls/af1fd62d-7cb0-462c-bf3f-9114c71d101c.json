@@ -1,0 +1,62 @@
+{
+  "call_id": "af1fd62d-7cb0-462c-bf3f-9114c71d101c",
+  "market": "id",
+  "started_at": "2026-10-02T19:41:16+00:00",
+  "transcript": [
+    {
+      "at": "2026-10-02T19:41:16+00:00",
+      "role": "agent",
+      "text": "Selamat siang, Bapak/Ibu. Saya Rani dari Darwix Finance. Panggilan ini direkam untuk keperluan kualitas dan kepatuhan. Apakah sekarang waktu yang tepat untuk berbicara sebentar?"
+    },
+    {
+      "at": "2026-10-02T19:41:16+00:00",
+      "role": "customer",
+      "text": "Iya."
+    },
+    {
+      "at": "2026-10-02T19:41:16+00:00",
+      "role": "agent",
+      "text": "Baik, terima kasih. Saya ingin menginformasikan terkait jadwal jatuh tempo cicilan Anda. Saya ingin menginformasikan mengenai angsuran pembiayaan Bapak/Ibu yang sudah jatuh tempo dan tercatat belum terbayar. Masih ada masa toleransi 3 hari sebelum denda mulai dihitung. Apakah angsurannya sudah dibayar, atau boleh saya bantu untuk pembayarannya?",
+      "citations": [],
+      "intent": "provide_info"
+    },
+    {
+      "at": "2026-10-02T19:41:16+00:00",
+      "role": "customer",
+      "text": "Nggih Mbak, belum ada uang nih."
+    },
+    {
+      "at": "2026-10-02T19:41:16+00:00",
+      "role": "agent",
+      "text": "Saya mengerti, kondisi bisa berubah. Supaya bisa dibantu dengan benar, saya hubungkan ke petugas kami yang bisa memproses pengajuan keringanan seperti perpanjangan tenor atau penjadwalan ulang angsuran. Saya tidak bisa menjanjikan disetujui ya, Pak/Bu.",
+      "citations": [
+        "docs/kebijakan_angsuran.txt#eskalasi-ke-petugas"
+      ]
+    }
+  ],
+  "lead": {},
+  "conflicts": {},
+  "recording_consent": true,
+  "underwriting_disclosed": false,
+  "outcome": {
+    "status": "hardship_referred",
+    "flow": "installment_reminder",
+    "market": "id"
+  },
+  "actions": [
+    {
+      "type": "escalation",
+      "id": "esc_af1fd62d",
+      "operation": "created"
+    }
+  ],
+  "guard_events": [],
+  "escalated": true,
+  "ended": true,
+  "attempts": {},
+  "last_asked": null,
+  "mode": "discovery",
+  "quote_offered": false,
+  "pending_non_us": null,
+  "qualifying_started_turn": false
+}
