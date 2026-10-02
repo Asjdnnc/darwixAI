@@ -2,25 +2,29 @@
 
 A working health-insurance lead-qualification voice agent, grounded in a knowledge base built from messy business content. All source material is synthetic (the fictional insurer "Darwix Health") and contains no real customer data.
 
-This report covers **Question 1** and **Question 2**, which are built and evidenced. Questions 3 and 4 have prototype endpoints in the codebase but are not claimed as complete here.
+This report covers **all four questions**. Every number below is produced by a script in this
+repository and can be re-run.
 
 ```bash
 cp .env.example .env            # add your GROQ_API_KEY
 pip install -e '.[dev]'
 python -m app.ingest            # raw sources -> data/kb/records.jsonl
 uvicorn app.main:app --reload   # http://127.0.0.1:8000/ for the voice call
-pytest                          # 70 offline tests, no network or credentials needed
+pytest                          # 126 offline tests, no network or credentials needed
 ```
 
 | Deliverable | Where |
 |---|---|
+| Architecture (all four questions) | [ARCHITECTURE.md](ARCHITECTURE.md) |
 | Architecture and design decisions | [ARCHITECTURE.md](ARCHITECTURE.md) |
 | Knowledge-base design | [KB_DESIGN.md](KB_DESIGN.md) |
 | Retrieval evaluation (42 queries, verdicts) | [RETRIEVAL_EVAL.md](RETRIEVAL_EVAL.md) |
 | Voice-agent design | [VOICE_AGENT.md](VOICE_AGENT.md) |
 | Scenario catalogue | [Q1_SCENARIOS.md](Q1_SCENARIOS.md) |
 | Scripted call transcripts + results | [Q1_TEST_CALLS.md](Q1_TEST_CALLS.md) |
-| Recorded calls (audio + transcripts) | `Evidence/` |
+| Recorded calls (audio + transcripts) | `Evidence/` and `Evidence/q3/` |
+| Q3 markets: localization, ASR, native TTS | [Q3_MARKETS.md](Q3_MARKETS.md) |
+| Q4 real time: signals, nudges, latency, false positives | [Q4_REALTIME.md](Q4_REALTIME.md) |
 
 ---
 
@@ -133,6 +137,62 @@ Every call is persisted per turn to `test_logs/calls/<call_id>.json` with the tr
 
 ---
 
+## Question 3 — Native-language voice bots
+
+Two bots built as different products, not one script translated twice.
+
+| | 🇵🇭 Philippines | 🇮🇩 Indonesia |
+|---|---|---|
+| Sector / flow | Life insurance, renewal + lapse reminder | Multifinance, installment reminder + collections |
+| Language | Taglish | Bahasa, formal and colloquial |
+| Records | 30 | 32 |
+| Native voice | `mms-tts-tgl`, local | `mms-tts-ind`, local |
+| ASR | Groq Whisper `tl` | Groq Whisper `id` |
+
+Outcomes have no Q1 equivalent — promise to pay, already paid, hardship referral, dispute, refusal,
+wrong person — and each market carries its own compliance rules: Philippine grace-period wording and
+reinstatement promises, Indonesian OJK collections conduct.
+
+**The main technical problem was cross-lingual retrieval.** Philippine insurers publish in English
+while clients speak Taglish, so "Magkano po ang babayaran ko?" shares almost no tokens with
+"Premiums may be paid annually". Baseline retrieval scored 2/5. Three measured fixes — per-market
+query expansion, per-market stop words (without which Taglish function words made every question
+match whichever record was written in the caller's language), and per-market gates — took it to
+**7/7 per market**, with every out-of-scope question rejected in both languages.
+
+**ASR was measured, not assumed.** Indonesian mean WER 0.056 with 13/13 finance terms retained;
+Javanese transcribes perfectly while Sundanese loses word boundaries. Philippine mean WER 0.293 with
+4/12 terms retained: Filipino words transcribe well, the English loanwords the business depends on
+do not. The system absorbs this because it depends on term retention rather than perfect
+transcription.
+
+Four end-to-end calls are in `Evidence/q3/`, with the caller's voice synthesized (the author speaks
+neither language) and real ASR errors left visible.
+
+## Question 4 — Live insights and nudges
+
+Agent assist watching a **human** agent on a call in progress. A recording is replayed at wall-clock
+speed — 92.3 s of wall clock for 92 s of audio — so nothing is analysed after the fact.
+
+| Stage | P50 | P95 |
+|---|---|---|
+| ASR (Groq Whisper) | 297.8 ms | 371.6 ms |
+| Signal extraction | 0.0 ms | 1.7 ms |
+| Nudge generation + delivery | 0.1 ms | 0.3 ms |
+| **End to end** | **298.0 ms** | **371.7 ms** |
+
+ASR is effectively the whole budget; everything after it is free by comparison.
+
+Suppression is the hard part, so every control is implemented and every suppression is recorded with
+its reason: confidence threshold, cooldown, duplicate suppression, topic grouping, priority, expiry
+and a repetition limit. Compliance is deliberately exempt from grouping, because two compliance
+findings are two distinct regulatory events.
+
+On 30 labelled chunks, 16 of them adversarial, the tightened rules score **recall 1.00, precision
+1.00, false-positive rate 0.00**. The LLM second pass was measured against the same set and turned
+**off**: it added no recall, cost precision (0.875), and called "I paid it already, last Tuesday"
+payment difficulty.
+
 ## What the recorded calls taught us
 
 Each recording was replayed and turned into a regression test. Real failures found and fixed this way:
@@ -145,6 +205,8 @@ Each recording was replayed and turned into a regression test. Real failures fou
 
 ## Known limitations
 
+- **Q4 signals are English-only.** The Q3 markets would need their own rule sets; the structure supports it, the rules are not written.
+- **No native-speaker review** of the Taglish or Bahasa content, which in a collections context is a compliance risk rather than a style issue.
 - **Retrieval is lexical.** Paraphrases with no shared vocabulary can fall below the coverage gate; the agent escalates rather than guessing.
 - **Free-tier quotas are a real constraint.** Groq's daily limits (200k chat tokens, 3,600 speech tokens) were exhausted during testing. The agent degrades to rule-based replies and the browser's voice, which is visible in the UI and the logs, but some recordings show the clipped fallback style rather than the model's natural phrasing.
 - **Speech is English-only** on this agent; Philippines and Indonesia are the Q3 scope.
