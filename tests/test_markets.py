@@ -186,3 +186,14 @@ def test_playbook_placeholders_are_never_spoken(kbs, tmp_path):
     out = run(agent, "ph", ["Ano po ang grace period?"])[-1]   # a plain turn, so the guard runs
     assert "[" not in out["text"] and "grace end date" not in out["text"]
     assert any(g["guard"] == "unfilled_placeholder" for g in agent.sessions["c"].guard_events)
+
+
+@pytest.mark.parametrize("text,expected", [
+    ("Ano po ang mangyayari kung hindi ako makabayad?", None),   # a question, not a dispute
+    ("Hindi po ako makabayad ngayong buwan.", None),
+    ("Mali po ang record ninyo, hindi ko po utang 'yan.", "dispute"),
+    ("Hindi po ako si Juan, mali po kayo ng tawag.", "wrong_person"),
+])
+def test_dispute_is_not_triggered_by_ordinary_negation(text, expected):
+    from app.reminder_agent import detect_intent
+    assert detect_intent(flow("ph"), text) == expected

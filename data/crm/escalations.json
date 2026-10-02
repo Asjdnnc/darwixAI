@@ -76,5 +76,13 @@
     },
     "updated_at": "2026-10-02T18:17:07+00:00",
     "created_at": "2026-10-02T18:17:07+00:00"
+  },
+  "esc_1f45e6f5": {
+    "call_id": "1f45e6f5-2387-41a0-89ea-342a7ca1907e",
+    "reason": "Caller disputes the amount or the record",
+    "market": "ph",
+    "last_customer_text": "Opo. Ano po ang mangyayari kung hindi ako makabayad?",
+    "updated_at": "2026-10-02T19:32:22+00:00",
+    "created_at": "2026-10-02T19:32:22+00:00"
   }
 }

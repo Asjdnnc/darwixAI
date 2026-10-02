@@ -1,0 +1,44 @@
+{
+  "call_id": "d0d8b04a-2a39-486c-aa88-92acc2d05b76",
+  "market": "ph",
+  "started_at": "2026-10-02T19:32:58+00:00",
+  "transcript": [
+    {
+      "at": "2026-10-02T19:32:58+00:00",
+      "role": "agent",
+      "text": "Magandang araw po, ako po si Maya mula sa Darwix Life Philippines. Recorded po ang tawag na ito para sa quality at compliance. Okay lang po ba na mag-usap tayo sandali?"
+    },
+    {
+      "at": "2026-10-02T19:32:58+00:00",
+      "role": "customer",
+      "text": "Opo. Ano po ang mangyayari kung hindi ako makabayad?"
+    },
+    {
+      "at": "2026-10-02T19:32:59+00:00",
+      "role": "agent",
+      "text": "May 31-day grace period po kayo mula sa due date, at active pa rin po ang coverage ninyo habang nasa loob po nito. Kung hindi po makabayad bago matapos ang grace period, mag-lapse po na ang policy at titigil ang coverage. Tungkol po sana ito sa premium ng policy ninyo na may due na. Nasa loob pa po tayo ng 31-day grace period, kaya active pa rin po ang coverage ninyo. Nabayaran na po ba ninyo ito, o gusto po ninyong tulungan ko kayo sa payment?",
+      "citations": [
+        "docs/renewal_lapse_policy.txt#grace-period",
+        "web/faq.html#what-happens-if-i-miss-my-premium-due-date"
+      ],
+      "intent": "ask_question"
+    }
+  ],
+  "lead": {},
+  "conflicts": {},
+  "recording_consent": true,
+  "underwriting_disclosed": false,
+  "outcome": {
+    "status": "in_progress"
+  },
+  "actions": [],
+  "guard_events": [],
+  "escalated": false,
+  "ended": false,
+  "attempts": {},
+  "last_asked": null,
+  "mode": "discovery",
+  "quote_offered": false,
+  "pending_non_us": null,
+  "qualifying_started_turn": false
+}

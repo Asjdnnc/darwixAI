@@ -79,8 +79,10 @@ PH = Flow(
                                    r"paid na|na-settle ko na)\b", re.I),
         "hardship": re.compile(r"\b(wala\s+(?:akong|ako|kaming)?\s*pera|walang pera|tight|hirap|nahihirapan|"
                                r"hindi ko kaya|mahal masyado|kapos|kulang ang budget)\b", re.I),
-        "dispute": re.compile(r"\b(mali|hindi ko utang|hindi ko policy|reklamo|complaint|hindi ako|"
-                              r"bakit ako|nagkamali kayo)\b", re.I),
+        # "hindi ako" alone is far too broad: "hindi ako makabayad" ("I can't pay") is a question
+        # about the grace period, not a dispute.
+        "dispute": re.compile(r"\b(mali ang (?:record|bill|singil)|hindi ko utang|hindi ko policy|reklamo|"
+                              r"complaint|hindi ako ang|hindi ako si|nagkamali kayo|bakit ako sinisingil)\b", re.I),
         "refuse": re.compile(r"\b(ayoko na|ayaw ko na|cancel ko na|huwag na|wag na|hindi na ako interesado|"
                              r"itigil n?[iy]o)\b", re.I),
         "promise": re.compile(r"\b(magbabayad|babayaran ko|babayaran na|sige|oo nga|magbabayad na ako|"
