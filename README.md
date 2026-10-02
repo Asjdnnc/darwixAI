@@ -4,11 +4,16 @@ An integrated prototype for the four assignment questions. It uses the **Groq AP
 
 ## What is implemented
 
-- **Q1 voice agent** (`app/agent.py`, docs in `docs/VOICE_AGENT.md`): a browser voice call for health-insurance lead qualification. It keeps state across turns, collects lead details in the playbook order, answers questions from the Q2 knowledge base with citations, handles objections, reads back conflicting answers, applies qualification rules in code, escalates to a human, and writes leads, callbacks and escalations to a mock CRM with an optional webhook. Code guards block invented numbers, guarantees and claims about unsupported products, and enforce the required disclosures.
-- **Q2 knowledge base** (`app/ingest.py`, `app/kb.py`, docs in `docs/KB_DESIGN.md` and `docs/RETRIEVAL_EVAL.md`): ingestion of messy web, PDF, CSV, form and Markdown sources (cleaning, PII redaction, deduplication, versioning, quarantining of source errors), producing 30 cited records. Retrieval is BM25 with grounding gates and is evaluated on tuning and held-out query sets.
-- Groq Whisper speech-to-text and English TTS for the browser call; OpenAI for the Philippines and Indonesia markets.
-- Real-time signal and nudge generation for Q4, with confidence thresholds, cooldowns and duplicate suppression.
-- Offline tests: `pytest` never calls a provider.
+| | Scope | Evidence |
+|---|---|---|
+| **Q1** | Browser voice agent for US health-insurance lead qualification: stateful call, cited answers, objection handling, conflict read-back, qualification rules in code, human escalation, mock CRM | [VOICE_AGENT.md](docs/VOICE_AGENT.md) · [Q1_TEST_CALLS.md](docs/Q1_TEST_CALLS.md) · `Evidence/` |
+| **Q2** | Knowledge base from messy web/PDF/CSV/form sources: cleaning, PII redaction, dedup, versioning, quarantine; BM25 retrieval with grounding gates | [KB_DESIGN.md](docs/KB_DESIGN.md) · [RETRIEVAL_EVAL.md](docs/RETRIEVAL_EVAL.md) |
+| **Q3** | Philippines (Taglish, life insurance renewal) and Indonesia (Bahasa, installment reminder) bots with their own sectors, flows, compliance rules and native voices | [Q3_MARKETS.md](docs/Q3_MARKETS.md) · `Evidence/q3/` |
+| **Q4** | Live nudges from a call in progress: streaming ASR, stateful signals, suppression controls, measured P50/P95 latency, false-positive analysis | [Q4_REALTIME.md](docs/Q4_REALTIME.md) |
+
+Headline numbers: retrieval 82% top-1 on held-out queries with 7/7 out-of-scope rejected; Indonesian
+ASR mean WER 0.056; Q4 nudges at P50 298 ms end to end on real audio with precision 1.00 and a 0.00
+false-positive rate on the labelled set. **126 offline tests**, no credentials or network required.
 
 ## Quick start
 
@@ -40,6 +45,8 @@ Evidence scripts: `python scripts/eval_retrieval.py` (Q2 retrieval table) and `p
 | Document | Contents |
 |---|---|
 | [ASSESSMENT_REPORT.md](docs/ASSESSMENT_REPORT.md) | **Start here** — what was built, with results |
+| [Q3_MARKETS.md](docs/Q3_MARKETS.md) | Q3: localization, ASR report, cross-lingual retrieval, native TTS |
+| [Q4_REALTIME.md](docs/Q4_REALTIME.md) | Q4: signal design, nudge control, latency, false positives |
 | [ARCHITECTURE.md](docs/ARCHITECTURE.md) | System and ingestion diagrams, design decisions |
 | [KB_DESIGN.md](docs/KB_DESIGN.md) | Q2: schema, cleaning, chunking, versioning, citations |
 | [RETRIEVAL_EVAL.md](docs/RETRIEVAL_EVAL.md) | Q2: 42 queries with sources, explanations and verdicts |

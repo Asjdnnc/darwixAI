@@ -427,6 +427,12 @@
         .lead-status.not_eligible, .lead-status.no_consent, .lead-status.recording_declined,
         .lead-status.refused, .lead-status.wrong_person { background: #fee2e2; color: #991b1b; }
         .lead-note { margin-top: 0.5rem; color: var(--text-muted); font-size: 0.8rem; }
+        .nudge-card.tier-high { border-left: 4px solid var(--danger); }
+        .nudge-card.tier-mid  { border-left: 4px solid #f59e0b; }
+        .nudge-card.tier-low  { border-left: 4px solid var(--primary); }
+        .nudge-head { display: flex; justify-content: space-between; align-items: baseline;
+                      font-weight: 600; text-transform: capitalize; font-size: 0.85rem; margin-bottom: 0.2rem; }
+        .nudge-meta { font-weight: 400; font-size: 0.75rem; color: var(--text-muted); }
 
         /* Features */
         .features-section {
@@ -581,6 +587,7 @@
                 <div class="panel insights-panel">
                     <div class="panel-header">
                         <div class="panel-title">⚡ Lead &amp; Live Insights</div>
+                        <span id="nudgeStats" style="font-weight:400;font-size:0.78rem;color:var(--text-muted)"></span>
                     </div>
                     <div class="insights-body">
                         <div class="lead-card" id="leadCard" style="display:none"></div>
@@ -703,6 +710,32 @@
             }
             chat.appendChild(div);
             chat.scrollTop = chat.scrollHeight;
+        };
+
+        const NUDGE_TIER = {compliance_gap: 'high', risky_statement: 'high',
+                            payment_difficulty: 'mid', frustration: 'mid', buying_signal: 'mid',
+                            callback: 'low', missed_cross_sell: 'low', topic_shift: 'low'};
+
+        const addLiveNudge = (nudge, latencyMs) => {
+            callHistory.push({timestamp: new Date().toISOString(), role: 'insight',
+                              text: `[${nudge.topic}] ${nudge.message}`});
+            const empty = document.querySelector('#emptyNudges');
+            if(empty) empty.style.display = 'none';
+            const div = document.createElement('div');
+            div.className = `nudge-card tier-${NUDGE_TIER[nudge.topic] || 'low'}`;
+            const head = document.createElement('div');
+            head.className = 'nudge-head';
+            head.textContent = nudge.topic.replace(/_/g, ' ');
+            const meta = document.createElement('span');
+            meta.className = 'nudge-meta';
+            meta.textContent = `${Math.round(nudge.confidence * 100)}%` +
+                (latencyMs != null ? ` · ${Math.round(latencyMs)} ms` : '');
+            head.appendChild(meta);
+            const body = document.createElement('div');
+            body.textContent = nudge.message;
+            div.append(head, body);
+            nudges.appendChild(div);
+            nudges.scrollTop = nudges.scrollHeight;
         };
 
         const addNudge = (message) => {
@@ -913,7 +946,7 @@
                     headers: {'content-type':'application/json'},
                     body: JSON.stringify({call_id: callId, speaker: 'customer', market, text})
                 }).then(res => res.json()).then(n => {
-                    for(const item of n.nudges) addNudge(item.message);
+                    for(const item of n.nudges) addLiveNudge(item, n.timing && n.timing.total_ms);
                 });
                 
                 setStatus('Agent thinking...');
@@ -1027,6 +1060,14 @@
                 const summary = await fetch(`/calls/${endedId}/end`, {method: 'POST'}).then(r => r.json());
                 renderLead(summary);
                 if(summary.summary) addNudge('CRM summary: ' + summary.summary);
+                try {
+                    const report = await fetch(`/calls/${endedId}/report`).then(r => r.json());
+                    const l = report.latency_ms || {};
+                    const stats = document.querySelector('#nudgeStats');
+                    if(l.chunks && stats) stats.textContent =
+                        `${report.nudges.fired} fired · ${report.nudges.suppressed} suppressed · ` +
+                        `P50 ${l.total_ms.p50} ms · P95 ${l.total_ms.p95} ms`;
+                } catch (err) { console.error(err); }
             } catch (err) {
                 console.error(err);
             }
