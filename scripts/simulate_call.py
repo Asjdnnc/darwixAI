@@ -34,11 +34,11 @@ ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "data" / "simulated_calls"
 
 CALLS = {
-    "ph1": ("ph", ["Opo, sige po.",
+    "ph1": ("ph", ["Opo, sige lang po.",
                    "Ano po ang mangyayari kung hindi ako makabayad?",
                    "Pwede po ba sa GCash?",
-                   "Sa kinsenas po."]),
-    "ph2": ("ph", ["Opo.",
+                   "Magbabayad po ako sa sahod ko."]),
+    "ph2": ("ph", ["Opo, sige lang po.",
                    "Mahal po masyado ang premium, pwede po bang gawing quarterly?",
                    "Wala po akong pera ngayon."]),
     "id1": ("id", ["Iya, boleh.",
@@ -46,7 +46,7 @@ CALLS = {
                    "Bisa lewat Indomaret?",
                    "Besok."]),
     "id2": ("id", ["Iya, boleh.",
-                   "Nggih Mbak, dendanya kok mahal ya?",
+                   "Nggih Mbak, dendanya kok mahal ya?",  # Javanese marker; often heard as "enggak"
                    "Udah lah, mau bicara dengan petugas aja."]),
 }
 
@@ -54,8 +54,31 @@ SILENCE_SECONDS = 0.4
 
 
 def speak(market: str, text: str) -> bytes:
+    """Agent voice: the same local MMS voice the product uses."""
     audio, _ = local_tts.synthesize(market, text, tts_segments)
     return audio
+
+
+def speak_caller(market: str, text: str) -> bytes:
+    """Caller voice: Google TTS, which Whisper transcribes far more reliably than MMS.
+
+    MMS is monolingual and pronounces English loanwords with local phonology, which Whisper
+    struggles with (GCash came back as "sag-asi"). Google's voice keeps them recognizable.
+    Falls back to the agent voice if gTTS or the network is unavailable.
+    """
+    try:
+        import subprocess
+        import tempfile
+        from gtts import gTTS
+        with tempfile.TemporaryDirectory() as tmp:
+            mp3, wav = Path(tmp) / "c.mp3", Path(tmp) / "c.wav"
+            gTTS(text=text, lang=ASR_LANGUAGE[market]).save(str(mp3))
+            subprocess.run(["afconvert", "-f", "WAVE", "-d", "LEI16@16000", "-c", "1", str(mp3), str(wav)],
+                           check=True, capture_output=True)
+            return wav.read_bytes()
+    except Exception as exc:
+        print(f"  (gTTS unavailable, using the local voice for the caller: {exc})")
+        return speak(market, text)
 
 
 def transcribe(audio: bytes, market: str) -> str:
@@ -97,7 +120,7 @@ def main(name: str) -> None:
     add("agent", opening["text"], speak(market, opening["text"]))
 
     for line in lines:
-        said = speak(market, line)
+        said = speak_caller(market, line)
         heard = transcribe(said, market)
         add("customer", heard, said, spoken=line, asr_changed=heard.lower() != line.lower())
         reply = agent.turn(name, heard, market)

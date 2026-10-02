@@ -121,8 +121,16 @@
     "call_id": "id2",
     "reason": "Caller asked for a human agent",
     "market": "id",
-    "last_customer_text": "Udah lah mau bicara dengan petugas A-nya.",
-    "updated_at": "2026-10-02T20:23:40+00:00",
+    "last_customer_text": "Udah lah, mau bicara dengan petugas aja.",
+    "updated_at": "2026-10-02T20:28:57+00:00",
     "created_at": "2026-10-02T20:23:40+00:00"
+  },
+  "esc_ph2": {
+    "call_id": "ph2",
+    "reason": "Caller reports payment difficulty; refer for keringanan / payment-mode review",
+    "market": "ph",
+    "last_customer_text": "Wala po akong pera ngayon.",
+    "updated_at": "2026-10-02T20:28:50+00:00",
+    "created_at": "2026-10-02T20:28:50+00:00"
   }
 }

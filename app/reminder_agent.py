@@ -86,6 +86,9 @@ def extract_payment(market: str, text: str) -> dict:
     # Whisper punctuates mid-phrase in Taglish ("sa Bayad? Center"), which would split a channel
     # name in two, so punctuation is flattened before matching.
     text = re.sub(r"[.,!?;:]+", " ", text)
+    if market == "ph":
+        # Whisper glues the politeness particle onto the previous word ("Bukaspo", "Sigepo").
+        text = re.sub(r"(?<=[a-z]{3})po\b", " po", text, flags=re.I)
     found = {}
     for label, pattern in CHANNELS[market].items():
         if re.search(pattern, text, re.I):
