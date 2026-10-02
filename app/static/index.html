@@ -948,6 +948,16 @@
                 }).then(res => res.json()).then(n => {
                     for(const item of n.nudges) addLiveNudge(item, n.timing && n.timing.total_ms);
                 });
+
+                // Q4 watches both sides of the call: compliance signals come from what the
+                // AGENT says, so its replies are fed to the same pipeline.
+                const feedAgentTurn = (agentText) => fetch('/calls/transcript', {
+                    method: 'POST',
+                    headers: {'content-type':'application/json'},
+                    body: JSON.stringify({call_id: callId, speaker: 'agent', market, text: agentText})
+                }).then(res => res.json()).then(n => {
+                    for(const item of n.nudges) addLiveNudge(item, n.timing && n.timing.total_ms);
+                }).catch(err => console.error(err));
                 
                 setStatus('Agent thinking...');
                 const reply = await fetch('/agent/turn', {
@@ -958,6 +968,7 @@
                 
                 addMessage(reply.text, 'agent', reply.citations);
                 renderLead(reply);
+                feedAgentTurn(reply.text);
 
                 if(inCall) await playAgentSpeech(reply.text, market, reply.end_call);
             } catch (err) {
