@@ -11,7 +11,7 @@ sectors, different call flows, different outcomes, different compliance rules.
 | Language | Taglish (Filipino structure, English insurance terms) | Bahasa Indonesia, formal and colloquial |
 | Knowledge base | 30 records | 32 records |
 | ASR | Groq `whisper-large-v3-turbo`, `tl` | Groq `whisper-large-v3-turbo`, `id` |
-| TTS | **No native Filipino voice available** (see Native TTS) | Browser native Indonesian voice (Damayanti) |
+| TTS | Local MMS Tagalog voice (`mms-tts-tgl`) | Local MMS Indonesian, or browser Damayanti |
 
 ```bash
 python -m app.ingest ph id          # rebuild both market knowledge bases
@@ -106,17 +106,55 @@ the intent is still read as a promise. This is covered by a regression test
 (`test_pipeline_survives_the_observed_sundanese_asr_errors`), because term retention matters more
 to this system than raw WER.
 
-### Philippines — not measurable synthetically
+### Philippines — measured
 
-macOS ships no Filipino voice, so there is nothing to synthesize Taglish probes with. The PH probes
-are defined in the same fixture and are measured from the **recorded calls** instead. Observed from
-those recordings: English insurance terms inside Filipino sentences transcribe reliably (the prompt
-does real work here), while rapid `po`-heavy speech occasionally drops the particle — harmless,
-since politeness is stripped before intent matching anyway.
+Originally this market had no voice to synthesize probes with. Adding the local MMS Tagalog voice
+(section 5) made it measurable.
 
-**What these numbers do not measure.** Synthesized speech is cleaner and more regular than a human
-on a mobile line. Treat the Indonesian figures as an upper bound; the recorded calls in `Evidence/`
-are the real-speech evidence.
+| Register | WER | Terms kept |
+|---|---|---|
+| Cooperative | 0.10 | premium |
+| Code-switching (due, grace period) | 0.55 | **lost both** |
+| Objection (premium, quarterly) | 0.40 | premium only |
+| Colloquial (kinsenas) | 0.10 | kinsenas |
+| Finance terms (lapse, rider, coverage) | 0.27 | lapse only |
+| Escalation (advisor) | 0.33 | **lost** |
+| Payment channel (GCash, Bayad Center) | 0.30 | **lost both** |
+
+**Mean WER 0.293, term retention 4/12** — far worse than Indonesian (0.056, 13/13).
+
+**The failure mode is specific: English loanwords inside Filipino sentences.** Filipino words
+transcribe well; the English terms the business depends on do not.
+
+| Said | Heard |
+|---|---|
+| due | doy |
+| grace period | gase. Period |
+| coverage | kubirage |
+| rider | redev |
+| quarterly | ka, Tarly |
+| advisor | ad disor |
+| GCash | Gash |
+| kinsenas | **quincenas** |
+
+Two of these were confirmed in a **real recorded call**, not just in synthesis: `kinsenas` came back
+as `quincenas` (Spanish-influenced orthography, which is normal in written Filipino) and `GCash` lost
+its leading G. Both broke field extraction and made the agent repeat its question, so both are now
+handled: the alternate spellings are accepted, and punctuation is flattened before matching because
+Whisper splits phrases mid-name ("sa Bayad? Center").
+
+**Caveat on these numbers.** MMS-TTS is a Tagalog-only model, so it pronounces English loanwords
+with Filipino phonology — harder for Whisper than a human Taglish speaker, who code-switches
+phonetically as well as lexically. Treat the Philippine figures as an **upper bound on error**; the
+recorded calls in `Evidence/` lost fewer terms than this. Indonesian does not have this problem
+because its finance loanwords (`transfer`, `virtual account`) are fully nativized in pronunciation.
+
+**What follows for the design.** Term retention matters more than WER here, so the system does not
+depend on perfect transcription: the retrieval expansion table, the alternate-spelling extraction and
+the deterministic intent patterns all absorb these errors. A production deployment should add a
+Taglish-tuned ASR model or a domain phrase list, which Whisper's prompt only partially substitutes
+for (it recovered `kinsenas`, and improved WER from 0.307 to 0.293, but did not recover the English
+terms).
 
 ## 3a. Model choice (measured, not assumed)
 
@@ -163,19 +201,30 @@ Three fixes, each measured:
 
 Embeddings would generalize this; the expansion table is the explainable, dependency-free stand-in.
 
-## 5. Native TTS and the compromises made
+## 5. Native TTS
 
-| Market | Outcome |
-|---|---|
-| Indonesia | **Native voice available.** Browser speech synthesis uses Damayanti (`id_ID`) |
-| Philippines | **No Filipino voice exists** on Groq (Orpheus is English-only), on OpenAI with this account, or in macOS system voices |
+| Market | Voice | Engine |
+|---|---|---|
+| Philippines | **Tagalog** | `facebook/mms-tts-tgl`, local |
+| Indonesia | **Indonesian** | `facebook/mms-tts-ind`, local; or the browser's Damayanti |
 
-Sending Taglish to an English voice model returns English-accented nonsense, so `/voice/speak`
-returns **501** for both markets with the reason, and the browser synthesizes instead. The UI shows
-which engine spoke each line, so a demo never silently misrepresents this.
+Groq's Orpheus speaks English and Arabic only, and no Filipino voice is offered by any cloud
+provider configured here — sending Taglish to an English voice returns English-accented nonsense.
+Meta's MMS-TTS closes that gap: both voices run locally from Hugging Face, need no API key and no
+quota, and are therefore unaffected by the Groq daily limits that constrain the English market.
 
-**Production fix:** Azure Speech and ElevenLabs both ship Filipino (`fil-PH`) voices; that is a
-provider swap in `/voice/speak`, not a redesign.
+- Models are ~139 MB each, load once (about 13 s, warmed in a background thread at startup), then
+  synthesize in roughly 0.6 s; synthesized sentences are cached on disk, so repeated script lines
+  cost nothing.
+- It is an **optional dependency** (`pip install -e '.[local-tts]'`). Without it the endpoint returns
+  501 with the reason and the browser speaks instead; the UI always shows which engine was used, so a
+  demo never silently misrepresents this.
+
+**Remaining compromise:** MMS is a research model. It is clearly Tagalog and clearly Indonesian, but
+flatter and more mechanical than a commercial voice, and it pronounces English loanwords with local
+phonology (which is also why the Philippine ASR probes score worse than real speech — section 3).
+For production, Azure Speech and ElevenLabs both offer `fil-PH` voices; that is a provider swap in
+`/voice/speak`, not a redesign.
 
 ## 6. Fallback and escalation stay in language
 
@@ -199,8 +248,8 @@ with each market's real advisor hours (PH: Mon–Fri 8 AM–6 PM, Sat 9 AM–12 
 | Code-switching | Constant and expected; English insurance terms inside Filipino grammar | Loanwords only (transfer, virtual account); sentences stay Bahasa |
 | Politeness | Grammatical particle `po`/`opo`, must appear in every line | Lexical: Bapak/Ibu, mohon, silakan; varies by register |
 | Compliance pressure | Moderate — grace-period wording, no reinstatement promises | High — OJK collections conduct, no threats or third-party contact |
-| ASR quality | Not synthetically measurable; terms transcribe well in recordings | Mean WER 0.056; Sundanese is the weak spot |
-| Native TTS | Not available | Available |
+| ASR quality | Mean WER 0.293, terms 4/12 — English loanwords inside Taglish are the weak spot | Mean WER 0.056, terms 13/13; Sundanese is the weak spot |
+| Native TTS | Local MMS Tagalog voice | Native system voice, or local MMS |
 
 ## 8. Known gaps
 

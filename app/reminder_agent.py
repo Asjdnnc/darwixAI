@@ -27,7 +27,10 @@ QUESTION_WORDS = {
 # Payment channels each market actually uses, for extracting a promise.
 CHANNELS = {
     "ph": {
-        "GCash": r"\bg-?cash\b", "Maya": r"\bmaya\b|\bpaymaya\b",
+        # Whisper drops the leading G ("GCash" -> "Gash"/"cash") in both synthetic and recorded
+        # Taglish, so the shortened forms are accepted too.
+        "GCash": r"\bg[\s-]?cash\b|\bgi[\s-]?cash\b|\bji[\s-]?cash\b|\bgcash\b|\bgash\b",
+        "Maya": r"\bmaya\b|\bpaymaya\b",
         "bank branch": r"\bbpi\b|\bbdo\b|\bmetrobank\b|\blandbank\b|\bsecurity bank\b|\bbangko\b|\bbank\b",
         "Bayad Center": r"\bbayad center\b|\bbayad\b", "SM Bills Payment": r"\bsm\b",
         "Palawan Express": r"\bpalawan\b", "7-Eleven": r"\b7-?eleven\b|\bcliqq\b",
@@ -45,8 +48,11 @@ CHANNELS = {
 # Filipino kinsenas/katapusan (15th / end of month) and Indonesian gajian (payday).
 DATE_PHRASES = {
     # "sa" + any word would swallow the channel ("Sa GCash po"), so only real time words follow it.
-    "ph": r"\b(?:sa\s+)?(bukas|ngayon|mamaya|makalawa|kinsenas|katapusan|sahod|sweldo|payday|next week|"
-          r"this week|lunes|martes|miyerkules|huwebes|biyernes|sabado|linggo|\d{1,2}(?:st|nd|rd|th)?)\b",
+    # Whisper writes Taglish with Spanish-influenced spelling, so "kinsenas" comes back as
+    # "quincenas". Both spellings are accepted; observed in the PH-1 recording.
+    "ph": r"\b(?:sa\s+)?(bukas|ngayon|mamaya|makalawa|kinsenas|quin[cs]enas|kin[cs]enas|katapusan|"
+          r"catapusan|sahod|sweldo|payday|next week|this week|lunes|martes|miyerkules|huwebes|"
+          r"biyernes|sabado|linggo|\d{1,2}(?:st|nd|rd|th)?)\b",
     "id": r"(besok|lusa|hari ini|nanti|minggu depan|akhir bulan|tanggal\s*\d{1,2}|gajian|senin|selasa|rabu|"
           r"kamis|jum'?at|sabtu|minggu|\d{1,2}\s*hari lagi)",
 }
@@ -77,6 +83,9 @@ def detect_intent(flw: Flow, text: str) -> str | None:
 
 
 def extract_payment(market: str, text: str) -> dict:
+    # Whisper punctuates mid-phrase in Taglish ("sa Bayad? Center"), which would split a channel
+    # name in two, so punctuation is flattened before matching.
+    text = re.sub(r"[.,!?;:]+", " ", text)
     found = {}
     for label, pattern in CHANNELS[market].items():
         if re.search(pattern, text, re.I):

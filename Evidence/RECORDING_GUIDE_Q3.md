@@ -16,11 +16,14 @@ uvicorn app.main:app --reload       # then open http://127.0.0.1:8000/
 3. Let the agent finish; it listens again automatically.
 4. Press **End Demo** at the end — that writes the transcript.
 
-**Voice, so nothing surprises you on camera:**
-- 🇮🇩 Indonesia speaks in **Damayanti**, a native Indonesian system voice.
-- 🇵🇭 Philippines uses the **browser's English voice**. No Filipino voice exists on Groq, on OpenAI,
-  or in macOS. The status line says so on screen. This is the documented compromise in
-  `docs/Q3_MARKETS.md §5`, not a defect — worth saying out loud in the video.
+**Voice:** both markets now speak natively, using local Meta MMS-TTS models — 🇵🇭 `mms-tts:tgl`
+and 🇮🇩 `mms-tts:ind`. The status line shows which engine spoke. Run the server from the virtual
+environment (`.venv/bin/uvicorn app.main:app --reload`), otherwise the voices are not loaded and it
+falls back to the browser.
+
+**A note for the Philippine calls:** Taglish speech-to-text loses English loanwords more often than
+Indonesian does (`GCash` → `Gash`, `kinsenas` → `quincenas`). Both are handled, but say the English
+terms a little more deliberately than the Filipino ones.
 
 ---
 

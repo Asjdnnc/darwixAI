@@ -1,0 +1,19 @@
+{
+  "call_id": "edbc5027-8fbe-45f7-9d6b-749fe5a5e67a",
+  "market": "en",
+  "history": [
+    {
+      "timestamp": "2026-10-02T20:11:50.600Z",
+      "role": "agent",
+      "text": "Hi, this is Austin, a virtual health insurance advisor with Darwix Health. This call is recorded for quality and compliance purposes. Is it okay if we continue?",
+      "citations": [
+        "docs/underwriting_policy_v2.txt#mandatory-disclosures"
+      ]
+    },
+    {
+      "timestamp": "2026-10-02T20:11:53.762Z",
+      "role": "insight",
+      "text": "CRM summary: Outcome: in progress."
+    }
+  ]
+}

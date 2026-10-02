@@ -1,7 +1,7 @@
 {
   "_comment": "ASR probes per market. 'must_keep' are the finance loanwords and local terms that must survive transcription; losing them breaks retrieval and intent detection. 'register' records what the line is testing. Synthesized speech is not native speech: see docs/Q3_MARKETS.md for what these numbers do and do not measure.",
   "ph": {
-    "voice": null,
+    "voice": "mms:ph",
     "language": "tl",
     "utterances": [
       {"id": "PH-1", "register": "cooperative", "text": "Opo, nabayaran ko na po ang premium noong isang linggo.", "must_keep": ["premium"]},

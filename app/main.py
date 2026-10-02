@@ -46,6 +46,17 @@ if local_tts.available():  # load the native voices in the background so the fir
 # Whisper language codes per market; Filipino is "tl".
 ASR_LANGUAGE = {"en": "en", "ph": "tl", "id": "id"}
 
+# A language-specific prompt measurably improves code-switched audio: it primes Whisper to keep
+# English finance loanwords in English and to spell local terms the way the extractors expect.
+ASR_PROMPTS = {
+    "tl": ("Taglish customer call about life insurance. Keep English terms in English: premium, "
+           "policy, coverage, rider, lapse, grace period, due date, beneficiary, reinstate, "
+           "quarterly, advisor. Spell these exactly: GCash, Maya, Bayad Center, 7-Eleven, "
+           "kinsenas, katapusan, sahod, sweldo."),
+    "id": ("Percakapan nasabah pembiayaan. Pertahankan istilah: angsuran, cicilan, tenor, denda, "
+           "jatuh tempo, DP, pembiayaan, virtual account, Indomaret, Alfamart, GoPay, OVO."),
+}
+
 
 def agent_for(market: str):
     """Q1 lead qualification for en; the Q3 reminder flows for ph and id."""
@@ -135,18 +146,10 @@ async def transcribe_audio(request: Request, language: str | None = None):
     try:
         if not settings.groq_api_key:
             raise HTTPException(status_code=503, detail="GROQ_API_KEY is required for transcription")
-        # A language-specific prompt measurably improves code-switched audio: it primes Whisper to
-        # keep English finance loanwords in English instead of transliterating them.
-        hints = {
-            "tl": "Taglish customer call about life insurance. Keep English terms: premium, policy, "
-                  "coverage, rider, lapse, grace period, due date, beneficiary, GCash, Bayad Center.",
-            "id": "Percakapan nasabah pembiayaan. Pertahankan istilah: angsuran, cicilan, tenor, denda, "
-                  "jatuh tempo, DP, pembiayaan, virtual account, Indomaret, Alfamart, GoPay, OVO.",
-        }
         client = Groq(api_key=settings.groq_api_key)
         result = client.audio.transcriptions.create(
             file=("recording.webm", audio), model=settings.groq_stt_model,
-            language=language, prompt=hints.get(language, ""), response_format="json",
+            language=language, prompt=ASR_PROMPTS.get(language, ""), response_format="json",
         )
         return {"text": result.text, "language": language}
     except Exception as exc:

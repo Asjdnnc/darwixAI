@@ -206,3 +206,15 @@ def test_price_objection_is_answered_not_escalated(kbs, tmp_path):
     assert detect_intent(flow("ph"), "Wala po akong pera ngayon.") == "hardship"
     assert detect_intent(flow("id"), "Dendanya kok mahal ya?") is None
     assert detect_intent(flow("id"), "Belum ada uang nih Mbak.") == "hardship"
+
+
+@pytest.mark.parametrize("heard,expect", [
+    ("Sa quincenas po.", {"payment_date": "quincenas"}),            # Spanish-influenced spelling
+    ("Pwede po bang magbayad sa Gash o sa Bayad? Center", {"payment_channel": "GCash"}),
+    ("sa Bayad? Center po", {"payment_channel": "Bayad Center"}),   # Whisper punctuates mid-phrase
+])
+def test_extraction_survives_observed_taglish_asr_errors(heard, expect):
+    """Errors seen in the PH-1 recording and in data/eval/asr_results.json."""
+    got = extract_payment("ph", heard)
+    for key, value in expect.items():
+        assert got.get(key) == value

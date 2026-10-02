@@ -28,12 +28,8 @@ ROOT = Path(__file__).resolve().parent.parent
 FIXTURE = ROOT / "data" / "eval" / "asr_utterances.json"
 RESULTS = ROOT / "data" / "eval" / "asr_results.json"
 
-PROMPTS = {
-    "tl": ("Taglish customer call about life insurance. Keep English terms: premium, policy, coverage, "
-           "rider, lapse, grace period, due date, beneficiary, GCash, Bayad Center."),
-    "id": ("Percakapan nasabah pembiayaan. Pertahankan istilah: angsuran, cicilan, tenor, denda, "
-           "jatuh tempo, DP, pembiayaan, virtual account, Indomaret, Alfamart, GoPay, OVO."),
-}
+# Imported from the server so the measurement always reflects what production actually sends.
+from app.main import ASR_PROMPTS as PROMPTS  # noqa: E402
 
 
 def normalize(text: str) -> list[str]:
@@ -55,11 +51,20 @@ def wer(reference: str, hypothesis: str) -> float:
 def available(voice: str | None) -> bool:
     if not voice:
         return False
+    if voice.startswith("mms:"):
+        from app import local_tts
+        return local_tts.available()
     listing = subprocess.run(["say", "-v", "?"], capture_output=True, text=True).stdout
     return any(line.startswith(voice) for line in listing.splitlines())
 
 
 def synthesize(text: str, voice: str, path: Path) -> None:
+    if voice.startswith("mms:"):
+        # Meta MMS-TTS gives the Philippines a voice at all; macOS has no Filipino one.
+        from app import local_tts
+        audio, _ = local_tts.synthesize(voice.split(":", 1)[1], text, lambda t: [t])
+        path.write_bytes(audio)
+        return
     aiff = path.with_suffix(".aiff")
     subprocess.run(["say", "-v", voice, "-o", str(aiff), text], check=True)
     subprocess.run(["afconvert", "-f", "WAVE", "-d", "LEI16@16000", "-c", "1", str(aiff), str(path)], check=True)
@@ -75,8 +80,8 @@ def main(markets: list[str]) -> None:
             voice, language = spec["voice"], spec["language"]
             if not available(voice):
                 report[market] = {"status": "skipped", "language": language, "voice": voice,
-                                  "reason": f"no {('Filipino' if market == 'ph' else 'local')} system voice is "
-                                            f"installed, so this market can only be measured from human recordings"}
+                                  "reason": "no usable voice in this environment; install the local-tts "
+                                            "extra or measure from human recordings instead"}
                 print(f"[{market}] skipped: no usable voice; use the recorded calls instead")
                 continue
             rows = []

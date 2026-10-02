@@ -1,140 +1,122 @@
 {
   "ph": {
-    "status": "skipped",
-    "language": "tl",
-    "voice": null,
-    "reason": "no Filipino system voice is installed, so this market can only be measured from human recordings"
-  },
-  "id": {
     "status": "measured",
-    "language": "id",
-    "voice": "Damayanti",
+    "language": "tl",
+    "voice": "mms:ph",
     "model": "whisper-large-v3-turbo",
-    "utterances": 8,
-    "mean_wer": 0.056,
-    "term_retention": "13/13",
+    "utterances": 7,
+    "mean_wer": 0.293,
+    "term_retention": "4/12",
     "rows": [
       {
-        "id": "ID-1",
-        "register": "cooperative formal",
-        "text": "Baik, saya akan membayar angsuran sebelum tanggal jatuh tempo.",
+        "id": "PH-1",
+        "register": "cooperative",
+        "text": "Opo, nabayaran ko na po ang premium noong isang linggo.",
         "must_keep": [
-          "angsuran",
-          "jatuh tempo"
+          "premium"
         ],
-        "heard": "Baik, saya akan membayar angsuran sebelum tanggal jatuh tempo.",
-        "wer": 0.0,
+        "heard": "O'Pon, nabayaran ko na po ang premium noong isang linggo.",
+        "wer": 0.1,
         "terms_kept": [
-          "angsuran",
-          "jatuh tempo"
+          "premium"
         ],
         "terms_lost": []
       },
       {
-        "id": "ID-2",
+        "id": "PH-2",
         "register": "code-switching",
-        "text": "Saya mau transfer lewat virtual account BCA, apakah bisa?",
+        "text": "Magkano po ang due ko at kailan po ang grace period?",
         "must_keep": [
-          "transfer",
-          "virtual account"
+          "due",
+          "grace period"
         ],
-        "heard": "Saya mau transfer lewat virtual account BCA, apakah bisa?",
-        "wer": 0.0,
-        "terms_kept": [
-          "transfer",
-          "virtual account"
-        ],
-        "terms_lost": []
+        "heard": "Huwag hilag-lagand. Huwag ano po ang doy ko, at kailan po ang gase, period.",
+        "wer": 0.545,
+        "terms_kept": [],
+        "terms_lost": [
+          "due",
+          "grace period"
+        ]
       },
       {
-        "id": "ID-3",
+        "id": "PH-3",
         "register": "objection",
-        "text": "Dendanya kok mahal, tenornya bisa diperpanjang tidak?",
+        "text": "Mahal po masyado ang premium, pwede po bang gawing quarterly?",
         "must_keep": [
-          "denda",
-          "tenor"
+          "premium",
+          "quarterly"
         ],
-        "heard": "Dendanya kok mahal, tenornya bisa diperpanjang tidak?",
-        "wer": 0.0,
+        "heard": "Mahal po masyado ang premium, pwede po bang gawin ka, Tarly. 3-0-Lan-Lan-Lan-Lan",
+        "wer": 0.4,
         "terms_kept": [
-          "denda",
-          "tenor"
+          "premium"
+        ],
+        "terms_lost": [
+          "quarterly"
+        ]
+      },
+      {
+        "id": "PH-4",
+        "register": "colloquial",
+        "text": "Wala po akong pera ngayon, sa kinsenas na lang po.",
+        "must_keep": [
+          "kinsenas"
+        ],
+        "heard": "Pala po akong pera ngayon sa kinsenas na lang po.",
+        "wer": 0.1,
+        "terms_kept": [
+          "kinsenas"
         ],
         "terms_lost": []
       },
       {
-        "id": "ID-4",
-        "register": "colloquial Jakarta",
-        "text": "Belum ada uang nih Mbak, nanti aja pas gajian ya.",
-        "must_keep": [
-          "gajian"
-        ],
-        "heard": "Belum ada uang nih mbak, nanti aja pas gajian ya.",
-        "wer": 0.0,
-        "terms_kept": [
-          "gajian"
-        ],
-        "terms_lost": []
-      },
-      {
-        "id": "ID-5",
-        "register": "regional Javanese",
-        "text": "Nggih Mbak, sampun saya bayar cicilannya kemarin.",
-        "must_keep": [
-          "cicilan"
-        ],
-        "heard": "Nggih mbak, sampun saya bayar cicilannya kemarin.",
-        "wer": 0.0,
-        "terms_kept": [
-          "cicilan"
-        ],
-        "terms_lost": []
-      },
-      {
-        "id": "ID-6",
-        "register": "regional Sundanese",
-        "text": "Punten Teh, abdi teu acan gajian, mangga minggu depan.",
-        "must_keep": [
-          "gajian"
-        ],
-        "heard": "Puntenteh, Abdi Tuacan Gajian, Mangga Minggu Depan.",
-        "wer": 0.444,
-        "terms_kept": [
-          "gajian"
-        ],
-        "terms_lost": []
-      },
-      {
-        "id": "ID-7",
-        "register": "escalation",
-        "text": "Saya mau bicara dengan petugas saja, bukan mesin.",
-        "must_keep": [
-          "petugas"
-        ],
-        "heard": "Saya mau bicara dengan petugas saja, bukan mesin.",
-        "wer": 0.0,
-        "terms_kept": [
-          "petugas"
-        ],
-        "terms_lost": []
-      },
-      {
-        "id": "ID-8",
+        "id": "PH-5",
         "register": "finance terms",
-        "text": "DP dan pembiayaan saya sudah lunas, tinggal angsuran terakhir.",
+        "text": "Mag-lapse po ba ang rider at coverage kung hindi ako makabayad?",
         "must_keep": [
-          "DP",
-          "pembiayaan",
-          "angsuran"
+          "lapse",
+          "rider",
+          "coverage"
         ],
-        "heard": "DP dan pembiayaan saya sudah lunas, tinggal angsuran terakhir.",
-        "wer": 0.0,
+        "heard": "Maglalapse po ba ang redev at kubirage? Kung hindi ako makabayad,",
+        "wer": 0.273,
         "terms_kept": [
-          "DP",
-          "pembiayaan",
-          "angsuran"
+          "lapse"
         ],
-        "terms_lost": []
+        "terms_lost": [
+          "rider",
+          "coverage"
+        ]
+      },
+      {
+        "id": "PH-6",
+        "register": "escalation",
+        "text": "Gusto ko po sanang makausap ang isang licensed advisor.",
+        "must_keep": [
+          "advisor"
+        ],
+        "heard": "Gusto ho po sanang makausap ang isang licensed, ad disor.",
+        "wer": 0.333,
+        "terms_kept": [],
+        "terms_lost": [
+          "advisor"
+        ]
+      },
+      {
+        "id": "PH-7",
+        "register": "payment channel",
+        "text": "Pwede po bang magbayad sa GCash o sa Bayad Center?",
+        "must_keep": [
+          "GCash",
+          "Bayad Center"
+        ],
+        "heard": "Pwede po bang magbayad sa Gash o sa Bayad? Sente ah!",
+        "wer": 0.3,
+        "terms_kept": [],
+        "terms_lost": [
+          "GCash",
+          "Bayad Center"
+        ]
       }
     ]
   }
