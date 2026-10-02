@@ -28,9 +28,13 @@ TITLE_WEIGHT = 4
 EXPANSION_WEIGHT = 0.5
 MIN_SCORE = 2.5  # calibrated on data/eval/retrieval_queries.json (scripts/eval_retrieval.py)
 MIN_COVERAGE = 0.4
+# Taglish and Bahasa questions contain many ordinary words that a (partly English) corpus has never
+# seen, so coverage runs structurally lower than in English. The score gate carries more of the work
+# in those markets; out-of-scope rejection is verified per market in tests/test_markets.py.
+MARKET_GATES = {"en": (MIN_SCORE, MIN_COVERAGE), "ph": (3.0, 0.25), "id": (3.0, 0.25)}
 RELATIVE_CUTOFF = 0.4  # drop results far below the best match
 
-STOP_WORDS = set("""
+EN_STOP_WORDS = set("""
 a about after again all also am an and any are as at be because been before being both but by can
 could did do does doing don for from get give go going got had has have having he her here hi him his
 how i i'm if in into is it it's its just know let like me might more most much my myself need no not
@@ -41,8 +45,31 @@ with would yes yet you your yours hello okay ok actually honestly don't isn't ca
 that's doesn't won't
 """.split())
 
+# Without these, Taglish and Bahasa function words ("po", "ninyo", "yang", "aja") dominate scoring
+# and every question matches whichever record happens to be written in the caller's language.
+PH_STOP_WORDS = EN_STOP_WORDS | set("""
+ako akin aking ang anong at ay ba baka dahil dito daw raw din rin ganito ganyan hindi ikaw ito iyan iyon
+ano ka kami kay kayo ko kung lamang lang may mayroon meron mga mo muna na naman namin nang naming nating
+ng nga ngayon nila nilang nito niya niyang o opo pa pala para pero po pwede puwede sana sa sila siya
+talaga tapos tayo yan yun yung akong nyo ninyo kayong nalang
+""".split())
+
+ID_STOP_WORDS = EN_STOP_WORDS | set("""
+yang saya aku kamu anda bapak ibu pak bu mbak mas bisa boleh kalau jika di ke dari untuk dengan pada
+ini itu ada aja saja sih nih dong deh ya iya nggak enggak gak tidak dan atau juga sudah udah belum
+mau akan kok kan lagi minta apa apakah berapa kapan gimana bagaimana kenapa mengapa mohon tolong nya
+adalah dapat harus masih sangat lebih kurang punya buat soal terus
+""".split())
+
+MARKET_STOP_WORDS = {"en": EN_STOP_WORDS, "ph": PH_STOP_WORDS, "id": ID_STOP_WORDS}
+
 # caller phrase -> knowledge-base vocabulary (applied to the raw query, weighted below 1)
-EXPANSIONS = {
+#
+# For `ph` this bridges languages, not just phrasing: Philippine insurers publish policy documents
+# in English while clients speak Taglish, so a Filipino question shares almost no tokens with the
+# source text. A multilingual embedding model would generalize this; the table is the explainable
+# stand-in. See docs/Q3_MARKETS.md.
+EN_EXPANSIONS = {
     r"how much|price|cost|costs|pay for|afford|budget": "premium",
     r"expensive|can'?t afford|cannot afford|too much money": "expensive budget premium",
     r"real person|human|someone|representative|supervisor|manager|speak to|talk to a": "human advisor escalation transfer",
@@ -69,6 +96,40 @@ EXPANSIONS = {
     r"\bfile\b|reimburse": "claim",
 }
 
+PH_EXPANSIONS = {
+    r"magkano|babayaran|bayarin|halaga|premium": "premium payment amount due",
+    r"hindi (?:ako )?maka ?bayad|walang pera|wala akong pera|hindi ko kaya|kapos|tight": "grace period unpaid lapse",
+    r"mag-?lapse|nag-?lapse|lapse|matitigil|mawawala": "lapse coverage stops riders denied",
+    r"rider|riders|dagdag na benefit": "rider accidental critical illness waiver hospital",
+    r"beneficiary|benepisyaryo|palitan.*beneficiary": "beneficiary change revocable irrevocable consent",
+    r"saan.*(?:bayad|magbayad)|gcash|maya|bayad center|bangko|bank|7-?eleven|palawan": "payment channels bank e-wallet over-the-counter",
+    r"kailan|due|deadline|huling araw": "due date grace period premium",
+    r"ibalik|balikan|reinstate|buhayin": "reinstate reinstatement unpaid premiums interest underwriting",
+    r"grace period|palugit": "grace period thirty-one days",
+    r"coverage|sakop|proteksyon": "coverage force policy",
+    r"mode|hulugan|monthly|quarterly|buwan-buwan": "payment mode annual semi-annual quarterly monthly anniversary",
+    r"claim|makaka-?claim": "claim denied lapse date",
+    r"na-?post|posting|pumasok ang bayad": "posting banking days receipt portal",
+    r"tao|totoong tao|advisor|agent": "licensed advisor escalation",
+    r"scam|totoo ba|peke": "verify hotline policy contract official",
+}
+
+ID_EXPANSIONS = {
+    r"keringanan|diringankan|dibantu|restruktur|relaksasi": "keringanan restrukturisasi perpanjangan tenor penjadwalan ulang",
+    r"denda|telat|terlambat|kena ?denda": "denda keterlambatan persen angsuran tertunggak",
+    r"bayar di ?mana|lewat mana|transfer|saluran": "saluran pembayaran virtual account gerai dompet digital",
+    r"lunas|pelunasan|lunasi": "pelunasan dipercepat biaya administrasi",
+    r"jam berapa|ditelepon|ditagih|nagih": "penagihan pukul etika petugas",
+    r"jatuh tempo|tanggal bayar": "jatuh tempo angsuran tenor",
+    r"terbukukan|masuk|ke ?catat|udah masuk": "terbukukan pembayaran jam hari kerja",
+    r"petugas|orang|manusia|cs": "petugas berlisensi eskalasi",
+    r"penipuan|scam|beneran": "call center resmi aplikasi perjanjian",
+    r"toleransi|masa tenggang": "masa toleransi hari kalender",
+    r"data|otp|pin": "data pribadi dilarang",
+}
+
+MARKET_EXPANSIONS = {"en": EN_EXPANSIONS, "ph": PH_EXPANSIONS, "id": ID_EXPANSIONS}
+
 
 def stem(word: str) -> str:
     """Tiny suffix stripper; applied identically to documents and queries."""
@@ -84,12 +145,19 @@ def stem(word: str) -> str:
     return word
 
 
-def tokenize(text: str) -> list[str]:
-    return [stem(t) for t in re.findall(r"[a-z0-9]+(?:'[a-z]+)?", text.lower()) if t not in STOP_WORDS]
+def tokenize(text: str, market: str = "en") -> list[str]:
+    stop = MARKET_STOP_WORDS.get(market, EN_STOP_WORDS)
+    words = re.findall(r"[a-z0-9]+(?:'[a-z]+)?", text.lower())
+    if market == "id":
+        # Indonesian clitics carry no meaning for retrieval: "dendanya" -> "denda".
+        words = [re.sub(r"(?<=\w{4})(?:nya|ku|mu)$", "", w) for w in words]
+    return [stem(t) for t in words if t not in stop]
 
 
 class KnowledgeBase:
-    def __init__(self) -> None:
+    def __init__(self, market: str = "en") -> None:
+        self.market = market
+        self.expansions = MARKET_EXPANSIONS.get(market, EN_EXPANSIONS)
         self.records: dict[str, KnowledgeRecord] = {}
         self.chunks: list[Chunk] = []
         self._tf: list[Counter] = []
@@ -119,7 +187,8 @@ class KnowledgeBase:
         self._reindex()
 
     def _reindex(self) -> None:
-        self._tf = [Counter(tokenize(c.title) * TITLE_WEIGHT + tokenize(c.content)) for c in self.chunks]
+        self._tf = [Counter(tokenize(c.title, self.market) * TITLE_WEIGHT + tokenize(c.content, self.market))
+                    for c in self.chunks]
         self._df = Counter(term for tf in self._tf for term in tf)
         self._avgdl = sum(sum(tf.values()) for tf in self._tf) / max(1, len(self._tf))
 
@@ -129,13 +198,13 @@ class KnowledgeBase:
 
     def _query_terms(self, query: str) -> tuple[dict[str, float], dict[str, set[str]]]:
         """Return weighted query terms and, for each original term, the expansion terms that may cover it."""
-        weights: dict[str, float] = {t: 1.0 for t in tokenize(query)}
+        weights: dict[str, float] = {t: 1.0 for t in tokenize(query, self.market)}
         covers: dict[str, set[str]] = {t: {t} for t in weights}
         lowered = query.lower()
-        for pattern, expansion in EXPANSIONS.items():
+        for pattern, expansion in self.expansions.items():
             for match in re.finditer(pattern, lowered):
-                source = tokenize(match.group(0))
-                expanded = tokenize(expansion)
+                source = tokenize(match.group(0), self.market)
+                expanded = tokenize(expansion, self.market)
                 # When the caller's own words never occur in the knowledge base, the expansion
                 # is the only possible evidence, so it gets full weight.
                 weight = 1.0 if all(t not in self._df for t in source) else EXPANSION_WEIGHT
@@ -180,7 +249,8 @@ class KnowledgeBase:
             top = ranked[0]["score"]
             ranked = [i for i in ranked if i["score"] >= top * RELATIVE_CUTOFF]
         if grounded_only:
-            ranked = [i for i in ranked if i["score"] >= MIN_SCORE and i["coverage"] >= MIN_COVERAGE]
+            min_score, min_coverage = MARKET_GATES.get(self.market, (MIN_SCORE, MIN_COVERAGE))
+            ranked = [i for i in ranked if i["score"] >= min_score and i["coverage"] >= min_coverage]
         chunks = [i["chunk"].model_copy(update={"score": i["score"], "coverage": i["coverage"]})
                   for i in ranked[:limit]]
         return RetrievalResult(query=query, chunks=chunks)

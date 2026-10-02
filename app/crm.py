@@ -66,5 +66,10 @@ class MockCRM:
     def escalate(self, call_id: str, escalation: dict) -> dict:
         return self._write("escalations", f"esc_{call_id[:8]}", {"call_id": call_id, **escalation})
 
+    def record(self, kind: str, call_id: str, data: dict) -> dict:
+        """Generic record for market flows: promises to pay, call notes."""
+        prefix = {"promises": "ptp", "notes": "note"}.get(kind, kind[:3])
+        return self._write(kind, f"{prefix}_{call_id[:8]}", {"call_id": call_id, **data})
+
     def list(self, kind: str) -> list[dict]:
         return [{"id": key, **value} for key, value in self._read(kind).items()]
