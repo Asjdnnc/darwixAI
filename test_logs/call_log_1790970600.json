@@ -1,0 +1,36 @@
+{
+  "call_id": "5d192c52-61da-496b-9f0d-6621b6b32c7d",
+  "market": "ph",
+  "history": [
+    {
+      "timestamp": "2026-10-02T19:49:08.678Z",
+      "role": "agent",
+      "text": "Magandang araw po, ako po si Maya mula sa Darwix Life Philippines. Recorded po ang tawag na ito para sa quality at compliance. Okay lang po ba na mag-usap tayo sandali?",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T19:49:24.854Z",
+      "role": "customer",
+      "text": "So, let's go.",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T19:49:25.299Z",
+      "role": "agent",
+      "text": "Salamat po. Tungkol po sana ito sa premium ng policy ninyo na may due na. Nasa loob pa po tayo ng 31-day grace period, kaya active pa rin po ang coverage ninyo. Nabayaran na po ba ninyo ito, o gusto po ninyong tulungan ko kayo sa payment?",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T19:49:55.210Z",
+      "role": "customer",
+      "text": "I'm going to go to the next video.",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T19:49:55.623Z",
+      "role": "agent",
+      "text": "Salamat po. Kung may tanong pa po kayo tungkol sa policy ninyo, nandito lang po ako. Saan po ninyo balak magbayad \u2014 sa GCash, Maya, bank branch, o sa Bayad Center?",
+      "citations": []
+    }
+  ]
+}

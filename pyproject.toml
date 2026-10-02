@@ -14,6 +14,8 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8,<9", "httpx>=0.27,<1"]
+# Native Filipino and Indonesian voices (Meta MMS-TTS). Optional: without it the browser speaks.
+local-tts = ["torch>=2,<3", "transformers>=4.40"]
 
 [tool.pytest.ini_options]
 pythonpath = ["."]

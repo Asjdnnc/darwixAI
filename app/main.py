@@ -1,5 +1,6 @@
 import hashlib
 import io
+import logging
 import re
 import wave
 from pathlib import Path
@@ -8,7 +9,6 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse, Response
 from fastapi.staticfiles import StaticFiles
 from groq import Groq, RateLimitError
-from tempfile import NamedTemporaryFile
 from uuid import uuid4
 
 from app.agent import LeadQualificationAgent
@@ -17,12 +17,14 @@ from app.crm import MockCRM
 from app.kb import KnowledgeBase
 from app.llm import GroqService
 from app.models import AgentTurn, TranscriptEvent
+from app import local_tts
 from app.flows import FLOWS, flow
 from app.ingest import load_records
 from app.nudges import NudgeEngine
 from app.reminder_agent import ReminderAgent
 from app.seed import seed
 
+log = logging.getLogger("uvicorn.error")
 app = FastAPI(title="AI Engineer Assessment API", version="0.3.0")
 kb, groq, nudge_engine = KnowledgeBase(), GroqService(), NudgeEngine()
 seed(kb)
@@ -37,6 +39,9 @@ for _market in FLOWS:
         _kb.upsert(_record)
     market_kbs[_market] = _kb
 reminder_agent = ReminderAgent(market_kbs, groq, crm)
+
+if local_tts.available():  # load the native voices in the background so the first call is not slow
+    local_tts.warm()
 
 # Whisper language codes per market; Filipino is "tl".
 ASR_LANGUAGE = {"en": "en", "ph": "tl", "id": "id"}
@@ -116,7 +121,7 @@ def crm_records(kind: str):
 def transcript(event: TranscriptEvent):
     """Called for every live/replayed transcript chunk, never only after a call ends."""
     # Q3/Q4 local-market calls use OpenAI for language-aware detection.
-    signals = openai_q3_q4.detect_signals(event.text, event.market) if event.market in {"ph", "id"} else groq.detect_signals(event.text)
+    signals = groq.detect_signals(event.text)
     nudges = [nudge for signal in signals if (nudge := nudge_engine.create(event.call_id, signal))]
     return {"event": event, "nudges": nudges}
 
@@ -154,22 +159,26 @@ def speak_text(turn: AgentTurn):
     text_to_speak = turn.customer_text
     try:
         if turn.market in {"ph", "id"}:
-            # Groq Orpheus speaks English only, so a Taglish or Bahasa line sent to it would come
-            # back as English-accented nonsense. The browser has a native Indonesian voice and no
-            # Filipino one, so we hand synthesis to the browser and say exactly why.
-            # See "Native TTS" in docs/Q3_MARKETS.md.
-            if settings.openai_api_key:
+            # Native local voice (Meta MMS-TTS) is preferred: it is the only Filipino voice
+            # available anywhere in this stack, needs no key and no quota.
+            if local_tts.available():
                 try:
-                    with NamedTemporaryFile(prefix="openai-voice-", suffix=".wav", delete=False) as temp:
-                        openai_q3_q4.speak(text_to_speak, turn.market, temp.name)
-                        return FileResponse(temp.name, media_type="audio/wav", filename="agent-reply.wav",
-                                            headers={"X-TTS-Engine": f"openai:{settings.openai_tts_voice}"})
-                except Exception:
-                    pass
+                    audio, cached = local_tts.synthesize(turn.market, text_to_speak, tts_segments)
+                    return Response(content=audio, media_type="audio/wav", headers={
+                        "X-TTS-Engine": f"mms-tts:{'tgl' if turn.market == 'ph' else 'ind'}",
+                        "X-TTS-Cache": cached,
+                        "Access-Control-Expose-Headers": "X-TTS-Engine, X-TTS-Cache"})
+                except Exception as exc:
+                    log.warning("local TTS failed for %s: %s", turn.market, exc)
+            # Groq Orpheus speaks English only, so a Taglish or Bahasa line sent to it would come
+            # back as English-accented nonsense; the browser speaks instead.
+            # See "Native TTS" in docs/Q3_MARKETS.md.
+            language = "Filipino" if turn.market == "ph" else "Indonesian"
             raise HTTPException(
                 status_code=501,
-                detail=("No native " + ("Filipino" if turn.market == "ph" else "Indonesian") +
-                        " voice is available from the configured providers; using the browser voice."))
+                detail=(f"No native {language} voice in this process. Install the local voices with "
+                        "`pip install -e '.[local-tts]'` and run the server from that same "
+                        "environment (e.g. .venv/bin/uvicorn app.main:app); using the browser voice."))
         if not settings.groq_api_key:
             raise HTTPException(status_code=503, detail="GROQ_API_KEY is required for English speech synthesis")
         try:
