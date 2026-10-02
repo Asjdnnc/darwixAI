@@ -1,0 +1,88 @@
+{
+  "_comment": "Source registry. Every raw file must be listed here so each knowledge record can be traced to an owner, origin, version, and authority level. All content is synthetic.",
+  "sources": [
+    {
+      "path": "docs/underwriting_policy_v2.txt",
+      "source_type": "pdf_extract",
+      "origin": "SharePoint > Compliance > Underwriting_Policy_v2.pdf",
+      "doc_version": "2.0",
+      "authority": 1,
+      "default_category": "policy",
+      "supersedes": "docs/underwriting_policy_v1.txt"
+    },
+    {
+      "path": "docs/underwriting_policy_v1.txt",
+      "source_type": "pdf_extract",
+      "origin": "SharePoint > Compliance > Underwriting_Policy_v1.pdf",
+      "doc_version": "1.0",
+      "authority": 1,
+      "default_category": "policy"
+    },
+    {
+      "path": "docs/sales_playbook.md",
+      "source_type": "markdown",
+      "origin": "Confluence > Sales Enablement > Phone Sales Playbook",
+      "doc_version": "1.3",
+      "authority": 2,
+      "default_category": "process"
+    },
+    {
+      "path": "tables/plan_comparison.csv",
+      "source_type": "table",
+      "origin": "Product team > plan_comparison.xlsx (exported to CSV)",
+      "doc_version": "2026.1",
+      "effective_date": "2026-01-15",
+      "authority": 2,
+      "default_category": "product"
+    },
+    {
+      "path": "forms/lead_intake_form.html",
+      "source_type": "form",
+      "origin": "https://www.darwixhealth.example/quote",
+      "doc_version": "1.0",
+      "effective_date": "2026-02-01",
+      "authority": 3,
+      "default_category": "qualification"
+    },
+    {
+      "path": "web/plans_overview.html",
+      "source_type": "web_page",
+      "origin": "https://www.darwixhealth.example/plans",
+      "doc_version": "1.0",
+      "authority": 3,
+      "default_category": "product"
+    },
+    {
+      "path": "web/family_shield.html",
+      "source_type": "web_page",
+      "origin": "https://www.darwixhealth.example/plans/family-shield",
+      "doc_version": "1.0",
+      "authority": 3,
+      "default_category": "product"
+    },
+    {
+      "path": "web/faq.html",
+      "source_type": "web_page",
+      "origin": "https://www.darwixhealth.example/faq",
+      "doc_version": "1.0",
+      "authority": 3,
+      "default_category": "faq"
+    },
+    {
+      "path": "web/careers.html",
+      "source_type": "web_page",
+      "origin": "https://www.darwixhealth.example/careers",
+      "doc_version": "1.0",
+      "authority": 4,
+      "default_category": "product"
+    },
+    {
+      "path": "docs/scanned_brochure.pdf",
+      "source_type": "pdf",
+      "origin": "Marketing > Print > 2026_brochure_scan.pdf",
+      "doc_version": "1.0",
+      "authority": 3,
+      "default_category": "product"
+    }
+  ]
+}

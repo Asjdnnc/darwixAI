@@ -1,0 +1,150 @@
+{
+  "call_id": "test-s9",
+  "market": "en",
+  "started_at": "2026-10-02T18:34:59+00:00",
+  "transcript": [
+    {
+      "at": "2026-10-02T18:34:59+00:00",
+      "role": "agent",
+      "text": "Hi, this is Austin, a virtual health insurance advisor with Darwix Health. This call is recorded for quality and compliance purposes. Is it okay if we continue?",
+      "citations": [
+        "docs/underwriting_policy_v2.txt#mandatory-disclosures"
+      ]
+    },
+    {
+      "at": "2026-10-02T18:35:03+00:00",
+      "role": "customer",
+      "text": "Yes, that's fine."
+    },
+    {
+      "at": "2026-10-02T18:35:04+00:00",
+      "role": "agent",
+      "text": "Thank you. How can I help you today? I can answer questions about our health plans, or check which plan might fit you.",
+      "citations": [],
+      "intent": "provide_info"
+    },
+    {
+      "at": "2026-10-02T18:35:08+00:00",
+      "role": "customer",
+      "text": "Is there a waiting period before coverage starts?"
+    },
+    {
+      "at": "2026-10-02T18:35:09+00:00",
+      "role": "agent",
+      "text": "Yes, there is a 30\u2011day waiting period for non\u2011emergency services from the policy start date. Accidents and emergencies are covered from day one, and certain procedures like joint replacement and cataract surgery have a 12\u2011month waiting period. Is there anything else I can help with, or would you like me to check which plans might fit you?",
+      "citations": [
+        "web/faq.html#is-there-a-waiting-period-before-my-coverage-starts"
+      ],
+      "intent": "provide_info"
+    },
+    {
+      "at": "2026-10-02T18:35:13+00:00",
+      "role": "customer",
+      "text": "And can I cancel if I change my mind?"
+    },
+    {
+      "at": "2026-10-02T18:35:14+00:00",
+      "role": "agent",
+      "text": "Yes, you can cancel within 30 days of the policy start date if you have made no claims, and you\u2019ll receive a full premium refund. Is there anything else I can help with, or would you like me to check which plans might fit you?",
+      "citations": [
+        "web/faq.html#can-i-cancel-my-policy"
+      ],
+      "intent": "provide_info"
+    },
+    {
+      "at": "2026-10-02T18:35:18+00:00",
+      "role": "customer",
+      "text": "Okay, sure, let's see which plan fits me."
+    },
+    {
+      "at": "2026-10-02T18:35:19+00:00",
+      "role": "agent",
+      "text": "Sure, I can help you find a plan that fits your needs. Happy to help with that. I'll ask a few quick questions to see which plans might fit. May I ask how old you are?",
+      "citations": [],
+      "intent": "wants_quote"
+    },
+    {
+      "at": "2026-10-02T18:35:23+00:00",
+      "role": "customer",
+      "text": "I'm 27."
+    },
+    {
+      "at": "2026-10-02T18:35:24+00:00",
+      "role": "agent",
+      "text": "Great, thanks for sharing that. I\u2019ll need a few more details to find the best plan for you. Which state do you live in?",
+      "citations": [],
+      "intent": "ask_question"
+    },
+    {
+      "at": "2026-10-02T18:35:28+00:00",
+      "role": "customer",
+      "text": "Pennsylvania."
+    },
+    {
+      "at": "2026-10-02T18:35:28+00:00",
+      "role": "agent",
+      "text": "Thanks for letting me know you\u2019re in Pennsylvania. I\u2019ll look at the Essential Care plan that\u2019s available there for you. How many people would need coverage, including you?",
+      "citations": [
+        "web/faq.html#in-which-states-are-plans-available"
+      ],
+      "intent": "provide_info"
+    }
+  ],
+  "lead": {
+    "age": 27,
+    "state": "PA"
+  },
+  "conflicts": {},
+  "recording_consent": true,
+  "underwriting_disclosed": false,
+  "outcome": {
+    "status": "in_progress",
+    "plans": [
+      "Essential Care"
+    ]
+  },
+  "actions": [
+    {
+      "type": "lead",
+      "id": "lead_test-s9",
+      "operation": "updated",
+      "webhook": "not configured"
+    }
+  ],
+  "guard_events": [
+    {
+      "guard": "not_an_answer",
+      "field": "medical_conditions",
+      "intent": "ask_question"
+    },
+    {
+      "guard": "not_an_answer",
+      "field": "current_insurance",
+      "intent": "ask_question"
+    },
+    {
+      "guard": "caller_words_override",
+      "field": "state",
+      "model": "Pennsylvania",
+      "used": "PA"
+    },
+    {
+      "guard": "unsupported_extraction",
+      "field": "medical_conditions",
+      "value": "none"
+    },
+    {
+      "guard": "unsupported_extraction",
+      "field": "current_insurance",
+      "value": "none"
+    }
+  ],
+  "escalated": false,
+  "ended": true,
+  "attempts": {},
+  "last_asked": "household_size",
+  "mode": "qualifying",
+  "quote_offered": true,
+  "pending_non_us": null,
+  "qualifying_started_turn": false
+}

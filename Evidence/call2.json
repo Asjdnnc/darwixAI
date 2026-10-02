@@ -1,0 +1,71 @@
+{
+  "call_id": "22d6c379-f323-4b5e-a621-755ea53b86f0",
+  "market": "en",
+  "history": [
+    {
+      "timestamp": "2026-10-02T17:44:18.961Z",
+      "role": "agent",
+      "text": "Hi, this is Austin, a virtual health insurance advisor with Darwix Health. This call is recorded for quality and compliance purposes. Is it okay if we continue?",
+      "citations": [
+        "docs/underwriting_policy_v2.txt#mandatory-disclosures"
+      ]
+    },
+    {
+      "timestamp": "2026-10-02T17:44:33.265Z",
+      "role": "customer",
+      "text": "Yes, go ahead.",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T17:44:34.038Z",
+      "role": "agent",
+      "text": "Thank you. How can I help you today? I can answer questions about our health plans, or check which plan might fit you.",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T17:44:47.595Z",
+      "role": "customer",
+      "text": "Is there a waiting period before my coverage starts?",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T17:44:48.524Z",
+      "role": "agent",
+      "text": "Yes, there is a 30\u2011day waiting period for non\u2011emergency services from the policy start date. Accidents and emergencies are covered from day one, and certain procedures like joint replacement and cataract surgery have a 12\u2011month waiting period. Is there anything else I can help with, or would you like me to check which plans might fit you?",
+      "citations": [
+        "web/faq.html#is-there-a-waiting-period-before-my-coverage-starts"
+      ]
+    },
+    {
+      "timestamp": "2026-10-02T17:45:17.678Z",
+      "role": "customer",
+      "text": "Can I cancel if I change my mind?",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T17:45:18.485Z",
+      "role": "agent",
+      "text": "Yes, you can cancel within 30 days of the policy start date if you change your mind and have made no claims, and you\u2019ll receive a full premium refund. Is there anything else I can help with, or would you like me to check which plans might fit you?",
+      "citations": [
+        "web/faq.html#can-i-cancel-my-policy"
+      ]
+    },
+    {
+      "timestamp": "2026-10-02T17:45:43.388Z",
+      "role": "customer",
+      "text": "No thanks. Goodbye.",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T17:45:43.869Z",
+      "role": "agent",
+      "text": "Thank you for calling Darwix Health. Have a great day!",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T17:45:48.235Z",
+      "role": "insight",
+      "text": "CRM summary: Outcome: in progress."
+    }
+  ]
+}

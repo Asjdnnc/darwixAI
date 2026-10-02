@@ -1,0 +1,430 @@
+{
+  "_comment": "Gold retrieval set for Q2. 'expected' lists source_refs that fully answer the question (any one at rank 1 = correct). An empty list means the knowledge base has no answer and retrieval must return nothing (the agent then says the information is unavailable). Gold labels were written before tuning the retriever. Queries with split 'held_out' were written after tuning and were never used to adjust the retriever.",
+  "queries": [
+    {
+      "id": "P1",
+      "type": "product",
+      "query": "What does the Family Shield plan cover?",
+      "expected": [
+        "web/plans_overview.html#family-shield",
+        "web/family_shield.html#who-is-covered",
+        "tables/plan_comparison.csv#row-2"
+      ],
+      "why": "The Family Shield records list who is covered and the included benefits (pediatric dental and vision, maternity, newborn care).",
+      "split": "tuning"
+    },
+    {
+      "id": "P2",
+      "type": "product",
+      "query": "How much does Essential Care cost per month?",
+      "expected": [
+        "web/plans_overview.html#essential-care",
+        "tables/plan_comparison.csv#row-1"
+      ],
+      "why": "Both Essential Care records state the starting premium of $189 per month.",
+      "split": "tuning"
+    },
+    {
+      "id": "P3",
+      "type": "product",
+      "query": "Hi, my wife and I are both 40 and we have two kids. How much would a family plan be?",
+      "expected": [
+        "web/plans_overview.html#family-shield",
+        "tables/plan_comparison.csv#row-2",
+        "web/family_shield.html#costs-at-a-glance",
+        "web/family_shield.html#getting-a-family-quote"
+      ],
+      "why": "Conversational family pricing question; the Family Shield records give the $520 starting premium for a family of four and what a quote depends on.",
+      "split": "tuning"
+    },
+    {
+      "id": "P4",
+      "type": "product",
+      "query": "Is there a plan for retired people?",
+      "expected": [
+        "web/plans_overview.html#senior-secure",
+        "docs/underwriting_policy_v2.txt#eligibility-rules"
+      ],
+      "why": "Senior Secure is the plan for adults aged 55 to 75; the eligibility rules give the same age range.",
+      "split": "tuning"
+    },
+    {
+      "id": "P5",
+      "type": "product",
+      "query": "Can I get a discount if I pay for the whole year?",
+      "expected": [
+        "web/plans_overview.html#paying-your-premium"
+      ],
+      "why": "The premium payment record states the 5% annual payment discount.",
+      "split": "tuning"
+    },
+    {
+      "id": "L1",
+      "type": "policy",
+      "query": "What do you have to tell me before you give me a price?",
+      "expected": [
+        "docs/underwriting_policy_v2.txt#mandatory-disclosures"
+      ],
+      "why": "The mandatory disclosure must be stated before any plan price is discussed.",
+      "split": "tuning"
+    },
+    {
+      "id": "L2",
+      "type": "policy",
+      "query": "Can you guarantee that my diabetes will be covered?",
+      "expected": [
+        "docs/underwriting_policy_v2.txt#prohibited-statements",
+        "web/faq.html#are-pre-existing-conditions-covered"
+      ],
+      "why": "Agents may never guarantee coverage of a pre-existing condition; the FAQ explains coverage depends on medical underwriting.",
+      "split": "tuning"
+    },
+    {
+      "id": "L3",
+      "type": "policy",
+      "query": "I want to speak to a real person.",
+      "expected": [
+        "docs/underwriting_policy_v2.txt#human-escalation"
+      ],
+      "why": "The human escalation rule says to transfer when the caller asks for a person, and gives advisor hours.",
+      "split": "tuning"
+    },
+    {
+      "id": "L4",
+      "type": "policy",
+      "query": "What happens if I don't agree to the call being recorded?",
+      "expected": [
+        "docs/underwriting_policy_v2.txt#mandatory-disclosures"
+      ],
+      "why": "The disclosure policy says to end the automated conversation and offer a human callback if recording consent is refused.",
+      "split": "tuning"
+    },
+    {
+      "id": "L5",
+      "type": "policy",
+      "split": "tuning",
+      "query": "What disclosure is required before a quote?",
+      "expected": [
+        "docs/underwriting_policy_v2.txt#mandatory-disclosures"
+      ],
+      "why": "The mandatory disclosure must be stated before any plan price is discussed. (Added after it exposed the form-record term-frequency issue.)"
+    },
+    {
+      "id": "Q1",
+      "type": "qualification",
+      "query": "Am I eligible if I live in California?",
+      "expected": [
+        "docs/underwriting_policy_v2.txt#eligibility-rules",
+        "web/faq.html#in-which-states-are-plans-available",
+        "docs/underwriting_policy_v2.txt#preliminary-lead-qualification"
+      ],
+      "why": "California is not an offered state; the eligibility rules and the states FAQ both list where plans are offered.",
+      "split": "tuning"
+    },
+    {
+      "id": "Q2",
+      "type": "qualification",
+      "query": "What information do you need from me to qualify?",
+      "expected": [
+        "docs/sales_playbook.md#qualification-questions",
+        "forms/lead_intake_form.html#form-fields",
+        "docs/underwriting_policy_v2.txt#preliminary-lead-qualification"
+      ],
+      "why": "The qualification questions record lists the details collected and their order.",
+      "split": "tuning"
+    },
+    {
+      "id": "Q3",
+      "type": "qualification",
+      "query": "I had a kidney transplant last year, can I still apply?",
+      "expected": [
+        "docs/underwriting_policy_v2.txt#preliminary-lead-qualification"
+      ],
+      "why": "An organ transplant requires referral to a senior health advisor under the preliminary qualification rules.",
+      "split": "tuning"
+    },
+    {
+      "id": "F1",
+      "type": "faq",
+      "query": "How long is the waiting period?",
+      "expected": [
+        "web/faq.html#is-there-a-waiting-period-before-my-coverage-starts"
+      ],
+      "why": "The waiting-period FAQ gives 30 days for non-emergency care and 12 months for specific surgeries.",
+      "split": "tuning"
+    },
+    {
+      "id": "F2",
+      "type": "faq",
+      "query": "Can I get a refund if I cancel?",
+      "expected": [
+        "web/faq.html#can-i-cancel-my-policy"
+      ],
+      "why": "The cancellation FAQ describes the 30-day free-look full refund.",
+      "split": "tuning"
+    },
+    {
+      "id": "F3",
+      "type": "faq",
+      "query": "What if I pay my premium late?",
+      "expected": [
+        "web/faq.html#what-happens-if-i-miss-a-premium-payment"
+      ],
+      "why": "The missed-payment FAQ describes the 30-day grace period and lapse.",
+      "split": "tuning"
+    },
+    {
+      "id": "F4",
+      "type": "faq",
+      "query": "How do I file a claim at a hospital?",
+      "expected": [
+        "web/faq.html#how-do-i-make-a-claim"
+      ],
+      "why": "The claims FAQ explains cashless in-network claims and reimbursement claims.",
+      "split": "tuning"
+    },
+    {
+      "id": "F5",
+      "type": "faq",
+      "query": "Can I see my own doctor?",
+      "expected": [
+        "web/faq.html#can-i-find-a-doctor-near-me",
+        "web/plans_overview.html#essential-care"
+      ],
+      "why": "The provider FAQ explains how to find in-network providers; Essential Care states out-of-network care is emergency-only.",
+      "split": "tuning"
+    },
+    {
+      "id": "O1",
+      "type": "objection",
+      "query": "Honestly this sounds too expensive for me.",
+      "expected": [
+        "docs/sales_playbook.md#objection-it-is-too-expensive"
+      ],
+      "why": "Approved price objection handling: ask budget, mention annual discount and Essential Care.",
+      "split": "tuning"
+    },
+    {
+      "id": "O2",
+      "type": "objection",
+      "query": "I already get insurance through my job.",
+      "expected": [
+        "docs/sales_playbook.md#objection-i-already-have-coverage-through-my-employer"
+      ],
+      "why": "Approved employer-coverage objection handling.",
+      "split": "tuning"
+    },
+    {
+      "id": "O3",
+      "type": "objection",
+      "query": "I need to discuss it with my husband first.",
+      "expected": [
+        "docs/sales_playbook.md#objection-i-need-to-talk-to-my-spouse-first"
+      ],
+      "why": "Approved spouse objection handling: offer a callback when both partners are available.",
+      "split": "tuning"
+    },
+    {
+      "id": "O4",
+      "type": "objection",
+      "query": "How do I know this isn't a scam?",
+      "expected": [
+        "docs/sales_playbook.md#objection-is-this-a-scam"
+      ],
+      "why": "Approved scam objection handling: offer written documents and the license number.",
+      "split": "tuning"
+    },
+    {
+      "id": "O5",
+      "type": "objection",
+      "query": "I'm not comfortable giving my medical history over the phone.",
+      "expected": [
+        "docs/sales_playbook.md#objection-i-do-not-want-to-share-medical-information-on-the"
+      ],
+      "why": "Approved privacy objection handling: explain why details are needed and allow skipping.",
+      "split": "tuning"
+    },
+    {
+      "id": "O6",
+      "type": "objection",
+      "query": "Insurance companies never actually pay out.",
+      "expected": [
+        "docs/sales_playbook.md#objection-insurance-companies-never-pay-claims"
+      ],
+      "why": "Approved claims-distrust objection handling.",
+      "split": "tuning"
+    },
+    {
+      "id": "N1",
+      "type": "out_of_scope",
+      "query": "What's the weather going to be like in Dallas tomorrow?",
+      "expected": [],
+      "why": "Unrelated to health insurance; nothing should be retrieved.",
+      "split": "tuning"
+    },
+    {
+      "id": "N2",
+      "type": "out_of_scope",
+      "query": "Do you sell car insurance?",
+      "expected": [],
+      "why": "Auto insurance is not in the knowledge base; the agent must say it is unavailable.",
+      "split": "tuning"
+    },
+    {
+      "id": "N3",
+      "type": "out_of_scope",
+      "query": "What is the exact price for planet insurance?",
+      "expected": [],
+      "why": "Nonsense product; a generic overlap on 'price' or 'insurance' must not count as evidence.",
+      "split": "tuning"
+    },
+    {
+      "id": "N4",
+      "type": "out_of_scope",
+      "query": "Who is the CEO of your company?",
+      "expected": [],
+      "why": "Company leadership is not in the knowledge base.",
+      "split": "tuning"
+    },
+    {
+      "id": "H1",
+      "type": "product",
+      "split": "held_out",
+      "query": "Does the family plan include dental for my kids?",
+      "expected": [
+        "web/plans_overview.html#family-shield",
+        "tables/plan_comparison.csv#row-2"
+      ],
+      "why": "Family Shield includes pediatric dental and vision care."
+    },
+    {
+      "id": "H2",
+      "type": "product",
+      "split": "held_out",
+      "query": "What's the deductible on Senior Secure?",
+      "expected": [
+        "web/plans_overview.html#senior-secure"
+      ],
+      "why": "The Senior Secure record states the $1,500 deductible (the CSV row with a negative deductible was quarantined)."
+    },
+    {
+      "id": "H3",
+      "type": "policy",
+      "split": "held_out",
+      "query": "Are you allowed to give me medical advice?",
+      "expected": [
+        "docs/underwriting_policy_v2.txt#prohibited-statements"
+      ],
+      "why": "Prohibited statements forbid medical advice or diagnoses."
+    },
+    {
+      "id": "H4",
+      "type": "policy",
+      "split": "held_out",
+      "query": "What hours are your advisors available?",
+      "expected": [
+        "docs/underwriting_policy_v2.txt#human-escalation"
+      ],
+      "why": "The escalation rule lists advisor hours."
+    },
+    {
+      "id": "H5",
+      "type": "qualification",
+      "split": "held_out",
+      "query": "I'm 70, which plan can I get?",
+      "expected": [
+        "docs/underwriting_policy_v2.txt#eligibility-rules",
+        "web/plans_overview.html#senior-secure",
+        "tables/plan_comparison.csv#row-1"
+      ],
+      "why": "Eligibility rules and Senior Secure give age ranges; only Senior Secure covers age 70."
+    },
+    {
+      "id": "H6",
+      "type": "qualification",
+      "split": "held_out",
+      "query": "Do you offer plans in New York?",
+      "expected": [
+        "web/faq.html#in-which-states-are-plans-available",
+        "docs/underwriting_policy_v2.txt#eligibility-rules"
+      ],
+      "why": "The states FAQ says plans are not offered in New York."
+    },
+    {
+      "id": "H7",
+      "type": "faq",
+      "split": "held_out",
+      "query": "If I have an accident next week, am I covered right away?",
+      "expected": [
+        "web/faq.html#is-there-a-waiting-period-before-my-coverage-starts"
+      ],
+      "why": "Accidents and emergencies are covered from day one."
+    },
+    {
+      "id": "H8",
+      "type": "faq",
+      "split": "held_out",
+      "query": "How quickly do you process reimbursement claims?",
+      "expected": [
+        "web/faq.html#how-do-i-make-a-claim",
+        "docs/sales_playbook.md#objection-insurance-companies-never-pay-claims"
+      ],
+      "why": "Complete claims are processed within 15 business days."
+    },
+    {
+      "id": "H9",
+      "type": "faq",
+      "split": "held_out",
+      "query": "Can I add my newborn baby to the policy?",
+      "expected": [
+        "web/family_shield.html#who-is-covered",
+        "web/plans_overview.html#family-shield"
+      ],
+      "why": "Children can be added within 30 days of birth or adoption."
+    },
+    {
+      "id": "H10",
+      "type": "objection",
+      "split": "held_out",
+      "query": "I can't afford another monthly bill right now.",
+      "expected": [
+        "docs/sales_playbook.md#objection-it-is-too-expensive"
+      ],
+      "why": "Approved price objection handling."
+    },
+    {
+      "id": "H11",
+      "type": "objection",
+      "split": "held_out",
+      "query": "My company already gives me health coverage.",
+      "expected": [
+        "docs/sales_playbook.md#objection-i-already-have-coverage-through-my-employer"
+      ],
+      "why": "Approved employer-coverage objection handling."
+    },
+    {
+      "id": "H12",
+      "type": "out_of_scope",
+      "split": "held_out",
+      "query": "Can you help me book a flight to Chicago?",
+      "expected": [],
+      "why": "Unrelated to health insurance."
+    },
+    {
+      "id": "H13",
+      "type": "out_of_scope",
+      "split": "held_out",
+      "query": "Do you cover pet insurance for my dog?",
+      "expected": [],
+      "why": "Pet insurance is not offered."
+    },
+    {
+      "id": "H14",
+      "type": "out_of_scope",
+      "split": "held_out",
+      "query": "What's your stock price today?",
+      "expected": [],
+      "why": "Not in the knowledge base; 'price' must not ground an answer."
+    }
+  ]
+}

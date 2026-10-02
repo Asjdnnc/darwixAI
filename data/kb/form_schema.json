@@ -1,0 +1,86 @@
+[
+  {
+    "field": "full_name",
+    "raw_label": "Your Name",
+    "raw_name": "nm",
+    "type": "input",
+    "required": true
+  },
+  {
+    "field": "date_of_birth",
+    "raw_label": "DOB (mm/dd/yyyy)",
+    "raw_name": "dob",
+    "type": "input",
+    "required": true
+  },
+  {
+    "field": "phone",
+    "raw_label": "Phone #",
+    "raw_name": "ph",
+    "type": "tel",
+    "required": true
+  },
+  {
+    "field": "email",
+    "raw_label": "E-mail",
+    "raw_name": "em",
+    "type": "email",
+    "required": false
+  },
+  {
+    "field": "zip_code",
+    "raw_label": "Zip",
+    "raw_name": "zip",
+    "type": "input",
+    "required": true
+  },
+  {
+    "field": "state",
+    "raw_label": "State of residence",
+    "raw_name": "st",
+    "type": "select",
+    "required": true
+  },
+  {
+    "field": "household_size",
+    "raw_label": "How many people need coverage?",
+    "raw_name": "hh",
+    "type": "number",
+    "required": true
+  },
+  {
+    "field": "tobacco_use",
+    "raw_label": "Smoker?",
+    "raw_name": "tob",
+    "type": "select",
+    "required": true
+  },
+  {
+    "field": "pre_existing_conditions",
+    "raw_label": "Pre-existing illness?",
+    "raw_name": "ped",
+    "type": "textarea",
+    "required": false
+  },
+  {
+    "field": "current_insurance",
+    "raw_label": "Current insurance",
+    "raw_name": "cur",
+    "type": "input",
+    "required": false
+  },
+  {
+    "field": "preferred_callback_time",
+    "raw_label": "Best time to call",
+    "raw_name": "cb",
+    "type": "input",
+    "required": false
+  },
+  {
+    "field": "consent_to_contact",
+    "raw_label": "I agree to be contacted about my quote",
+    "raw_name": "ok",
+    "type": "checkbox",
+    "required": true
+  }
+]

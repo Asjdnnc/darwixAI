@@ -1,0 +1,181 @@
+{
+  "call_id": "dd9940da-d37a-41a6-ba70-42de3569d6b7",
+  "market": "en",
+  "history": [
+    {
+      "timestamp": "2026-10-02T18:10:39.021Z",
+      "role": "agent",
+      "text": "Hi, this is Austin, a virtual health insurance advisor with Darwix Health. This call is recorded for quality and compliance purposes. Is it okay if we continue?",
+      "citations": [
+        "docs/underwriting_policy_v2.txt#mandatory-disclosures"
+      ]
+    },
+    {
+      "timestamp": "2026-10-02T18:10:53.258Z",
+      "role": "customer",
+      "text": "Go ahead.",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T18:10:54.991Z",
+      "role": "agent",
+      "text": "Thank you. How can I help you today? I can answer questions about our health plans, or check which plan might fit you.",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T18:11:07.356Z",
+      "role": "customer",
+      "text": "I would like a quote.",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T18:11:09.320Z",
+      "role": "agent",
+      "text": "Sure, I can help you get a quote. I\u2019ll need some details about your family to prepare an estimate. Happy to help with that. I'll ask a few quick questions to see which plans might fit. May I ask how old you are?",
+      "citations": [
+        "web/family_shield.html#getting-a-family-quote"
+      ]
+    },
+    {
+      "timestamp": "2026-10-02T18:11:28.673Z",
+      "role": "customer",
+      "text": "I am 38.",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T18:12:01.180Z",
+      "role": "agent",
+      "text": "Which state do you live in?",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T18:12:06.711Z",
+      "role": "customer",
+      "text": "Ohio",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T18:12:27.773Z",
+      "role": "agent",
+      "text": "Great, you\u2019re in Ohio. We offer our Essential Care plan there. I can help you see if it fits your needs. How many people would need coverage, including you?",
+      "citations": [
+        "web/faq.html#in-which-states-are-plans-available"
+      ]
+    },
+    {
+      "timestamp": "2026-10-02T18:12:46.723Z",
+      "role": "customer",
+      "text": "Sorry, I gave you the wrong age. I am actually 48.",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T18:12:50.507Z",
+      "role": "agent",
+      "text": "Got it, you\u2019re 48. Just to make sure I have this right, earlier I noted your age as 38, and just now I heard 48. Which one is correct?",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T18:13:09.320Z",
+      "role": "customer",
+      "text": "I am 48",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T18:13:32.307Z",
+      "role": "agent",
+      "text": "Thank you for confirming your age is 48. Does anyone who would be covered use tobacco?",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T18:13:43.146Z",
+      "role": "customer",
+      "text": "No.",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T18:13:43.862Z",
+      "role": "agent",
+      "text": "Thank you. I\u2019ve noted that no one in your household uses tobacco. Do you, or anyone who would be covered, have any current medical conditions? You're welcome to skip this one.",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T18:14:00.822Z",
+      "role": "customer",
+      "text": "No.",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T18:14:34.237Z",
+      "role": "agent",
+      "text": "Do you have any health insurance right now?",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T18:14:41.023Z",
+      "role": "customer",
+      "text": "No.",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T18:14:44.789Z",
+      "role": "agent",
+      "text": "I understand you don\u2019t have current insurance. I can help you explore our Essential Care plan. What's the best time for a licensed advisor to call you back with a quote?",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T18:15:03.645Z",
+      "role": "customer",
+      "text": "Honestly, this sound too expensive for me.",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T18:15:03.681Z",
+      "role": "insight",
+      "text": "Offer an approved payment-support or callback path; do not promise an unapproved exception."
+    },
+    {
+      "timestamp": "2026-10-02T18:15:14.438Z",
+      "role": "agent",
+      "text": "I hear your concern about cost. What monthly budget do you have in mind?",
+      "citations": [
+        "docs/sales_playbook.md#objection-it-is-too-expensive"
+      ]
+    },
+    {
+      "timestamp": "2026-10-02T18:15:25.352Z",
+      "role": "customer",
+      "text": "Ten Thousand",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T18:15:26.198Z",
+      "role": "agent",
+      "text": "I'm sorry, I don't have verified information about that, so I won't guess. A licensed advisor can help with that question. And do I have your permission for Darwix Health to contact you about your quote?",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T18:15:45.021Z",
+      "role": "customer",
+      "text": "I need to talk to my wife first.",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T18:15:45.043Z",
+      "role": "insight",
+      "text": "Ask whether the customer wants a family health insurance plan."
+    },
+    {
+      "timestamp": "2026-10-02T18:16:12.428Z",
+      "role": "agent",
+      "text": "Of course. I'll connect you with a licensed advisor. Our advisors are available Monday to Friday, 8 AM to 8 PM Central, and Saturday 9 AM to 2 PM Central. If no one is available right now, we'll call you back within 1 business day.",
+      "citations": [
+        "docs/underwriting_policy_v2.txt#human-escalation"
+      ]
+    },
+    {
+      "timestamp": "2026-10-02T18:16:28.615Z",
+      "role": "insight",
+      "text": "CRM summary: Outcome: escalated. Could not capture consent to contact over the phone. Details: age=48; state=Ohio; household size=not provided; tobacco use=no; medical conditions=none; current insurance=none; callback time=Honestly, this sound too expensive for me.."
+    }
+  ]
+}

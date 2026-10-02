@@ -1,0 +1,320 @@
+{
+  "generated_at": "2026-10-02T11:37:23+00:00",
+  "sources": [
+    {
+      "path": "docs/underwriting_policy_v2.txt",
+      "source_type": "pdf_extract",
+      "status": "ok",
+      "sections": 7
+    },
+    {
+      "path": "docs/underwriting_policy_v1.txt",
+      "source_type": "pdf_extract",
+      "status": "superseded by docs/underwriting_policy_v2.txt",
+      "sections": 0
+    },
+    {
+      "path": "docs/sales_playbook.md",
+      "source_type": "markdown",
+      "status": "ok",
+      "sections": 10
+    },
+    {
+      "path": "tables/plan_comparison.csv",
+      "source_type": "table",
+      "status": "ok",
+      "sections": 4
+    },
+    {
+      "path": "forms/lead_intake_form.html",
+      "source_type": "form",
+      "status": "ok",
+      "sections": 1
+    },
+    {
+      "path": "web/plans_overview.html",
+      "source_type": "web_page",
+      "status": "ok",
+      "sections": 5
+    },
+    {
+      "path": "web/family_shield.html",
+      "source_type": "web_page",
+      "status": "ok",
+      "sections": 4
+    },
+    {
+      "path": "web/faq.html",
+      "source_type": "web_page",
+      "status": "ok",
+      "sections": 9
+    },
+    {
+      "path": "web/careers.html",
+      "source_type": "web_page",
+      "status": "ok",
+      "sections": 2
+    },
+    {
+      "path": "docs/scanned_brochure.pdf",
+      "source_type": "pdf",
+      "status": "failed",
+      "sections": 0
+    }
+  ],
+  "extraction_failures": [
+    {
+      "path": "docs/scanned_brochure.pdf",
+      "error": "PDF has no extractable text layer (scanned image); route to OCR or manual review",
+      "action": "excluded from index; flagged for manual review"
+    }
+  ],
+  "superseded": [
+    {
+      "path": "docs/underwriting_policy_v1.txt",
+      "replaced_by": "docs/underwriting_policy_v2.txt"
+    }
+  ],
+  "irrelevant_sections": [
+    {
+      "source_ref": "docs/underwriting_policy_v2.txt#purpose",
+      "reason": "irrelevant heading"
+    },
+    {
+      "source_ref": "docs/sales_playbook.md#internal-notes",
+      "reason": "irrelevant heading"
+    },
+    {
+      "source_ref": "web/plans_overview.html#find-the-right-health-plan-for-you",
+      "reason": "no domain content"
+    },
+    {
+      "source_ref": "web/family_shield.html#share-this-page",
+      "reason": "irrelevant heading"
+    },
+    {
+      "source_ref": "web/faq.html#still-have-questions",
+      "reason": "irrelevant heading"
+    },
+    {
+      "source_ref": "web/careers.html#open-roles",
+      "reason": "irrelevant heading"
+    },
+    {
+      "source_ref": "web/careers.html#how-to-apply",
+      "reason": "irrelevant heading"
+    }
+  ],
+  "boilerplate_removed": {
+    "Join thousands of happy members today!": 1,
+    "Call us today at 1-800-555-0199 to speak with an advisor!": 1
+  },
+  "pii_redactions": {
+    "email": 1,
+    "phone": 1,
+    "person_name": 1
+  },
+  "terminology_normalizations": {
+    "dependant -> dependent": 2,
+    "licence -> license": 1,
+    "Family-Shield -> Family Shield": 2,
+    "monthly fee -> premium": 1,
+    "deductable -> deductible": 1,
+    "out of pocket limit -> out-of-pocket maximum": 1,
+    "network hospital -> in-network provider": 1,
+    "premium amount -> premium": 2,
+    "oop max -> out-of-pocket maximum": 1,
+    "prior medical condition -> pre-existing condition": 1,
+    "pre existing disease -> pre-existing condition": 1,
+    "waiting time -> waiting period": 2,
+    "pre-existing illness -> pre-existing condition": 1,
+    "health underwriting -> medical underwriting": 1
+  },
+  "date_normalizations": [
+    {
+      "raw": "05/01/2026",
+      "iso": "2026-05-01",
+      "source": "docs/underwriting_policy_v2.txt"
+    },
+    {
+      "raw": "March 12, 2026",
+      "iso": "2026-03-12",
+      "source": "docs/sales_playbook.md"
+    },
+    {
+      "raw": "March 5, 2026",
+      "iso": "2026-03-05",
+      "source": "web/plans_overview.html"
+    },
+    {
+      "raw": "03/05/2026",
+      "iso": "2026-03-05",
+      "source": "web/family_shield.html"
+    },
+    {
+      "raw": "5th Mar 2026",
+      "iso": "2026-03-05",
+      "source": "web/faq.html"
+    }
+  ],
+  "quarantined": [
+    {
+      "source_ref": "docs/underwriting_policy_v2.txt#errata",
+      "errors": [
+        "invalid date: 'February 30, 2026'"
+      ],
+      "content": "The revised waiting periods take effect on February 30, 2026 for all new applications."
+    },
+    {
+      "source_ref": "tables/plan_comparison.csv#row-3",
+      "errors": [
+        "negative monetary amount"
+      ],
+      "content": "Senior Secure plan summary: eligible ages 55 to 75. Premium starts from $260 per month. Deductible: -$1,500. Out-of-pocket maximum: $5,000. Primary care visit copay: $20. Generic prescription copay: $10. Annual preventive screenings included."
+    }
+  ],
+  "duplicates": [
+    {
+      "level": "sentence",
+      "dropped": "docs/sales_playbook.md#mandatory-disclosure-reminder",
+      "kept": "docs/underwriting_policy_v2.txt#mandatory-disclosures",
+      "text": "Before discussing any plan price, the agent must state that final coverage and premiums are subject to medical underwriting and depend on verified medical history."
+    },
+    {
+      "level": "record",
+      "dropped": "tables/plan_comparison.csv#row-4",
+      "kept": "tables/plan_comparison.csv#row-1",
+      "similarity": 1.0
+    },
+    {
+      "level": "sentence",
+      "dropped": "web/family_shield.html#who-is-covered",
+      "kept": "web/plans_overview.html#family-shield",
+      "text": "Family Shield covers the policyholder, a spouse or domestic partner, and up to four dependent children under age 26 on one policy."
+    },
+    {
+      "level": "sentence",
+      "dropped": "web/family_shield.html#costs-at-a-glance",
+      "kept": "web/plans_overview.html#family-shield",
+      "text": "Premium starts from $520 per month for a family of four."
+    },
+    {
+      "level": "sentence",
+      "dropped": "web/family_shield.html#costs-at-a-glance",
+      "kept": "web/plans_overview.html#family-shield",
+      "text": "The plan has a $6,000 family deductible ($3,000 per person) and a $14,000 family out-of-pocket maximum."
+    },
+    {
+      "level": "record",
+      "dropped": "web/faq.html#is-there-a-waiting-period-before-my-coverage-starts-2",
+      "kept": "web/faq.html#is-there-a-waiting-period-before-my-coverage-starts",
+      "similarity": 1.0
+    }
+  ],
+  "unmapped_form_fields": [],
+  "form_schema": [
+    {
+      "field": "full_name",
+      "raw_label": "Your Name",
+      "raw_name": "nm",
+      "type": "input",
+      "required": true
+    },
+    {
+      "field": "date_of_birth",
+      "raw_label": "DOB (mm/dd/yyyy)",
+      "raw_name": "dob",
+      "type": "input",
+      "required": true
+    },
+    {
+      "field": "phone",
+      "raw_label": "Phone #",
+      "raw_name": "ph",
+      "type": "tel",
+      "required": true
+    },
+    {
+      "field": "email",
+      "raw_label": "E-mail",
+      "raw_name": "em",
+      "type": "email",
+      "required": false
+    },
+    {
+      "field": "zip_code",
+      "raw_label": "Zip",
+      "raw_name": "zip",
+      "type": "input",
+      "required": true
+    },
+    {
+      "field": "state",
+      "raw_label": "State of residence",
+      "raw_name": "st",
+      "type": "select",
+      "required": true
+    },
+    {
+      "field": "household_size",
+      "raw_label": "How many people need coverage?",
+      "raw_name": "hh",
+      "type": "number",
+      "required": true
+    },
+    {
+      "field": "tobacco_use",
+      "raw_label": "Smoker?",
+      "raw_name": "tob",
+      "type": "select",
+      "required": true
+    },
+    {
+      "field": "pre_existing_conditions",
+      "raw_label": "Pre-existing illness?",
+      "raw_name": "ped",
+      "type": "textarea",
+      "required": false
+    },
+    {
+      "field": "current_insurance",
+      "raw_label": "Current insurance",
+      "raw_name": "cur",
+      "type": "input",
+      "required": false
+    },
+    {
+      "field": "preferred_callback_time",
+      "raw_label": "Best time to call",
+      "raw_name": "cb",
+      "type": "input",
+      "required": false
+    },
+    {
+      "field": "consent_to_contact",
+      "raw_label": "I agree to be contacted about my quote",
+      "raw_name": "ok",
+      "type": "checkbox",
+      "required": true
+    }
+  ],
+  "totals": {
+    "sources": 10,
+    "sources_failed": 1,
+    "sources_superseded": 1,
+    "sections_extracted": 42,
+    "irrelevant_sections_dropped": 7,
+    "quarantined": 2,
+    "duplicate_records_dropped": 2,
+    "duplicate_sentences_dropped": 4,
+    "records_published": 30,
+    "categories": {
+      "faq": 7,
+      "objection": 6,
+      "policy": 3,
+      "process": 1,
+      "product": 9,
+      "qualification": 4
+    }
+  }
+}

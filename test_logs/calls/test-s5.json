@@ -1,0 +1,97 @@
+{
+  "call_id": "test-s5",
+  "market": "en",
+  "started_at": "2026-10-02T18:39:23+00:00",
+  "transcript": [
+    {
+      "at": "2026-10-02T18:39:23+00:00",
+      "role": "agent",
+      "text": "Hi, this is Austin, a virtual health insurance advisor with Darwix Health. This call is recorded for quality and compliance purposes. Is it okay if we continue?",
+      "citations": [
+        "docs/underwriting_policy_v2.txt#mandatory-disclosures"
+      ]
+    },
+    {
+      "at": "2026-10-02T18:39:27+00:00",
+      "role": "customer",
+      "text": "Okay."
+    },
+    {
+      "at": "2026-10-02T18:39:28+00:00",
+      "role": "agent",
+      "text": "Thank you. How can I help you today? I can answer questions about our health plans, or check which plan might fit you.",
+      "citations": [],
+      "intent": "provide_info"
+    },
+    {
+      "at": "2026-10-02T18:39:32+00:00",
+      "role": "customer",
+      "text": "I'm 60."
+    },
+    {
+      "at": "2026-10-02T18:39:32+00:00",
+      "role": "agent",
+      "text": "Thanks for sharing your age. I can help you with plan options or answer any questions you have. Which state do you live in?",
+      "citations": [],
+      "intent": "provide_info"
+    },
+    {
+      "at": "2026-10-02T18:39:36+00:00",
+      "role": "customer",
+      "text": "Can I just speak to a real person please?"
+    },
+    {
+      "at": "2026-10-02T18:39:38+00:00",
+      "role": "agent",
+      "text": "Of course. I'll connect you with a licensed advisor. Our advisors are available Monday to Friday, 8 AM to 8 PM Central, and Saturday 9 AM to 2 PM Central. If no one is available right now, we'll call you back within 1 business day.",
+      "citations": [
+        "docs/underwriting_policy_v2.txt#human-escalation"
+      ]
+    }
+  ],
+  "lead": {
+    "age": 60
+  },
+  "conflicts": {},
+  "recording_consent": true,
+  "underwriting_disclosed": false,
+  "outcome": {
+    "status": "escalated",
+    "reason": "Caller asked for a human advisor",
+    "source_ref": "docs/underwriting_policy_v2.txt#human-escalation"
+  },
+  "actions": [
+    {
+      "type": "escalation",
+      "id": "esc_test-s5",
+      "operation": "updated",
+      "webhook": "not configured"
+    },
+    {
+      "type": "lead",
+      "id": "lead_test-s5",
+      "operation": "updated",
+      "webhook": "not configured"
+    }
+  ],
+  "guard_events": [
+    {
+      "guard": "unsupported_extraction",
+      "field": "medical_conditions",
+      "value": "none"
+    },
+    {
+      "guard": "unsupported_extraction",
+      "field": "current_insurance",
+      "value": "none"
+    }
+  ],
+  "escalated": true,
+  "ended": true,
+  "attempts": {},
+  "last_asked": "state",
+  "mode": "qualifying",
+  "quote_offered": false,
+  "pending_non_us": null,
+  "qualifying_started_turn": false
+}

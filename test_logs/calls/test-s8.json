@@ -1,0 +1,54 @@
+{
+  "call_id": "test-s8",
+  "market": "en",
+  "started_at": "2026-10-02T18:34:53+00:00",
+  "transcript": [
+    {
+      "at": "2026-10-02T18:34:53+00:00",
+      "role": "agent",
+      "text": "Hi, this is Austin, a virtual health insurance advisor with Darwix Health. This call is recorded for quality and compliance purposes. Is it okay if we continue?",
+      "citations": [
+        "docs/underwriting_policy_v2.txt#mandatory-disclosures"
+      ]
+    },
+    {
+      "at": "2026-10-02T18:34:57+00:00",
+      "role": "customer",
+      "text": "No, I don't want to be recorded."
+    },
+    {
+      "at": "2026-10-02T18:34:59+00:00",
+      "role": "agent",
+      "text": "No problem, I understand. I'll end this automated call now and arrange for a human advisor to call you back instead. Thank you for your time.",
+      "citations": [
+        "docs/underwriting_policy_v2.txt#mandatory-disclosures"
+      ]
+    }
+  ],
+  "lead": {},
+  "conflicts": {},
+  "recording_consent": false,
+  "underwriting_disclosed": false,
+  "outcome": {
+    "status": "recording_declined",
+    "reason": "Caller declined call recording",
+    "source_ref": "docs/underwriting_policy_v2.txt#mandatory-disclosures"
+  },
+  "actions": [
+    {
+      "type": "callback",
+      "id": "cb_test-s8",
+      "operation": "updated",
+      "webhook": "not configured"
+    }
+  ],
+  "guard_events": [],
+  "escalated": false,
+  "ended": true,
+  "attempts": {},
+  "last_asked": null,
+  "mode": "discovery",
+  "quote_offered": false,
+  "pending_non_us": null,
+  "qualifying_started_turn": false
+}

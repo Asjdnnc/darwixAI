@@ -1,0 +1,171 @@
+{
+  "call_id": "test-s2",
+  "market": "en",
+  "started_at": "2026-10-02T18:37:25+00:00",
+  "transcript": [
+    {
+      "at": "2026-10-02T18:37:25+00:00",
+      "role": "agent",
+      "text": "Hi, this is Austin, a virtual health insurance advisor with Darwix Health. This call is recorded for quality and compliance purposes. Is it okay if we continue?",
+      "citations": [
+        "docs/underwriting_policy_v2.txt#mandatory-disclosures"
+      ]
+    },
+    {
+      "at": "2026-10-02T18:37:29+00:00",
+      "role": "customer",
+      "text": "Sure."
+    },
+    {
+      "at": "2026-10-02T18:37:35+00:00",
+      "role": "agent",
+      "text": "Thank you. How can I help you today? I can answer questions about our health plans, or check which plan might fit you.",
+      "citations": [],
+      "intent": "provide_info"
+    },
+    {
+      "at": "2026-10-02T18:37:39+00:00",
+      "role": "customer",
+      "text": "I'm 30."
+    },
+    {
+      "at": "2026-10-02T18:37:39+00:00",
+      "role": "agent",
+      "text": "Thanks for sharing your age. I can help you with any questions you have about our plans or coverage options. Which state do you live in?",
+      "citations": [],
+      "intent": "provide_info"
+    },
+    {
+      "at": "2026-10-02T18:37:43+00:00",
+      "role": "customer",
+      "text": "Florida."
+    },
+    {
+      "at": "2026-10-02T18:37:47+00:00",
+      "role": "agent",
+      "text": "Great, you\u2019re in Florida. I can help you see which plans are available there and get you a quote. How many people would need coverage, including you?",
+      "citations": [
+        "web/faq.html#in-which-states-are-plans-available"
+      ],
+      "intent": "ask_question"
+    },
+    {
+      "at": "2026-10-02T18:37:51+00:00",
+      "role": "customer",
+      "text": "Honestly, this sounds too expensive for me."
+    },
+    {
+      "at": "2026-10-02T18:37:51+00:00",
+      "role": "agent",
+      "text": "I hear your concern about cost. What monthly budget do you have in mind?",
+      "citations": [
+        "docs/sales_playbook.md#objection-it-is-too-expensive"
+      ],
+      "intent": "objection"
+    },
+    {
+      "at": "2026-10-02T18:37:55+00:00",
+      "role": "customer",
+      "text": "I already get insurance through my job anyway."
+    },
+    {
+      "at": "2026-10-02T18:37:56+00:00",
+      "role": "agent",
+      "text": "I understand you already have coverage through your employer. We can still look at options for any family members not covered by that plan. How many people would need coverage, including you?",
+      "citations": [
+        "docs/sales_playbook.md#objection-i-already-have-coverage-through-my-employer"
+      ],
+      "intent": "objection"
+    },
+    {
+      "at": "2026-10-02T18:38:00+00:00",
+      "role": "customer",
+      "text": "I need to talk to my wife first."
+    },
+    {
+      "at": "2026-10-02T18:38:03+00:00",
+      "role": "agent",
+      "text": "I understand you want to discuss this with your wife first. I can give you a callback when both of you are available and send a written plan summary in the meantime. How many people would need coverage, including you?",
+      "citations": [
+        "docs/sales_playbook.md#objection-i-need-to-talk-to-my-spouse-first"
+      ],
+      "intent": "objection"
+    }
+  ],
+  "lead": {
+    "age": 30,
+    "state": "FL"
+  },
+  "conflicts": {},
+  "recording_consent": true,
+  "underwriting_disclosed": false,
+  "outcome": {
+    "status": "in_progress",
+    "plans": [
+      "Essential Care"
+    ]
+  },
+  "actions": [
+    {
+      "type": "lead",
+      "id": "lead_test-s2",
+      "operation": "updated",
+      "webhook": "not configured"
+    }
+  ],
+  "guard_events": [
+    {
+      "guard": "unsupported_extraction",
+      "field": "medical_conditions",
+      "value": "none"
+    },
+    {
+      "guard": "unsupported_extraction",
+      "field": "current_insurance",
+      "value": "none"
+    },
+    {
+      "guard": "not_an_answer",
+      "field": "medical_conditions",
+      "intent": "ask_question"
+    },
+    {
+      "guard": "not_an_answer",
+      "field": "current_insurance",
+      "intent": "ask_question"
+    },
+    {
+      "guard": "not_an_answer",
+      "field": "medical_conditions",
+      "intent": "objection"
+    },
+    {
+      "guard": "not_an_answer",
+      "field": "current_insurance",
+      "intent": "objection"
+    },
+    {
+      "guard": "not_an_answer",
+      "field": "current_insurance",
+      "intent": "objection"
+    },
+    {
+      "guard": "not_an_answer",
+      "field": "medical_conditions",
+      "intent": "objection"
+    },
+    {
+      "guard": "not_an_answer",
+      "field": "current_insurance",
+      "intent": "objection"
+    }
+  ],
+  "escalated": false,
+  "ended": true,
+  "attempts": {},
+  "last_asked": "household_size",
+  "mode": "qualifying",
+  "quote_offered": false,
+  "pending_non_us": null,
+  "qualifying_started_turn": false
+}

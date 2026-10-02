@@ -1,0 +1,1854 @@
+{
+  "config": {
+    "min_score": 2.5,
+    "min_coverage": 0.4,
+    "title_weight": 4,
+    "k1": 1.2,
+    "b": 0.75
+  },
+  "summary": {
+    "queries": 42,
+    "correct": 40,
+    "partially_correct": 0,
+    "incorrect": 2,
+    "top1_accuracy": 0.943,
+    "recall_at_3": 0.943,
+    "mrr": 0.943,
+    "out_of_scope_rejected": "7/7",
+    "by_split": {
+      "tuning": {
+        "queries": 28,
+        "correct": 28,
+        "partially_correct": 0,
+        "incorrect": 0,
+        "top1_accuracy": 1.0,
+        "recall_at_3": 1.0,
+        "mrr": 1.0,
+        "out_of_scope_rejected": "4/4"
+      },
+      "held_out": {
+        "queries": 14,
+        "correct": 12,
+        "partially_correct": 0,
+        "incorrect": 2,
+        "top1_accuracy": 0.818,
+        "recall_at_3": 0.818,
+        "mrr": 0.818,
+        "out_of_scope_rejected": "3/3"
+      }
+    }
+  },
+  "rows": [
+    {
+      "id": "P1",
+      "type": "product",
+      "query": "What does the Family Shield plan cover?",
+      "expected": [
+        "web/plans_overview.html#family-shield",
+        "web/family_shield.html#who-is-covered",
+        "tables/plan_comparison.csv#row-2"
+      ],
+      "why": "The Family Shield records list who is covered and the included benefits (pediatric dental and vision, maternity, newborn care).",
+      "split": "tuning",
+      "results": [
+        {
+          "record_id": "kb_product_007",
+          "title": "Family Shield - Who is covered",
+          "source_ref": "web/family_shield.html#who-is-covered",
+          "score": 7.049,
+          "coverage": 0.837,
+          "matched": [
+            "family",
+            "shield",
+            "cover"
+          ],
+          "content": "Children can be added within 30 days of birth or adoption without waiting for the annual enrollment window."
+        },
+        {
+          "record_id": "kb_product_004",
+          "title": "Family Shield",
+          "source_ref": "web/plans_overview.html#family-shield",
+          "score": 6.778,
+          "coverage": 1.0,
+          "matched": [
+            "family",
+            "shield",
+            "plan",
+            "cover"
+          ],
+          "content": "Family Shield covers the policyholder, a spouse or domestic partner, and up to four dependent children under age 26 on a single policy. Premium starts from $520 per month for a family of four. The plan has a $6,000 family deductible ($3,000 per person) and a $14,000 family out-of-pocket maximum. Pediatric dental and vision care, maternity care, and newborn care are included."
+        },
+        {
+          "record_id": "kb_objection_002",
+          "title": "Objection: I already have coverage through my employer",
+          "source_ref": "docs/sales_playbook.md#objection-i-already-have-coverage-through-my-employer",
+          "score": 6.561,
+          "coverage": 1.0,
+          "matched": [
+            "family",
+            "shield",
+            "plan",
+            "cover"
+          ],
+          "content": "Respect the existing coverage and ask whether any family members are not covered by the employer plan. Family Shield can cover dependents who are not on an employer plan. Do not pressure the caller to cancel existing coverage."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "web/family_shield.html#who-is-covered",
+        "score": 7.049,
+        "coverage": 0.837
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "P2",
+      "type": "product",
+      "query": "How much does Essential Care cost per month?",
+      "expected": [
+        "web/plans_overview.html#essential-care",
+        "tables/plan_comparison.csv#row-1"
+      ],
+      "why": "Both Essential Care records state the starting premium of $189 per month.",
+      "split": "tuning",
+      "results": [
+        {
+          "record_id": "kb_product_001",
+          "title": "Essential Care plan summary",
+          "source_ref": "tables/plan_comparison.csv#row-1",
+          "score": 10.187,
+          "coverage": 1.0,
+          "matched": [
+            "essential",
+            "care",
+            "per",
+            "month",
+            "premium"
+          ],
+          "content": "Essential Care plan summary: eligible ages 18 to 64. Premium starts from $189 per month. Deductible: $3,000. Out-of-pocket maximum: $8,000. Primary care visit copay: $30. Generic prescription copay: $15. Individual plan; in-network only except emergencies."
+        },
+        {
+          "record_id": "kb_product_003",
+          "title": "Essential Care",
+          "source_ref": "web/plans_overview.html#essential-care",
+          "score": 7.624,
+          "coverage": 0.602,
+          "matched": [
+            "essential",
+            "care",
+            "cost",
+            "premium"
+          ],
+          "content": "Essential Care is an individual health plan for adults aged 18 to 64. Premium starts from $189 for a 30-year-old non-tobacco user. The plan has a $3,000 annual deductible and a $8,000 out-of-pocket maximum. Primary care visits cost a $30 copay and generic prescriptions cost a $15 copay. Care is covered at in-network providers and in-network clinics. Out-of-network care is covered only for emergencies."
+        },
+        {
+          "record_id": "kb_product_004",
+          "title": "Family Shield",
+          "source_ref": "web/plans_overview.html#family-shield",
+          "score": 6.276,
+          "coverage": 0.79,
+          "matched": [
+            "care",
+            "per",
+            "month",
+            "premium"
+          ],
+          "content": "Family Shield covers the policyholder, a spouse or domestic partner, and up to four dependent children under age 26 on a single policy. Premium starts from $520 per month for a family of four. The plan has a $6,000 family deductible ($3,000 per person) and a $14,000 family out-of-pocket maximum. Pediatric dental and vision care, maternity care, and newborn care are included."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "tables/plan_comparison.csv#row-1",
+        "score": 10.187,
+        "coverage": 1.0
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "P3",
+      "type": "product",
+      "query": "Hi, my wife and I are both 40 and we have two kids. How much would a family plan be?",
+      "expected": [
+        "web/plans_overview.html#family-shield",
+        "tables/plan_comparison.csv#row-2",
+        "web/family_shield.html#costs-at-a-glance",
+        "web/family_shield.html#getting-a-family-quote"
+      ],
+      "why": "Conversational family pricing question; the Family Shield records give the $520 starting premium for a family of four and what a quote depends on.",
+      "split": "tuning",
+      "results": [
+        {
+          "record_id": "kb_product_004",
+          "title": "Family Shield",
+          "source_ref": "web/plans_overview.html#family-shield",
+          "score": 7.621,
+          "coverage": 0.555,
+          "matched": [
+            "family",
+            "plan",
+            "premium",
+            "spouse",
+            "dependent",
+            "children"
+          ],
+          "content": "Family Shield covers the policyholder, a spouse or domestic partner, and up to four dependent children under age 26 on a single policy. Premium starts from $520 per month for a family of four. The plan has a $6,000 family deductible ($3,000 per person) and a $14,000 family out-of-pocket maximum. Pediatric dental and vision care, maternity care, and newborn care are included."
+        },
+        {
+          "record_id": "kb_product_002",
+          "title": "Family Shield plan summary",
+          "source_ref": "tables/plan_comparison.csv#row-2",
+          "score": 6.055,
+          "coverage": 0.555,
+          "matched": [
+            "family",
+            "plan",
+            "premium",
+            "dependent",
+            "children"
+          ],
+          "content": "Family Shield plan summary: eligible ages 0 to 64. Premium starts from $520 per month. Deductible: $6,000 family / $3,000 per person. Out-of-pocket maximum: $14,000 family. Primary care visit copay: $25. Generic prescription copay: $15. Up to 4 dependent children under 26; pediatric dental and vision included."
+        },
+        {
+          "record_id": "kb_objection_003",
+          "title": "Objection: I need to talk to my spouse first",
+          "source_ref": "docs/sales_playbook.md#objection-i-need-to-talk-to-my-spouse-first",
+          "score": 5.325,
+          "coverage": 0.555,
+          "matched": [
+            "family",
+            "plan",
+            "spouse"
+          ],
+          "content": "Agree that it is a family decision. Offer a callback at a time when both partners are available and offer to send a written plan summary in the meantime."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "web/plans_overview.html#family-shield",
+        "score": 7.621,
+        "coverage": 0.555
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "P4",
+      "type": "product",
+      "query": "Is there a plan for retired people?",
+      "expected": [
+        "web/plans_overview.html#senior-secure",
+        "docs/underwriting_policy_v2.txt#eligibility-rules"
+      ],
+      "why": "Senior Secure is the plan for adults aged 55 to 75; the eligibility rules give the same age range.",
+      "split": "tuning",
+      "results": [
+        {
+          "record_id": "kb_product_005",
+          "title": "Senior Secure",
+          "source_ref": "web/plans_overview.html#senior-secure",
+          "score": 3.518,
+          "coverage": 0.619,
+          "matched": [
+            "plan",
+            "senior"
+          ],
+          "content": "Senior Secure is designed for adults aged 55 to 75 who want lower out-of-pocket costs. Premium starts from $260 per month. The plan has a $1,500 deductible and a $5,000 Out-of-pocket maximum. Annual preventive screenings and a yearly wellness visit are included at no extra cost."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "web/plans_overview.html#senior-secure",
+        "score": 3.518,
+        "coverage": 0.619
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "P5",
+      "type": "product",
+      "query": "Can I get a discount if I pay for the whole year?",
+      "expected": [
+        "web/plans_overview.html#paying-your-premium"
+      ],
+      "why": "The premium payment record states the 5% annual payment discount.",
+      "split": "tuning",
+      "results": [
+        {
+          "record_id": "kb_product_006",
+          "title": "Paying your premium",
+          "source_ref": "web/plans_overview.html#paying-your-premium",
+          "score": 10.23,
+          "coverage": 1.0,
+          "matched": [
+            "discount",
+            "pay",
+            "premium",
+            "annually"
+          ],
+          "content": "Premiums can be paid monthly, quarterly, or annually. Members who pay annually receive a 5% discount on the total yearly premium."
+        },
+        {
+          "record_id": "kb_objection_001",
+          "title": "Objection: It is too expensive",
+          "source_ref": "docs/sales_playbook.md#objection-it-is-too-expensive",
+          "score": 7.803,
+          "coverage": 1.0,
+          "matched": [
+            "discount",
+            "pay",
+            "premium",
+            "annually"
+          ],
+          "content": "Acknowledge the concern and ask what monthly budget the caller has in mind. Mention that paying annually gives a 5% discount and that Essential Care has a lower starting premium than Family Shield. Never promise a discount or price that is not in the approved plan materials."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "web/plans_overview.html#paying-your-premium",
+        "score": 10.23,
+        "coverage": 1.0
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "L1",
+      "type": "policy",
+      "query": "What do you have to tell me before you give me a price?",
+      "expected": [
+        "docs/underwriting_policy_v2.txt#mandatory-disclosures"
+      ],
+      "why": "The mandatory disclosure must be stated before any plan price is discussed.",
+      "split": "tuning",
+      "results": [
+        {
+          "record_id": "kb_policy_001",
+          "title": "Mandatory disclosures",
+          "source_ref": "docs/underwriting_policy_v2.txt#mandatory-disclosures",
+          "score": 17.129,
+          "coverage": 1.0,
+          "matched": [
+            "price",
+            "premium",
+            "state",
+            "disclosure",
+            "must",
+            "mandatory"
+          ],
+          "content": "At the start of every call the agent must state that the call is recorded for quality and compliance purposes. Before discussing any plan price, the agent must state that final coverage and premiums are subject to medical underwriting and depend on verified medical history. If the customer does not consent to recording, the agent must end the automated conversation and offer a callback from a human advisor."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "docs/underwriting_policy_v2.txt#mandatory-disclosures",
+        "score": 17.129,
+        "coverage": 1.0
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "L2",
+      "type": "policy",
+      "query": "Can you guarantee that my diabetes will be covered?",
+      "expected": [
+        "docs/underwriting_policy_v2.txt#prohibited-statements",
+        "web/faq.html#are-pre-existing-conditions-covered"
+      ],
+      "why": "Agents may never guarantee coverage of a pre-existing condition; the FAQ explains coverage depends on medical underwriting.",
+      "split": "tuning",
+      "results": [
+        {
+          "record_id": "kb_faq_002",
+          "title": "Are pre-existing conditions covered?",
+          "source_ref": "web/faq.html#are-pre-existing-conditions-covered",
+          "score": 12.073,
+          "coverage": 0.722,
+          "matched": [
+            "cover",
+            "pre",
+            "exist",
+            "condition",
+            "medical"
+          ],
+          "content": "Pre-existing conditions must be declared on the application. Depending on medical underwriting, a condition may be covered in full, covered with a specific exclusion, or covered with an additional premium. An advisor cannot confirm the outcome during a call."
+        },
+        {
+          "record_id": "kb_policy_002",
+          "title": "Prohibited statements",
+          "source_ref": "docs/underwriting_policy_v2.txt#prohibited-statements",
+          "score": 8.883,
+          "coverage": 0.798,
+          "matched": [
+            "guarantee",
+            "pre",
+            "exist",
+            "condition",
+            "medical"
+          ],
+          "content": "Agents must never guarantee approval or coverage of a pre-existing condition, quote a final premium, give medical advice or diagnoses, disparage another insurer, or pressure the customer to decide during the call."
+        },
+        {
+          "record_id": "kb_product_009",
+          "title": "Family Shield - Getting a family quote",
+          "source_ref": "web/family_shield.html#getting-a-family-quote",
+          "score": 8.16,
+          "coverage": 0.798,
+          "matched": [
+            "guarantee",
+            "pre",
+            "exist",
+            "condition"
+          ],
+          "content": "To prepare a family quote, the advisor needs the age of every family member, the state of residence, tobacco use for each adult, and any pre-existing condition for each person. A family quote is an estimate only and does not guarantee coverage for pre-existing conditions."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "web/faq.html#are-pre-existing-conditions-covered",
+        "score": 12.073,
+        "coverage": 0.722
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "L3",
+      "type": "policy",
+      "query": "I want to speak to a real person.",
+      "expected": [
+        "docs/underwriting_policy_v2.txt#human-escalation"
+      ],
+      "why": "The human escalation rule says to transfer when the caller asks for a person, and gives advisor hours.",
+      "split": "tuning",
+      "results": [
+        {
+          "record_id": "kb_policy_003",
+          "title": "Human escalation",
+          "source_ref": "docs/underwriting_policy_v2.txt#human-escalation",
+          "score": 13.122,
+          "coverage": 0.708,
+          "matched": [
+            "person",
+            "human",
+            "advisor",
+            "escalation",
+            "transfer"
+          ],
+          "content": "Transfer the caller to a licensed human advisor when the caller asks for a person, raises a complaint, asks a detailed medical or legal question, or disputes a claim on an existing policy. Human advisors are available Monday to Friday 8 AM to 8 PM Central Time and Saturday 9 AM to 2 PM Central Time. Outside these hours, schedule a callback within 1 business day."
+        },
+        {
+          "record_id": "kb_product_004",
+          "title": "Family Shield",
+          "source_ref": "web/plans_overview.html#family-shield",
+          "score": 5.416,
+          "coverage": 0.417,
+          "matched": [
+            "person",
+            "dependent",
+            "children",
+            "family"
+          ],
+          "content": "Family Shield covers the policyholder, a spouse or domestic partner, and up to four dependent children under age 26 on a single policy. Premium starts from $520 per month for a family of four. The plan has a $6,000 family deductible ($3,000 per person) and a $14,000 family out-of-pocket maximum. Pediatric dental and vision care, maternity care, and newborn care are included."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "docs/underwriting_policy_v2.txt#human-escalation",
+        "score": 13.122,
+        "coverage": 0.708
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "L4",
+      "type": "policy",
+      "query": "What happens if I don't agree to the call being recorded?",
+      "expected": [
+        "docs/underwriting_policy_v2.txt#mandatory-disclosures"
+      ],
+      "why": "The disclosure policy says to end the automated conversation and offer a human callback if recording consent is refused.",
+      "split": "tuning",
+      "results": [
+        {
+          "record_id": "kb_policy_001",
+          "title": "Mandatory disclosures",
+          "source_ref": "docs/underwriting_policy_v2.txt#mandatory-disclosures",
+          "score": 5.902,
+          "coverage": 0.713,
+          "matched": [
+            "call",
+            "record",
+            "consent"
+          ],
+          "content": "At the start of every call the agent must state that the call is recorded for quality and compliance purposes. Before discussing any plan price, the agent must state that final coverage and premiums are subject to medical underwriting and depend on verified medical history. If the customer does not consent to recording, the agent must end the automated conversation and offer a callback from a human advisor."
+        },
+        {
+          "record_id": "kb_process_001",
+          "title": "Call opening script",
+          "source_ref": "docs/sales_playbook.md#call-opening-script",
+          "score": 4.521,
+          "coverage": 0.425,
+          "matched": [
+            "call",
+            "record"
+          ],
+          "content": "Greet the caller, introduce yourself as a Darwix Health advisor, and say that the call is recorded for quality and compliance purposes. Ask for permission to continue. Ask what prompted the caller to look for health coverage today."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "docs/underwriting_policy_v2.txt#mandatory-disclosures",
+        "score": 5.902,
+        "coverage": 0.713
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "L5",
+      "type": "policy",
+      "split": "tuning",
+      "query": "What disclosure is required before a quote?",
+      "expected": [
+        "docs/underwriting_policy_v2.txt#mandatory-disclosures"
+      ],
+      "why": "The mandatory disclosure must be stated before any plan price is discussed. (Added after it exposed the form-record term-frequency issue.)",
+      "results": [
+        {
+          "record_id": "kb_policy_001",
+          "title": "Mandatory disclosures",
+          "source_ref": "docs/underwriting_policy_v2.txt#mandatory-disclosures",
+          "score": 10.402,
+          "coverage": 1.0,
+          "matched": [
+            "disclosure",
+            "must",
+            "mandatory",
+            "price",
+            "premium"
+          ],
+          "content": "At the start of every call the agent must state that the call is recorded for quality and compliance purposes. Before discussing any plan price, the agent must state that final coverage and premiums are subject to medical underwriting and depend on verified medical history. If the customer does not consent to recording, the agent must end the automated conversation and offer a callback from a human advisor."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "docs/underwriting_policy_v2.txt#mandatory-disclosures",
+        "score": 10.402,
+        "coverage": 1.0
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "Q1",
+      "type": "qualification",
+      "query": "Am I eligible if I live in California?",
+      "expected": [
+        "docs/underwriting_policy_v2.txt#eligibility-rules",
+        "web/faq.html#in-which-states-are-plans-available",
+        "docs/underwriting_policy_v2.txt#preliminary-lead-qualification"
+      ],
+      "why": "California is not an offered state; the eligibility rules and the states FAQ both list where plans are offered.",
+      "split": "tuning",
+      "results": [
+        {
+          "record_id": "kb_qualification_001",
+          "title": "Eligibility rules",
+          "source_ref": "docs/underwriting_policy_v2.txt#eligibility-rules",
+          "score": 4.627,
+          "coverage": 0.578,
+          "matched": [
+            "eligible",
+            "live",
+            "eligibility"
+          ],
+          "content": "Essential Care is available to applicants aged 18 to 64. Family Shield is available to a policyholder aged 18 to 64 together with eligible dependents. Senior Secure is available to applicants aged 55 to 75. Applicants must live in a state where plans are offered: Texas, Florida, Georgia, Arizona, North Carolina, Ohio, Pennsylvania, Illinois, Michigan, Tennessee, Colorado, or Virginia."
+        },
+        {
+          "record_id": "kb_qualification_002",
+          "title": "Preliminary lead qualification",
+          "source_ref": "docs/underwriting_policy_v2.txt#preliminary-lead-qualification",
+          "score": 4.126,
+          "coverage": 0.578,
+          "matched": [
+            "eligible",
+            "live",
+            "qualification"
+          ],
+          "content": "A lead must be referred to a senior health advisor when the caller reports cancer treatment in the last 5 years, kidney dialysis, an organ transplant, or a current hospital admission. A lead is not eligible for a quote when the caller lives outside the offered states or no plan matches the caller's age. Offer to notify the caller when plans become available in their state. Agents provide a preliminary outcome only."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "docs/underwriting_policy_v2.txt#eligibility-rules",
+        "score": 4.627,
+        "coverage": 0.578
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "Q2",
+      "type": "qualification",
+      "query": "What information do you need from me to qualify?",
+      "expected": [
+        "docs/sales_playbook.md#qualification-questions",
+        "forms/lead_intake_form.html#form-fields",
+        "docs/underwriting_policy_v2.txt#preliminary-lead-qualification"
+      ],
+      "why": "The qualification questions record lists the details collected and their order.",
+      "split": "tuning",
+      "results": [
+        {
+          "record_id": "kb_qualification_002",
+          "title": "Preliminary lead qualification",
+          "source_ref": "docs/underwriting_policy_v2.txt#preliminary-lead-qualification",
+          "score": 6.747,
+          "coverage": 1.0,
+          "matched": [
+            "eligibility",
+            "qualification"
+          ],
+          "content": "Agents provide a preliminary outcome only. Final eligibility is decided by medical underwriting after a complete application."
+        },
+        {
+          "record_id": "kb_qualification_003",
+          "title": "Qualification questions",
+          "source_ref": "docs/sales_playbook.md#qualification-questions",
+          "score": 5.202,
+          "coverage": 1.0,
+          "matched": [
+            "qualification",
+            "question"
+          ],
+          "content": "Ask one question at a time, in this order: the caller's age, state of residence, how many people need coverage and their ages, tobacco use, any current medical conditions, current insurance, the best time for a callback, and consent to be contacted. If an answer conflicts with an earlier answer, politely read back both answers and ask the caller which one is correct. Never guess a missing detail."
+        },
+        {
+          "record_id": "kb_objection_005",
+          "title": "Objection: I do not want to share medical information on the phone",
+          "source_ref": "docs/sales_playbook.md#objection-i-do-not-want-to-share-medical-information-on-the",
+          "score": 4.562,
+          "coverage": 0.425,
+          "matched": [
+            "information",
+            "question"
+          ],
+          "content": "Explain that health details are needed only so medical underwriting can give an accurate premium. The caller may skip the question and complete it later through the secure application or with a licensed advisor."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "docs/underwriting_policy_v2.txt#preliminary-lead-qualification",
+        "score": 6.747,
+        "coverage": 1.0
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "Q3",
+      "type": "qualification",
+      "query": "I had a kidney transplant last year, can I still apply?",
+      "expected": [
+        "docs/underwriting_policy_v2.txt#preliminary-lead-qualification"
+      ],
+      "why": "An organ transplant requires referral to a senior health advisor under the preliminary qualification rules.",
+      "split": "tuning",
+      "results": [
+        {
+          "record_id": "kb_qualification_002",
+          "title": "Preliminary lead qualification",
+          "source_ref": "docs/underwriting_policy_v2.txt#preliminary-lead-qualification",
+          "score": 12.327,
+          "coverage": 1.0,
+          "matched": [
+            "kidney",
+            "transplant",
+            "last",
+            "year",
+            "qualification"
+          ],
+          "content": "A lead is preliminarily qualified when the caller's age is within the range of at least one plan, the caller lives in a state where plans are offered, and the caller consents to be contacted. A lead must be referred to a senior health advisor when the caller reports cancer treatment in the last 5 years, kidney dialysis, an organ transplant, or a current hospital admission."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "docs/underwriting_policy_v2.txt#preliminary-lead-qualification",
+        "score": 12.327,
+        "coverage": 1.0
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "F1",
+      "type": "faq",
+      "query": "How long is the waiting period?",
+      "expected": [
+        "web/faq.html#is-there-a-waiting-period-before-my-coverage-starts"
+      ],
+      "why": "The waiting-period FAQ gives 30 days for non-emergency care and 12 months for specific surgeries.",
+      "split": "tuning",
+      "results": [
+        {
+          "record_id": "kb_faq_001",
+          "title": "Is there a waiting period before my coverage starts?",
+          "source_ref": "web/faq.html#is-there-a-waiting-period-before-my-coverage-starts",
+          "score": 8.858,
+          "coverage": 1.0,
+          "matched": [
+            "wait",
+            "period"
+          ],
+          "content": "Yes. There is a 30-day waiting period for non-emergency services from the policy start date. Accidents and emergencies are covered from day one. Planned joint replacement and cataract surgery have a 12-month waiting period."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "web/faq.html#is-there-a-waiting-period-before-my-coverage-starts",
+        "score": 8.858,
+        "coverage": 1.0
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "F2",
+      "type": "faq",
+      "query": "Can I get a refund if I cancel?",
+      "expected": [
+        "web/faq.html#can-i-cancel-my-policy"
+      ],
+      "why": "The cancellation FAQ describes the 30-day free-look full refund.",
+      "split": "tuning",
+      "results": [
+        {
+          "record_id": "kb_faq_004",
+          "title": "Can I cancel my policy?",
+          "source_ref": "web/faq.html#can-i-cancel-my-policy",
+          "score": 11.411,
+          "coverage": 1.0,
+          "matched": [
+            "refund",
+            "cancel",
+            "free",
+            "look"
+          ],
+          "content": "Every new policy has a 30-day free-look period. If you cancel within 30 days of the policy start date and have made no claims, you receive a full premium refund."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "web/faq.html#can-i-cancel-my-policy",
+        "score": 11.411,
+        "coverage": 1.0
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "F3",
+      "type": "faq",
+      "query": "What if I pay my premium late?",
+      "expected": [
+        "web/faq.html#what-happens-if-i-miss-a-premium-payment"
+      ],
+      "why": "The missed-payment FAQ describes the 30-day grace period and lapse.",
+      "split": "tuning",
+      "results": [
+        {
+          "record_id": "kb_faq_005",
+          "title": "What happens if I miss a premium payment?",
+          "source_ref": "web/faq.html#what-happens-if-i-miss-a-premium-payment",
+          "score": 13.068,
+          "coverage": 0.691,
+          "matched": [
+            "premium",
+            "grace",
+            "period",
+            "payment"
+          ],
+          "content": "There is a 30-day grace period after the premium due date. Coverage continues during the grace period. If the premium is not paid by the end of the grace period, the policy lapses."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "web/faq.html#what-happens-if-i-miss-a-premium-payment",
+        "score": 13.068,
+        "coverage": 0.691
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "F4",
+      "type": "faq",
+      "query": "How do I file a claim at a hospital?",
+      "expected": [
+        "web/faq.html#how-do-i-make-a-claim"
+      ],
+      "why": "The claims FAQ explains cashless in-network claims and reimbursement claims.",
+      "split": "tuning",
+      "results": [
+        {
+          "record_id": "kb_faq_003",
+          "title": "How do I make a claim?",
+          "source_ref": "web/faq.html#how-do-i-make-a-claim",
+          "score": 6.358,
+          "coverage": 1.0,
+          "matched": [
+            "claim",
+            "provider",
+            "network"
+          ],
+          "content": "At in-network providers, claims are cashless: show your member card and the provider bills Darwix Health directly. For out-of-network emergency care, submit a reimbursement claim with itemized bills within 90 days of discharge. Complete claims are processed within 15 business days."
+        },
+        {
+          "record_id": "kb_objection_004",
+          "title": "Objection: Insurance companies never pay claims",
+          "source_ref": "docs/sales_playbook.md#objection-insurance-companies-never-pay-claims",
+          "score": 5.504,
+          "coverage": 1.0,
+          "matched": [
+            "claim",
+            "provider",
+            "network"
+          ],
+          "content": "Acknowledge the frustration. Explain that claims at in-network providers are cashless and that complete reimbursement claims are processed within 15 business days. Never guarantee that a specific claim will be approved."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "web/faq.html#how-do-i-make-a-claim",
+        "score": 6.358,
+        "coverage": 1.0
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "F5",
+      "type": "faq",
+      "query": "Can I see my own doctor?",
+      "expected": [
+        "web/faq.html#can-i-find-a-doctor-near-me",
+        "web/plans_overview.html#essential-care"
+      ],
+      "why": "The provider FAQ explains how to find in-network providers; Essential Care states out-of-network care is emergency-only.",
+      "split": "tuning",
+      "results": [
+        {
+          "record_id": "kb_faq_007",
+          "title": "Can I find a doctor near me?",
+          "source_ref": "web/faq.html#can-i-find-a-doctor-near-me",
+          "score": 5.854,
+          "coverage": 0.425,
+          "matched": [
+            "doctor",
+            "provider",
+            "network"
+          ],
+          "content": "Use the provider search on our website or ask an advisor to email you the in-network provider list for your ZIP code."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "web/faq.html#can-i-find-a-doctor-near-me",
+        "score": 5.854,
+        "coverage": 0.425
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "O1",
+      "type": "objection",
+      "query": "Honestly this sounds too expensive for me.",
+      "expected": [
+        "docs/sales_playbook.md#objection-it-is-too-expensive"
+      ],
+      "why": "Approved price objection handling: ask budget, mention annual discount and Essential Care.",
+      "split": "tuning",
+      "results": [
+        {
+          "record_id": "kb_objection_001",
+          "title": "Objection: It is too expensive",
+          "source_ref": "docs/sales_playbook.md#objection-it-is-too-expensive",
+          "score": 7.389,
+          "coverage": 1.0,
+          "matched": [
+            "expensive",
+            "budget",
+            "premium"
+          ],
+          "content": "Acknowledge the concern and ask what monthly budget the caller has in mind. Mention that paying annually gives a 5% discount and that Essential Care has a lower starting premium than Family Shield. Never promise a discount or price that is not in the approved plan materials."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "docs/sales_playbook.md#objection-it-is-too-expensive",
+        "score": 7.389,
+        "coverage": 1.0
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "O2",
+      "type": "objection",
+      "query": "I already get insurance through my job.",
+      "expected": [
+        "docs/sales_playbook.md#objection-i-already-have-coverage-through-my-employer"
+      ],
+      "why": "Approved employer-coverage objection handling.",
+      "split": "tuning",
+      "results": [
+        {
+          "record_id": "kb_objection_002",
+          "title": "Objection: I already have coverage through my employer",
+          "source_ref": "docs/sales_playbook.md#objection-i-already-have-coverage-through-my-employer",
+          "score": 11.917,
+          "coverage": 0.764,
+          "matched": [
+            "already",
+            "employer",
+            "coverage"
+          ],
+          "content": "Respect the existing coverage and ask whether any family members are not covered by the employer plan. Family Shield can cover dependents who are not on an employer plan. Do not pressure the caller to cancel existing coverage."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "docs/sales_playbook.md#objection-i-already-have-coverage-through-my-employer",
+        "score": 11.917,
+        "coverage": 0.764
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "O3",
+      "type": "objection",
+      "query": "I need to discuss it with my husband first.",
+      "expected": [
+        "docs/sales_playbook.md#objection-i-need-to-talk-to-my-spouse-first"
+      ],
+      "why": "Approved spouse objection handling: offer a callback when both partners are available.",
+      "split": "tuning",
+      "results": [
+        {
+          "record_id": "kb_objection_003",
+          "title": "Objection: I need to talk to my spouse first",
+          "source_ref": "docs/sales_playbook.md#objection-i-need-to-talk-to-my-spouse-first",
+          "score": 9.697,
+          "coverage": 0.702,
+          "matched": [
+            "first",
+            "spouse",
+            "family"
+          ],
+          "content": "Agree that it is a family decision. Offer a callback at a time when both partners are available and offer to send a written plan summary in the meantime."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "docs/sales_playbook.md#objection-i-need-to-talk-to-my-spouse-first",
+        "score": 9.697,
+        "coverage": 0.702
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "O4",
+      "type": "objection",
+      "query": "How do I know this isn't a scam?",
+      "expected": [
+        "docs/sales_playbook.md#objection-is-this-a-scam"
+      ],
+      "why": "Approved scam objection handling: offer written documents and the license number.",
+      "split": "tuning",
+      "results": [
+        {
+          "record_id": "kb_objection_006",
+          "title": "Objection: Is this a scam?",
+          "source_ref": "docs/sales_playbook.md#objection-is-this-a-scam",
+          "score": 9.153,
+          "coverage": 1.0,
+          "matched": [
+            "scam",
+            "verify",
+            "license"
+          ],
+          "content": "Stay calm and do not argue. Offer to email the written plan documents and the company license number so the caller can verify them independently, and offer a callback from a licensed advisor."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "docs/sales_playbook.md#objection-is-this-a-scam",
+        "score": 9.153,
+        "coverage": 1.0
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "O5",
+      "type": "objection",
+      "query": "I'm not comfortable giving my medical history over the phone.",
+      "expected": [
+        "docs/sales_playbook.md#objection-i-do-not-want-to-share-medical-information-on-the"
+      ],
+      "why": "Approved privacy objection handling: explain why details are needed and allow skipping.",
+      "split": "tuning",
+      "results": [
+        {
+          "record_id": "kb_objection_005",
+          "title": "Objection: I do not want to share medical information on the phone",
+          "source_ref": "docs/sales_playbook.md#objection-i-do-not-want-to-share-medical-information-on-the",
+          "score": 8.796,
+          "coverage": 0.456,
+          "matched": [
+            "medical",
+            "phone",
+            "share",
+            "information"
+          ],
+          "content": "Explain that health details are needed only so medical underwriting can give an accurate premium. The caller may skip the question and complete it later through the secure application or with a licensed advisor."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "docs/sales_playbook.md#objection-i-do-not-want-to-share-medical-information-on-the",
+        "score": 8.796,
+        "coverage": 0.456
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "O6",
+      "type": "objection",
+      "query": "Insurance companies never actually pay out.",
+      "expected": [
+        "docs/sales_playbook.md#objection-insurance-companies-never-pay-claims"
+      ],
+      "why": "Approved claims-distrust objection handling.",
+      "split": "tuning",
+      "results": [
+        {
+          "record_id": "kb_objection_004",
+          "title": "Objection: Insurance companies never pay claims",
+          "source_ref": "docs/sales_playbook.md#objection-insurance-companies-never-pay-claims",
+          "score": 17.055,
+          "coverage": 1.0,
+          "matched": [
+            "insurance",
+            "company",
+            "never",
+            "pay",
+            "claim"
+          ],
+          "content": "Acknowledge the frustration. Explain that claims at in-network providers are cashless and that complete reimbursement claims are processed within 15 business days. Never guarantee that a specific claim will be approved."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "docs/sales_playbook.md#objection-insurance-companies-never-pay-claims",
+        "score": 17.055,
+        "coverage": 1.0
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "N1",
+      "type": "out_of_scope",
+      "query": "What's the weather going to be like in Dallas tomorrow?",
+      "expected": [],
+      "why": "Unrelated to health insurance; nothing should be retrieved.",
+      "split": "tuning",
+      "results": [],
+      "best_ungated": null,
+      "rank": null,
+      "verdict": "correct"
+    },
+    {
+      "id": "N2",
+      "type": "out_of_scope",
+      "query": "Do you sell car insurance?",
+      "expected": [],
+      "why": "Auto insurance is not in the knowledge base; the agent must say it is unavailable.",
+      "split": "tuning",
+      "results": [],
+      "best_ungated": {
+        "source_ref": "docs/sales_playbook.md#objection-insurance-companies-never-pay-claims",
+        "score": 2.255,
+        "coverage": 0.211
+      },
+      "rank": null,
+      "verdict": "correct"
+    },
+    {
+      "id": "N3",
+      "type": "out_of_scope",
+      "query": "What is the exact price for planet insurance?",
+      "expected": [],
+      "why": "Nonsense product; a generic overlap on 'price' or 'insurance' must not count as evidence.",
+      "split": "tuning",
+      "results": [],
+      "best_ungated": {
+        "source_ref": "docs/sales_playbook.md#objection-insurance-companies-never-pay-claims",
+        "score": 2.178,
+        "coverage": 0.17
+      },
+      "rank": null,
+      "verdict": "correct"
+    },
+    {
+      "id": "N4",
+      "type": "out_of_scope",
+      "query": "Who is the CEO of your company?",
+      "expected": [],
+      "why": "Company leadership is not in the knowledge base.",
+      "split": "tuning",
+      "results": [],
+      "best_ungated": {
+        "source_ref": "docs/sales_playbook.md#objection-insurance-companies-never-pay-claims",
+        "score": 2.957,
+        "coverage": 0.381
+      },
+      "rank": null,
+      "verdict": "correct"
+    },
+    {
+      "id": "H1",
+      "type": "product",
+      "split": "held_out",
+      "query": "Does the family plan include dental for my kids?",
+      "expected": [
+        "web/plans_overview.html#family-shield",
+        "tables/plan_comparison.csv#row-2"
+      ],
+      "why": "Family Shield includes pediatric dental and vision care.",
+      "results": [
+        {
+          "record_id": "kb_product_002",
+          "title": "Family Shield plan summary",
+          "source_ref": "tables/plan_comparison.csv#row-2",
+          "score": 7.763,
+          "coverage": 0.678,
+          "matched": [
+            "family",
+            "plan",
+            "dental",
+            "dependent",
+            "children"
+          ],
+          "content": "Family Shield plan summary: eligible ages 0 to 64. Premium starts from $520 per month. Deductible: $6,000 family / $3,000 per person. Out-of-pocket maximum: $14,000 family. Primary care visit copay: $25. Generic prescription copay: $15. Up to 4 dependent children under 26; pediatric dental and vision included."
+        },
+        {
+          "record_id": "kb_product_004",
+          "title": "Family Shield",
+          "source_ref": "web/plans_overview.html#family-shield",
+          "score": 7.615,
+          "coverage": 0.678,
+          "matched": [
+            "family",
+            "plan",
+            "dental",
+            "dependent",
+            "children"
+          ],
+          "content": "Family Shield covers the policyholder, a spouse or domestic partner, and up to four dependent children under age 26 on a single policy. Premium starts from $520 per month for a family of four. The plan has a $6,000 family deductible ($3,000 per person) and a $14,000 family out-of-pocket maximum. Pediatric dental and vision care, maternity care, and newborn care are included."
+        },
+        {
+          "record_id": "kb_objection_002",
+          "title": "Objection: I already have coverage through my employer",
+          "source_ref": "docs/sales_playbook.md#objection-i-already-have-coverage-through-my-employer",
+          "score": 3.656,
+          "coverage": 0.48,
+          "matched": [
+            "family",
+            "plan",
+            "dependent"
+          ],
+          "content": "Respect the existing coverage and ask whether any family members are not covered by the employer plan. Family Shield can cover dependents who are not on an employer plan. Do not pressure the caller to cancel existing coverage."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "tables/plan_comparison.csv#row-2",
+        "score": 7.763,
+        "coverage": 0.678
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "H2",
+      "type": "product",
+      "split": "held_out",
+      "query": "What's the deductible on Senior Secure?",
+      "expected": [
+        "web/plans_overview.html#senior-secure"
+      ],
+      "why": "The Senior Secure record states the $1,500 deductible (the CSV row with a negative deductible was quarantined).",
+      "results": [
+        {
+          "record_id": "kb_product_005",
+          "title": "Senior Secure",
+          "source_ref": "web/plans_overview.html#senior-secure",
+          "score": 9.285,
+          "coverage": 1.0,
+          "matched": [
+            "deductible",
+            "senior",
+            "secure"
+          ],
+          "content": "Senior Secure is designed for adults aged 55 to 75 who want lower out-of-pocket costs. Premium starts from $260 per month. The plan has a $1,500 deductible and a $5,000 Out-of-pocket maximum. Annual preventive screenings and a yearly wellness visit are included at no extra cost."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "web/plans_overview.html#senior-secure",
+        "score": 9.285,
+        "coverage": 1.0
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "H3",
+      "type": "policy",
+      "split": "held_out",
+      "query": "Are you allowed to give me medical advice?",
+      "expected": [
+        "docs/underwriting_policy_v2.txt#prohibited-statements"
+      ],
+      "why": "Prohibited statements forbid medical advice or diagnoses.",
+      "results": [
+        {
+          "record_id": "kb_policy_002",
+          "title": "Prohibited statements",
+          "source_ref": "docs/underwriting_policy_v2.txt#prohibited-statements",
+          "score": 3.694,
+          "coverage": 0.515,
+          "matched": [
+            "medical",
+            "advice"
+          ],
+          "content": "Agents must never guarantee approval or coverage of a pre-existing condition, quote a final premium, give medical advice or diagnoses, disparage another insurer, or pressure the customer to decide during the call."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "docs/underwriting_policy_v2.txt#prohibited-statements",
+        "score": 3.694,
+        "coverage": 0.515
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "H4",
+      "type": "policy",
+      "split": "held_out",
+      "query": "What hours are your advisors available?",
+      "expected": [
+        "docs/underwriting_policy_v2.txt#human-escalation"
+      ],
+      "why": "The escalation rule lists advisor hours.",
+      "results": [
+        {
+          "record_id": "kb_policy_003",
+          "title": "Human escalation",
+          "source_ref": "docs/underwriting_policy_v2.txt#human-escalation",
+          "score": 5.819,
+          "coverage": 1.0,
+          "matched": [
+            "hour",
+            "advisor",
+            "available"
+          ],
+          "content": "Transfer the caller to a licensed human advisor when the caller asks for a person, raises a complaint, asks a detailed medical or legal question, or disputes a claim on an existing policy. Human advisors are available Monday to Friday 8 AM to 8 PM Central Time and Saturday 9 AM to 2 PM Central Time. Outside these hours, schedule a callback within 1 business day."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "docs/underwriting_policy_v2.txt#human-escalation",
+        "score": 5.819,
+        "coverage": 1.0
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "H5",
+      "type": "qualification",
+      "split": "held_out",
+      "query": "I'm 70, which plan can I get?",
+      "expected": [
+        "docs/underwriting_policy_v2.txt#eligibility-rules",
+        "web/plans_overview.html#senior-secure",
+        "tables/plan_comparison.csv#row-1"
+      ],
+      "why": "Eligibility rules and Senior Secure give age ranges; only Senior Secure covers age 70.",
+      "results": [],
+      "best_ungated": {
+        "source_ref": "web/faq.html#in-which-states-are-plans-available",
+        "score": 0.893,
+        "coverage": 0.164
+      },
+      "rank": null,
+      "verdict": "incorrect"
+    },
+    {
+      "id": "H6",
+      "type": "qualification",
+      "split": "held_out",
+      "query": "Do you offer plans in New York?",
+      "expected": [
+        "web/faq.html#in-which-states-are-plans-available",
+        "docs/underwriting_policy_v2.txt#eligibility-rules"
+      ],
+      "why": "The states FAQ says plans are not offered in New York.",
+      "results": [
+        {
+          "record_id": "kb_faq_006",
+          "title": "In which states are plans available?",
+          "source_ref": "web/faq.html#in-which-states-are-plans-available",
+          "score": 9.668,
+          "coverage": 1.0,
+          "matched": [
+            "offer",
+            "plan",
+            "new",
+            "york"
+          ],
+          "content": "Plans are currently offered in Texas, Florida, Georgia, Arizona, North Carolina, Ohio, Pennsylvania, Illinois, Michigan, Tennessee, Colorado, and Virginia. Plans are not currently offered in New York or California."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "web/faq.html#in-which-states-are-plans-available",
+        "score": 9.668,
+        "coverage": 1.0
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "H7",
+      "type": "faq",
+      "split": "held_out",
+      "query": "If I have an accident next week, am I covered right away?",
+      "expected": [
+        "web/faq.html#is-there-a-waiting-period-before-my-coverage-starts"
+      ],
+      "why": "Accidents and emergencies are covered from day one.",
+      "results": [],
+      "best_ungated": {
+        "source_ref": "web/faq.html#is-there-a-waiting-period-before-my-coverage-starts",
+        "score": 3.017,
+        "coverage": 0.273
+      },
+      "rank": null,
+      "verdict": "incorrect"
+    },
+    {
+      "id": "H8",
+      "type": "faq",
+      "split": "held_out",
+      "query": "How quickly do you process reimbursement claims?",
+      "expected": [
+        "web/faq.html#how-do-i-make-a-claim",
+        "docs/sales_playbook.md#objection-insurance-companies-never-pay-claims"
+      ],
+      "why": "Complete claims are processed within 15 business days.",
+      "results": [
+        {
+          "record_id": "kb_faq_003",
+          "title": "How do I make a claim?",
+          "source_ref": "web/faq.html#how-do-i-make-a-claim",
+          "score": 7.729,
+          "coverage": 0.73,
+          "matched": [
+            "process",
+            "reimbursement",
+            "claim"
+          ],
+          "content": "At in-network providers, claims are cashless: show your member card and the provider bills Darwix Health directly. For out-of-network emergency care, submit a reimbursement claim with itemized bills within 90 days of discharge. Complete claims are processed within 15 business days."
+        },
+        {
+          "record_id": "kb_objection_004",
+          "title": "Objection: Insurance companies never pay claims",
+          "source_ref": "docs/sales_playbook.md#objection-insurance-companies-never-pay-claims",
+          "score": 7.463,
+          "coverage": 0.73,
+          "matched": [
+            "process",
+            "reimbursement",
+            "claim"
+          ],
+          "content": "Acknowledge the frustration. Explain that claims at in-network providers are cashless and that complete reimbursement claims are processed within 15 business days. Never guarantee that a specific claim will be approved."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "web/faq.html#how-do-i-make-a-claim",
+        "score": 7.729,
+        "coverage": 0.73
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "H9",
+      "type": "faq",
+      "split": "held_out",
+      "query": "Can I add my newborn baby to the policy?",
+      "expected": [
+        "web/family_shield.html#who-is-covered",
+        "web/plans_overview.html#family-shield"
+      ],
+      "why": "Children can be added within 30 days of birth or adoption.",
+      "results": [
+        {
+          "record_id": "kb_product_004",
+          "title": "Family Shield",
+          "source_ref": "web/plans_overview.html#family-shield",
+          "score": 8.918,
+          "coverage": 0.742,
+          "matched": [
+            "newborn",
+            "policy",
+            "dependent",
+            "children",
+            "family"
+          ],
+          "content": "Family Shield covers the policyholder, a spouse or domestic partner, and up to four dependent children under age 26 on a single policy. Premium starts from $520 per month for a family of four. The plan has a $6,000 family deductible ($3,000 per person) and a $14,000 family out-of-pocket maximum. Pediatric dental and vision care, maternity care, and newborn care are included."
+        },
+        {
+          "record_id": "kb_product_007",
+          "title": "Family Shield - Who is covered",
+          "source_ref": "web/family_shield.html#who-is-covered",
+          "score": 8.032,
+          "coverage": 0.865,
+          "matched": [
+            "add",
+            "children",
+            "family"
+          ],
+          "content": "Children can be added within 30 days of birth or adoption without waiting for the annual enrollment window."
+        },
+        {
+          "record_id": "kb_product_002",
+          "title": "Family Shield plan summary",
+          "source_ref": "tables/plan_comparison.csv#row-2",
+          "score": 4.614,
+          "coverage": 0.607,
+          "matched": [
+            "dependent",
+            "children",
+            "family"
+          ],
+          "content": "Family Shield plan summary: eligible ages 0 to 64. Premium starts from $520 per month. Deductible: $6,000 family / $3,000 per person. Out-of-pocket maximum: $14,000 family. Primary care visit copay: $25. Generic prescription copay: $15. Up to 4 dependent children under 26; pediatric dental and vision included."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "web/plans_overview.html#family-shield",
+        "score": 8.918,
+        "coverage": 0.742
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "H10",
+      "type": "objection",
+      "split": "held_out",
+      "query": "I can't afford another monthly bill right now.",
+      "expected": [
+        "docs/sales_playbook.md#objection-it-is-too-expensive"
+      ],
+      "why": "Approved price objection handling.",
+      "results": [
+        {
+          "record_id": "kb_objection_001",
+          "title": "Objection: It is too expensive",
+          "source_ref": "docs/sales_playbook.md#objection-it-is-too-expensive",
+          "score": 9.248,
+          "coverage": 0.523,
+          "matched": [
+            "monthly",
+            "premium",
+            "expensive",
+            "budget"
+          ],
+          "content": "Acknowledge the concern and ask what monthly budget the caller has in mind. Mention that paying annually gives a 5% discount and that Essential Care has a lower starting premium than Family Shield. Never promise a discount or price that is not in the approved plan materials."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "docs/sales_playbook.md#objection-it-is-too-expensive",
+        "score": 9.248,
+        "coverage": 0.523
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "H11",
+      "type": "objection",
+      "split": "held_out",
+      "query": "My company already gives me health coverage.",
+      "expected": [
+        "docs/sales_playbook.md#objection-i-already-have-coverage-through-my-employer"
+      ],
+      "why": "Approved employer-coverage objection handling.",
+      "results": [
+        {
+          "record_id": "kb_objection_002",
+          "title": "Objection: I already have coverage through my employer",
+          "source_ref": "docs/sales_playbook.md#objection-i-already-have-coverage-through-my-employer",
+          "score": 8.513,
+          "coverage": 0.598,
+          "matched": [
+            "already",
+            "coverage",
+            "employer"
+          ],
+          "content": "Respect the existing coverage and ask whether any family members are not covered by the employer plan. Family Shield can cover dependents who are not on an employer plan. Do not pressure the caller to cancel existing coverage."
+        }
+      ],
+      "best_ungated": {
+        "source_ref": "docs/sales_playbook.md#objection-i-already-have-coverage-through-my-employer",
+        "score": 8.513,
+        "coverage": 0.598
+      },
+      "rank": 1,
+      "verdict": "correct"
+    },
+    {
+      "id": "H12",
+      "type": "out_of_scope",
+      "split": "held_out",
+      "query": "Can you help me book a flight to Chicago?",
+      "expected": [],
+      "why": "Unrelated to health insurance.",
+      "results": [],
+      "best_ungated": null,
+      "rank": null,
+      "verdict": "correct"
+    },
+    {
+      "id": "H13",
+      "type": "out_of_scope",
+      "split": "held_out",
+      "query": "Do you cover pet insurance for my dog?",
+      "expected": [],
+      "why": "Pet insurance is not offered.",
+      "results": [],
+      "best_ungated": {
+        "source_ref": "docs/sales_playbook.md#objection-insurance-companies-never-pay-claims",
+        "score": 2.203,
+        "coverage": 0.183
+      },
+      "rank": null,
+      "verdict": "correct"
+    },
+    {
+      "id": "H14",
+      "type": "out_of_scope",
+      "split": "held_out",
+      "query": "What's your stock price today?",
+      "expected": [],
+      "why": "Not in the knowledge base; 'price' must not ground an answer.",
+      "results": [],
+      "best_ungated": {
+        "source_ref": "docs/sales_playbook.md#call-opening-script",
+        "score": 2.153,
+        "coverage": 0.313
+      },
+      "rank": null,
+      "verdict": "correct"
+    }
+  ],
+  "sweep": [
+    {
+      "min_score": 1.5,
+      "min_coverage": 0.3,
+      "queries": 42,
+      "correct": 38,
+      "partially_correct": 0,
+      "incorrect": 4,
+      "top1_accuracy": 0.943,
+      "recall_at_3": 0.943,
+      "mrr": 0.943,
+      "out_of_scope_rejected": "5/7"
+    },
+    {
+      "min_score": 1.5,
+      "min_coverage": 0.35,
+      "queries": 42,
+      "correct": 39,
+      "partially_correct": 0,
+      "incorrect": 3,
+      "top1_accuracy": 0.943,
+      "recall_at_3": 0.943,
+      "mrr": 0.943,
+      "out_of_scope_rejected": "6/7"
+    },
+    {
+      "min_score": 1.5,
+      "min_coverage": 0.4,
+      "queries": 42,
+      "correct": 40,
+      "partially_correct": 0,
+      "incorrect": 2,
+      "top1_accuracy": 0.943,
+      "recall_at_3": 0.943,
+      "mrr": 0.943,
+      "out_of_scope_rejected": "7/7"
+    },
+    {
+      "min_score": 1.5,
+      "min_coverage": 0.45,
+      "queries": 42,
+      "correct": 39,
+      "partially_correct": 0,
+      "incorrect": 3,
+      "top1_accuracy": 0.914,
+      "recall_at_3": 0.914,
+      "mrr": 0.914,
+      "out_of_scope_rejected": "7/7"
+    },
+    {
+      "min_score": 1.5,
+      "min_coverage": 0.5,
+      "queries": 42,
+      "correct": 38,
+      "partially_correct": 0,
+      "incorrect": 4,
+      "top1_accuracy": 0.886,
+      "recall_at_3": 0.886,
+      "mrr": 0.886,
+      "out_of_scope_rejected": "7/7"
+    },
+    {
+      "min_score": 2.0,
+      "min_coverage": 0.3,
+      "queries": 42,
+      "correct": 38,
+      "partially_correct": 0,
+      "incorrect": 4,
+      "top1_accuracy": 0.943,
+      "recall_at_3": 0.943,
+      "mrr": 0.943,
+      "out_of_scope_rejected": "5/7"
+    },
+    {
+      "min_score": 2.0,
+      "min_coverage": 0.35,
+      "queries": 42,
+      "correct": 39,
+      "partially_correct": 0,
+      "incorrect": 3,
+      "top1_accuracy": 0.943,
+      "recall_at_3": 0.943,
+      "mrr": 0.943,
+      "out_of_scope_rejected": "6/7"
+    },
+    {
+      "min_score": 2.0,
+      "min_coverage": 0.4,
+      "queries": 42,
+      "correct": 40,
+      "partially_correct": 0,
+      "incorrect": 2,
+      "top1_accuracy": 0.943,
+      "recall_at_3": 0.943,
+      "mrr": 0.943,
+      "out_of_scope_rejected": "7/7"
+    },
+    {
+      "min_score": 2.0,
+      "min_coverage": 0.45,
+      "queries": 42,
+      "correct": 39,
+      "partially_correct": 0,
+      "incorrect": 3,
+      "top1_accuracy": 0.914,
+      "recall_at_3": 0.914,
+      "mrr": 0.914,
+      "out_of_scope_rejected": "7/7"
+    },
+    {
+      "min_score": 2.0,
+      "min_coverage": 0.5,
+      "queries": 42,
+      "correct": 38,
+      "partially_correct": 0,
+      "incorrect": 4,
+      "top1_accuracy": 0.886,
+      "recall_at_3": 0.886,
+      "mrr": 0.886,
+      "out_of_scope_rejected": "7/7"
+    },
+    {
+      "min_score": 2.5,
+      "min_coverage": 0.3,
+      "queries": 42,
+      "correct": 39,
+      "partially_correct": 0,
+      "incorrect": 3,
+      "top1_accuracy": 0.943,
+      "recall_at_3": 0.943,
+      "mrr": 0.943,
+      "out_of_scope_rejected": "6/7"
+    },
+    {
+      "min_score": 2.5,
+      "min_coverage": 0.35,
+      "queries": 42,
+      "correct": 39,
+      "partially_correct": 0,
+      "incorrect": 3,
+      "top1_accuracy": 0.943,
+      "recall_at_3": 0.943,
+      "mrr": 0.943,
+      "out_of_scope_rejected": "6/7"
+    },
+    {
+      "min_score": 2.5,
+      "min_coverage": 0.4,
+      "queries": 42,
+      "correct": 40,
+      "partially_correct": 0,
+      "incorrect": 2,
+      "top1_accuracy": 0.943,
+      "recall_at_3": 0.943,
+      "mrr": 0.943,
+      "out_of_scope_rejected": "7/7"
+    },
+    {
+      "min_score": 2.5,
+      "min_coverage": 0.45,
+      "queries": 42,
+      "correct": 39,
+      "partially_correct": 0,
+      "incorrect": 3,
+      "top1_accuracy": 0.914,
+      "recall_at_3": 0.914,
+      "mrr": 0.914,
+      "out_of_scope_rejected": "7/7"
+    },
+    {
+      "min_score": 2.5,
+      "min_coverage": 0.5,
+      "queries": 42,
+      "correct": 38,
+      "partially_correct": 0,
+      "incorrect": 4,
+      "top1_accuracy": 0.886,
+      "recall_at_3": 0.886,
+      "mrr": 0.886,
+      "out_of_scope_rejected": "7/7"
+    },
+    {
+      "min_score": 3.0,
+      "min_coverage": 0.3,
+      "queries": 42,
+      "correct": 40,
+      "partially_correct": 0,
+      "incorrect": 2,
+      "top1_accuracy": 0.943,
+      "recall_at_3": 0.943,
+      "mrr": 0.943,
+      "out_of_scope_rejected": "7/7"
+    },
+    {
+      "min_score": 3.0,
+      "min_coverage": 0.35,
+      "queries": 42,
+      "correct": 40,
+      "partially_correct": 0,
+      "incorrect": 2,
+      "top1_accuracy": 0.943,
+      "recall_at_3": 0.943,
+      "mrr": 0.943,
+      "out_of_scope_rejected": "7/7"
+    },
+    {
+      "min_score": 3.0,
+      "min_coverage": 0.4,
+      "queries": 42,
+      "correct": 40,
+      "partially_correct": 0,
+      "incorrect": 2,
+      "top1_accuracy": 0.943,
+      "recall_at_3": 0.943,
+      "mrr": 0.943,
+      "out_of_scope_rejected": "7/7"
+    },
+    {
+      "min_score": 3.0,
+      "min_coverage": 0.45,
+      "queries": 42,
+      "correct": 39,
+      "partially_correct": 0,
+      "incorrect": 3,
+      "top1_accuracy": 0.914,
+      "recall_at_3": 0.914,
+      "mrr": 0.914,
+      "out_of_scope_rejected": "7/7"
+    },
+    {
+      "min_score": 3.0,
+      "min_coverage": 0.5,
+      "queries": 42,
+      "correct": 38,
+      "partially_correct": 0,
+      "incorrect": 4,
+      "top1_accuracy": 0.886,
+      "recall_at_3": 0.886,
+      "mrr": 0.886,
+      "out_of_scope_rejected": "7/7"
+    },
+    {
+      "min_score": 3.5,
+      "min_coverage": 0.3,
+      "queries": 42,
+      "correct": 40,
+      "partially_correct": 0,
+      "incorrect": 2,
+      "top1_accuracy": 0.943,
+      "recall_at_3": 0.943,
+      "mrr": 0.943,
+      "out_of_scope_rejected": "7/7"
+    },
+    {
+      "min_score": 3.5,
+      "min_coverage": 0.35,
+      "queries": 42,
+      "correct": 40,
+      "partially_correct": 0,
+      "incorrect": 2,
+      "top1_accuracy": 0.943,
+      "recall_at_3": 0.943,
+      "mrr": 0.943,
+      "out_of_scope_rejected": "7/7"
+    },
+    {
+      "min_score": 3.5,
+      "min_coverage": 0.4,
+      "queries": 42,
+      "correct": 40,
+      "partially_correct": 0,
+      "incorrect": 2,
+      "top1_accuracy": 0.943,
+      "recall_at_3": 0.943,
+      "mrr": 0.943,
+      "out_of_scope_rejected": "7/7"
+    },
+    {
+      "min_score": 3.5,
+      "min_coverage": 0.45,
+      "queries": 42,
+      "correct": 39,
+      "partially_correct": 0,
+      "incorrect": 3,
+      "top1_accuracy": 0.914,
+      "recall_at_3": 0.914,
+      "mrr": 0.914,
+      "out_of_scope_rejected": "7/7"
+    },
+    {
+      "min_score": 3.5,
+      "min_coverage": 0.5,
+      "queries": 42,
+      "correct": 38,
+      "partially_correct": 0,
+      "incorrect": 4,
+      "top1_accuracy": 0.886,
+      "recall_at_3": 0.886,
+      "mrr": 0.886,
+      "out_of_scope_rejected": "7/7"
+    }
+  ]
+}

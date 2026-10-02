@@ -1,0 +1,336 @@
+{
+  "lead_test-s1": {
+    "call_id": "test-s1",
+    "status": "qualified",
+    "plans": [
+      "Essential Care",
+      "Family Shield"
+    ],
+    "reason": "Age and state match at least one plan and the caller consented to contact",
+    "fields": {
+      "age": 42,
+      "state": "TX",
+      "household_size": 2,
+      "tobacco_use": false,
+      "medical_conditions": "none",
+      "current_insurance": "none",
+      "callback_time": "Weekday evenings after 6 would be best.",
+      "consent_to_contact": true
+    },
+    "summary": "Outcome: qualified. Age and state match at least one plan and the caller consented to contact. Possible plans: Essential Care, Family Shield. Details: age=42; state=Texas; household size=2; tobacco use=no; medical conditions=none; current insurance=none; callback time=Weekday evenings after 6 would be best.; consent to contact=yes.",
+    "updated_at": "2026-10-02T18:37:25+00:00",
+    "created_at": "2026-10-02T11:46:29+00:00"
+  },
+  "lead_test-s2": {
+    "call_id": "test-s2",
+    "status": "in_progress",
+    "plans": [
+      "Essential Care"
+    ],
+    "reason": null,
+    "fields": {
+      "age": 30,
+      "state": "FL"
+    },
+    "summary": "Outcome: in progress. Possible plans: Essential Care. Details: age=30; state=Florida.",
+    "updated_at": "2026-10-02T18:38:03+00:00",
+    "created_at": "2026-10-02T11:47:19+00:00"
+  },
+  "lead_test-s3": {
+    "call_id": "test-s3",
+    "status": "in_progress",
+    "plans": [
+      "Essential Care",
+      "Family Shield"
+    ],
+    "reason": null,
+    "fields": {
+      "age": 48,
+      "state": "OH",
+      "household_size": 4,
+      "tobacco_use": "not provided",
+      "medical_conditions": "declined to share"
+    },
+    "summary": "Outcome: in progress. Possible plans: Essential Care, Family Shield. Details: age=48; state=Ohio; household size=4; tobacco use=not provided; medical conditions=declined to share.",
+    "updated_at": "2026-10-02T18:38:55+00:00",
+    "created_at": "2026-10-02T11:48:41+00:00"
+  },
+  "lead_test-s5": {
+    "call_id": "test-s5",
+    "status": "escalated",
+    "plans": [],
+    "reason": "Caller asked for a human advisor",
+    "fields": {
+      "age": 60
+    },
+    "summary": "Outcome: escalated. Caller asked for a human advisor. Details: age=60.",
+    "updated_at": "2026-10-02T18:39:38+00:00",
+    "created_at": "2026-10-02T11:49:49+00:00"
+  },
+  "lead_test-s6": {
+    "call_id": "test-s6",
+    "status": "not_eligible",
+    "plans": [],
+    "reason": "Plans are not offered in California",
+    "fields": {
+      "age": 33,
+      "state": "CA"
+    },
+    "summary": "Outcome: not eligible. Plans are not offered in California. Details: age=33; state=California.",
+    "updated_at": "2026-10-02T18:33:46+00:00",
+    "created_at": "2026-10-02T11:50:20+00:00"
+  },
+  "lead_test-s7": {
+    "call_id": "test-s7",
+    "status": "referred",
+    "plans": [
+      "Essential Care"
+    ],
+    "reason": "Reported condition requires a senior health advisor",
+    "fields": {
+      "age": 52,
+      "state": "GA",
+      "household_size": 1,
+      "tobacco_use": false,
+      "medical_conditions": "I had a kidney transplant two years ago.",
+      "current_insurance": "none",
+      "callback_time": "Mornings.",
+      "consent_to_contact": true
+    },
+    "summary": "Outcome: referred. Reported condition requires a senior health advisor. Possible plans: Essential Care. Details: age=52; state=Georgia; household size=1; tobacco use=no; medical conditions=I had a kidney transplant two years ago.; current insurance=none; callback time=Mornings.; consent to contact=yes.",
+    "updated_at": "2026-10-02T18:34:53+00:00",
+    "created_at": "2026-10-02T11:51:22+00:00"
+  },
+  "lead_248b1c22": {
+    "call_id": "248b1c22-d532-41d3-b8b3-2ba119b7f1ad",
+    "status": "escalated",
+    "plans": [],
+    "reason": "Caller asked for a human advisor",
+    "fields": {
+      "age": 29,
+      "state": "AZ",
+      "medical_conditions": "declined to share",
+      "current_insurance": "none"
+    },
+    "summary": "Outcome: escalated. Caller asked for a human advisor. Details: age=29; state=Arizona; medical conditions=declined to share; current insurance=none.",
+    "updated_at": "2026-10-02T12:03:44+00:00",
+    "created_at": "2026-10-02T12:03:44+00:00"
+  },
+  "lead_bf620568": {
+    "call_id": "bf620568-74a5-465b-869a-0d67fe15a2c5",
+    "status": "in_progress",
+    "plans": [
+      "Essential Care"
+    ],
+    "reason": null,
+    "fields": {
+      "age": 20
+    },
+    "summary": "Outcome: in progress. Possible plans: Essential Care. Details: age=20.",
+    "updated_at": "2026-10-02T13:05:03+00:00",
+    "created_at": "2026-10-02T13:05:03+00:00"
+  },
+  "lead_a665b501": {
+    "call_id": "a665b501-316d-4d3b-b23e-575e9dc30233",
+    "status": "not_eligible",
+    "plans": [],
+    "reason": "Plans are not offered in New York",
+    "fields": {
+      "age": 24,
+      "state": "NY"
+    },
+    "summary": "Outcome: not eligible. Plans are not offered in New York. Details: age=24; state=New York.",
+    "updated_at": "2026-10-02T13:13:50+00:00",
+    "created_at": "2026-10-02T13:13:50+00:00"
+  },
+  "lead_59d3ba77": {
+    "call_id": "59d3ba77-0e26-4cbf-a3ac-18eebb07c78d",
+    "status": "not_eligible",
+    "plans": [],
+    "reason": "Plans are not offered in California",
+    "fields": {
+      "age": 24,
+      "state": "CA"
+    },
+    "summary": "Outcome: not eligible. Plans are not offered in California. Details: age=24; state=California.",
+    "updated_at": "2026-10-02T13:23:37+00:00",
+    "created_at": "2026-10-02T13:23:37+00:00"
+  },
+  "lead_ecfbc240": {
+    "call_id": "ecfbc240-659d-4b7b-8436-072ffc73c0e4",
+    "status": "qualified",
+    "plans": [
+      "Essential Care",
+      "Family Shield"
+    ],
+    "reason": "Age and state match at least one plan and the caller consented to contact",
+    "fields": {
+      "age": 42,
+      "state": "TX",
+      "household_size": 2,
+      "tobacco_use": false,
+      "medical_conditions": "none",
+      "current_insurance": "none",
+      "callback_time": "Weekend evenings after 6",
+      "consent_to_contact": true
+    },
+    "summary": "Outcome: qualified. Age and state match at least one plan and the caller consented to contact. Possible plans: Essential Care, Family Shield. Details: age=42; state=Texas; household size=2; tobacco use=no; medical conditions=none; current insurance=none; callback time=Weekend evenings after 6; consent to contact=yes.",
+    "updated_at": "2026-10-02T13:27:36+00:00",
+    "created_at": "2026-10-02T13:26:56+00:00"
+  },
+  "lead_2128835c": {
+    "call_id": "2128835c-1eca-4956-87ba-1325cfc85ba1",
+    "status": "in_progress",
+    "plans": [
+      "Essential Care",
+      "Family Shield"
+    ],
+    "reason": null,
+    "fields": {
+      "age": 38,
+      "state": "OH",
+      "household_size": 4,
+      "tobacco_use": true,
+      "medical_conditions": "none",
+      "current_insurance": "yes",
+      "callback_time": "Today after this call"
+    },
+    "summary": "Outcome: in progress. Possible plans: Essential Care, Family Shield. Details: age=38; state=Ohio; household size=4; tobacco use=yes; medical conditions=none; current insurance=yes; callback time=Today after this call.",
+    "updated_at": "2026-10-02T13:32:21+00:00",
+    "created_at": "2026-10-02T13:32:21+00:00"
+  },
+  "lead_test-s9": {
+    "call_id": "test-s9",
+    "status": "in_progress",
+    "plans": [
+      "Essential Care"
+    ],
+    "reason": null,
+    "fields": {
+      "age": 27,
+      "state": "PA"
+    },
+    "summary": "Outcome: in progress. Possible plans: Essential Care. Details: age=27; state=Pennsylvania.",
+    "updated_at": "2026-10-02T18:35:28+00:00",
+    "created_at": "2026-10-02T13:56:02+00:00"
+  },
+  "lead_test-s11": {
+    "call_id": "test-s11",
+    "status": "not_eligible",
+    "plans": [],
+    "reason": "Plans are only offered to residents of 12 US states, and India is outside the United States",
+    "fields": {
+      "age": 24,
+      "state": "India (outside the US)"
+    },
+    "summary": "Outcome: not eligible. Plans are only offered to residents of 12 US states, and India is outside the United States. Details: age=24; state=India (outside the US).",
+    "updated_at": "2026-10-02T18:35:57+00:00",
+    "created_at": "2026-10-02T13:56:52+00:00"
+  },
+  "lead_972296eb": {
+    "call_id": "972296eb-b3c1-4489-9edd-8b1385af9ba6",
+    "status": "in_progress",
+    "plans": [
+      "Essential Care"
+    ],
+    "reason": null,
+    "fields": {
+      "age": 42,
+      "state": "TX",
+      "household_size": "not provided"
+    },
+    "summary": "Outcome: in progress. Possible plans: Essential Care. Details: age=42; state=Texas; household size=not provided.",
+    "updated_at": "2026-10-02T14:07:56+00:00",
+    "created_at": "2026-10-02T14:07:56+00:00"
+  },
+  "lead_e2f06b26": {
+    "call_id": "e2f06b26-219c-4fcc-b8b7-267c0407f0e3",
+    "status": "qualified",
+    "plans": [
+      "Essential Care",
+      "Family Shield"
+    ],
+    "reason": "Age and state match at least one plan and the caller consented to contact",
+    "fields": {
+      "age": 42,
+      "state": "TX",
+      "household_size": 2,
+      "tobacco_use": false,
+      "medical_conditions": "none",
+      "current_insurance": "none",
+      "callback_time": "Weekend evenings after 6.",
+      "consent_to_contact": true
+    },
+    "summary": "Outcome: qualified. Age and state match at least one plan and the caller consented to contact. Possible plans: Essential Care, Family Shield. Details: age=42; state=Texas; household size=2; tobacco use=no; medical conditions=none; current insurance=none; callback time=Weekend evenings after 6.; consent to contact=yes.",
+    "updated_at": "2026-10-02T14:15:21+00:00",
+    "created_at": "2026-10-02T14:14:56+00:00"
+  },
+  "lead_9f2757f5": {
+    "call_id": "9f2757f5-a20f-4ba2-b293-9775749a8316",
+    "status": "in_progress",
+    "plans": [
+      "Essential Care"
+    ],
+    "reason": null,
+    "fields": {
+      "age": 38,
+      "state": "OH"
+    },
+    "summary": "Outcome: in progress. Possible plans: Essential Care. Details: age=38; state=Ohio.",
+    "updated_at": "2026-10-02T14:28:01+00:00",
+    "created_at": "2026-10-02T14:28:01+00:00"
+  },
+  "lead_0d511453": {
+    "call_id": "0d511453-b709-4819-9aec-78f182f04add",
+    "status": "not_eligible",
+    "plans": [],
+    "reason": "Plans are only offered to residents of 12 US states, and I.O is outside the United States",
+    "fields": {
+      "age": 38,
+      "state": "I.O (outside the US)"
+    },
+    "summary": "Outcome: not eligible. Plans are only offered to residents of 12 US states, and I.O is outside the United States. Details: age=38; state=I.O (outside the US).",
+    "updated_at": "2026-10-02T14:29:50+00:00",
+    "created_at": "2026-10-02T14:29:50+00:00"
+  },
+  "lead_8367d636": {
+    "call_id": "8367d636-d853-4af1-890d-7b0315ec1415",
+    "status": "qualified",
+    "plans": [
+      "Essential Care",
+      "Family Shield"
+    ],
+    "reason": "Age and state match at least one plan and the caller consented to contact",
+    "fields": {
+      "age": 38,
+      "state": "OH",
+      "household_size": 4,
+      "tobacco_use": false,
+      "medical_conditions": "none",
+      "current_insurance": "Yes.",
+      "callback_time": "Tomorrow five bim.",
+      "consent_to_contact": true
+    },
+    "summary": "Outcome: qualified. Age and state match at least one plan and the caller consented to contact. Possible plans: Essential Care, Family Shield. Details: age=38; state=Ohio; household size=4; tobacco use=no; medical conditions=none; current insurance=Yes.; callback time=Tomorrow five bim.; consent to contact=yes.",
+    "updated_at": "2026-10-02T17:01:48+00:00",
+    "created_at": "2026-10-02T17:01:14+00:00"
+  },
+  "lead_dd9940da": {
+    "call_id": "dd9940da-d37a-41a6-ba70-42de3569d6b7",
+    "status": "escalated",
+    "plans": [],
+    "reason": "Could not capture consent to contact over the phone",
+    "fields": {
+      "age": 48,
+      "state": "OH",
+      "household_size": "not provided",
+      "tobacco_use": false,
+      "medical_conditions": "none",
+      "current_insurance": "none",
+      "callback_time": "Honestly, this sound too expensive for me."
+    },
+    "summary": "Outcome: escalated. Could not capture consent to contact over the phone. Details: age=48; state=Ohio; household size=not provided; tobacco use=no; medical conditions=none; current insurance=none; callback time=Honestly, this sound too expensive for me..",
+    "updated_at": "2026-10-02T18:16:28+00:00",
+    "created_at": "2026-10-02T18:16:28+00:00"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "esc_test-s5": {
+    "call_id": "test-s5",
+    "reason": "Caller asked for a human advisor",
+    "last_customer_text": "Can I just speak to a real person please?",
+    "lead": {
+      "age": 60
+    },
+    "updated_at": "2026-10-02T18:39:38+00:00",
+    "created_at": "2026-10-02T11:49:49+00:00"
+  },
+  "esc_test-s7": {
+    "call_id": "test-s7",
+    "reason": "Caller requested a human",
+    "last_customer_text": "I had a kidney transplant two years ago.",
+    "lead": {
+      "age": 52,
+      "state": "GA",
+      "household_size": 1,
+      "tobacco_use": false
+    },
+    "updated_at": "2026-10-02T11:51:22+00:00",
+    "created_at": "2026-10-02T11:51:22+00:00"
+  },
+  "esc_248b1c22": {
+    "call_id": "248b1c22-d532-41d3-b8b3-2ba119b7f1ad",
+    "reason": "Caller requested a human",
+    "last_customer_text": "Can I talk to a real person?",
+    "lead": {
+      "age": 29,
+      "state": "AZ",
+      "medical_conditions": "declined to share",
+      "current_insurance": "none"
+    },
+    "updated_at": "2026-10-02T12:03:44+00:00",
+    "created_at": "2026-10-02T12:03:44+00:00"
+  },
+  "esc_test-s10": {
+    "call_id": "test-s10",
+    "reason": "Existing member request (claims, billing or policy service)",
+    "last_customer_text": "Hi, my claim was denied last month and I want to know why.",
+    "lead": {},
+    "updated_at": "2026-10-02T18:35:38+00:00",
+    "created_at": "2026-10-02T13:56:22+00:00"
+  },
+  "esc_ff62ecb5": {
+    "call_id": "ff62ecb5-8279-4459-a8d4-138ec02c2716",
+    "reason": "Caller asked for a human advisor",
+    "last_customer_text": "Can I just speak to a real person please?",
+    "lead": {},
+    "updated_at": "2026-10-02T17:59:15+00:00",
+    "created_at": "2026-10-02T17:59:15+00:00"
+  },
+  "esc_dd9940da": {
+    "call_id": "dd9940da-d37a-41a6-ba70-42de3569d6b7",
+    "reason": "Could not capture consent to contact over the phone",
+    "last_customer_text": "I need to talk to my wife first.",
+    "lead": {
+      "age": 48,
+      "state": "OH",
+      "household_size": "not provided",
+      "tobacco_use": false,
+      "medical_conditions": "none",
+      "current_insurance": "none",
+      "callback_time": "Honestly, this sound too expensive for me."
+    },
+    "updated_at": "2026-10-02T18:16:12+00:00",
+    "created_at": "2026-10-02T18:16:12+00:00"
+  },
+  "esc_test-s11": {
+    "call_id": "test-s11",
+    "reason": "Could not capture state over the phone",
+    "last_customer_text": "Yes, New Delhi, India.",
+    "lead": {
+      "age": 24
+    },
+    "updated_at": "2026-10-02T18:17:07+00:00",
+    "created_at": "2026-10-02T18:17:07+00:00"
+  }
+}

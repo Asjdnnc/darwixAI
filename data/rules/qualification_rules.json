@@ -1,0 +1,25 @@
+{
+  "_comment": "Executable form of the qualification rules in the knowledge base. Each rule cites the record it implements; update both together. The agent evaluates these in code so eligibility never depends on LLM judgement.",
+  "plans": [
+    {"name": "Essential Care", "min_age": 18, "max_age": 64, "source_ref": "docs/underwriting_policy_v2.txt#eligibility-rules"},
+    {"name": "Family Shield", "min_age": 18, "max_age": 64, "min_household": 2, "source_ref": "docs/underwriting_policy_v2.txt#eligibility-rules"},
+    {"name": "Senior Secure", "min_age": 55, "max_age": 75, "source_ref": "docs/underwriting_policy_v2.txt#eligibility-rules"}
+  ],
+  "offered_states": ["TX", "FL", "GA", "AZ", "NC", "OH", "PA", "IL", "MI", "TN", "CO", "VA"],
+  "offered_states_source_ref": "docs/underwriting_policy_v2.txt#eligibility-rules",
+  "referral_conditions": ["cancer", "chemotherapy", "chemo", "radiation therapy", "dialysis", "kidney failure", "transplant", "in the hospital", "hospitalized", "hospitalised", "admitted"],
+  "referral_source_ref": "docs/underwriting_policy_v2.txt#preliminary-lead-qualification",
+  "collect_order": ["age", "state", "household_size", "tobacco_use", "medical_conditions", "current_insurance", "callback_time", "consent_to_contact"],
+  "collect_order_source_ref": "docs/sales_playbook.md#qualification-questions",
+  "required_for_outcome": ["age", "state", "consent_to_contact"],
+  "questions": {
+    "age": "May I ask how old you are?",
+    "state": "Which state do you live in?",
+    "household_size": "How many people would need coverage, including you?",
+    "tobacco_use": "Does anyone who would be covered use tobacco?",
+    "medical_conditions": "Do you, or anyone who would be covered, have any current medical conditions? You're welcome to skip this one.",
+    "current_insurance": "Do you have any health insurance right now?",
+    "callback_time": "What's the best time for a licensed advisor to call you back with a quote?",
+    "consent_to_contact": "And do I have your permission for Darwix Health to contact you about your quote?"
+  }
+}

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Get a Free Quote | Darwix Health</title></head>
+<body>
+  <header><nav><ul><li><a href="/plans">Plans</a></li><li><a href="/faq">FAQ</a></li></ul></nav></header>
+  <main>
+    <h1>Get a free health insurance quote</h1>
+    <form id="lead-intake" action="/api/leads" method="post">
+      <label for="nm">Your Name</label><input id="nm" name="nm" required>
+      <label for="dob">DOB (mm/dd/yyyy)</label><input id="dob" name="dob" required>
+      <label for="ph">Phone #</label><input id="ph" name="ph" type="tel" required>
+      <label for="em">E-mail</label><input id="em" name="em" type="email">
+      <label for="zip">Zip</label><input id="zip" name="zip" required>
+      <label for="st">State of residence</label><select id="st" name="st" required><option>TX</option><option>FL</option></select>
+      <label for="hh">How many people need coverage?</label><input id="hh" name="hh" type="number" required>
+      <label for="tob">Smoker?</label><select id="tob" name="tob" required><option>Yes</option><option>No</option></select>
+      <label for="ped">Pre-existing illness?</label><textarea id="ped" name="ped"></textarea>
+      <label for="cur">Current insurance</label><input id="cur" name="cur">
+      <label for="cb">Best time to call</label><input id="cb" name="cb">
+      <label for="ok">I agree to be contacted about my quote</label><input id="ok" name="ok" type="checkbox" required>
+      <button type="submit">Get my quote</button>
+    </form>
+  </main>
+  <footer><p>© 2026 Darwix Health. All rights reserved. | Privacy Policy | Terms of Use</p></footer>
+</body>
+</html>

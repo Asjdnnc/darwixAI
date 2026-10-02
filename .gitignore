@@ -1,0 +1,29 @@
+# Secrets - never commit. Use .env.example as the template.
+.env
+.env.*
+!.env.example
+
+# Virtualenv and build artifacts
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+build/
+dist/
+
+# Generated audio cache: large and rebuilt on demand
+data/tts_cache/
+
+# Scratch files from development
+test_llm*.py
+test_groq.py
+test_concat.py
+output/
+
+# macOS
+.DS_Store
+
+# Claude Code local tooling config
+.claude/

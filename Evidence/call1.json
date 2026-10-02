@@ -1,0 +1,168 @@
+{
+  "call_id": "e2f06b26-219c-4fcc-b8b7-267c0407f0e3",
+  "market": "en",
+  "history": [
+    {
+      "timestamp": "2026-10-02T14:13:08.780Z",
+      "role": "agent",
+      "text": "Hi, this is Austin, a virtual health insurance advisor with Darwix Health. This call is recorded for quality and compliance purposes. Is it okay if we continue?",
+      "citations": [
+        "docs/underwriting_policy_v2.txt#mandatory-disclosures"
+      ]
+    },
+    {
+      "timestamp": "2026-10-02T14:13:23.937Z",
+      "role": "customer",
+      "text": "Yes, that's fine.",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T14:13:24.836Z",
+      "role": "agent",
+      "text": "Thank you. How can I help you today? I can answer questions about our health plans, or check which plan might fit you.",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T14:13:39.090Z",
+      "role": "customer",
+      "text": "Hi, I am looking for health insurance for me and my wife.",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T14:13:39.114Z",
+      "role": "insight",
+      "text": "Ask whether the customer wants a family health insurance plan."
+    },
+    {
+      "timestamp": "2026-10-02T14:13:39.235Z",
+      "role": "agent",
+      "text": "Happy to help with that. I'll ask a few quick questions to see which plans might fit. May I ask how old you are?",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T14:13:50.514Z",
+      "role": "customer",
+      "text": "I am 42 years old.",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T14:13:50.722Z",
+      "role": "agent",
+      "text": "Which state do you live in?",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T14:13:56.651Z",
+      "role": "customer",
+      "text": "I live in Texas",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T14:13:56.781Z",
+      "role": "agent",
+      "text": "How many people would need coverage, including you?",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T14:14:03.285Z",
+      "role": "customer",
+      "text": "Just two of us.",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T14:14:03.469Z",
+      "role": "agent",
+      "text": "Does anyone who would be covered use tobacco?",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T14:14:10.800Z",
+      "role": "customer",
+      "text": "No, neither of us.",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T14:14:10.936Z",
+      "role": "agent",
+      "text": "Do you, or anyone who would be covered, have any current medical conditions? You're welcome to skip this one.",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T14:14:21.844Z",
+      "role": "customer",
+      "text": "No.",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T14:14:21.983Z",
+      "role": "agent",
+      "text": "Do you have any health insurance right now?",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T14:14:28.992Z",
+      "role": "customer",
+      "text": "No.",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T14:14:29.107Z",
+      "role": "agent",
+      "text": "What's the best time for a licensed advisor to call you back with a quote?",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T14:14:39.807Z",
+      "role": "customer",
+      "text": "Weekend evenings after 6.",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T14:14:40.004Z",
+      "role": "agent",
+      "text": "And do I have your permission for Darwix Health to contact you about your quote?",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T14:14:48.522Z",
+      "role": "customer",
+      "text": "That's fine.",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T14:14:48.665Z",
+      "role": "agent",
+      "text": "And do I have your permission for Darwix Health to contact you about your quote?",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T14:14:56.677Z",
+      "role": "customer",
+      "text": "Yes.",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T14:14:56.815Z",
+      "role": "agent",
+      "text": "Thank you, that's everything I need. Based on what you've told me, you may be a fit for Essential Care or Family Shield. A licensed advisor will call you with a personalized quote. Is there anything else I can help with?",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T14:15:16.684Z",
+      "role": "customer",
+      "text": "No, that's all. Thanks.",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T14:15:16.810Z",
+      "role": "agent",
+      "text": "Thank you for calling Darwix Health. Have a great day!",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T14:15:21.262Z",
+      "role": "insight",
+      "text": "CRM summary: Outcome: qualified. Age and state match at least one plan and the caller consented to contact. Possible plans: Essential Care, Family Shield. Details: age=42; state=Texas; household size=2; tobacco use=no; medical conditions=none; current insurance=none; callback time=Weekend evenings after 6.; consent to contact=yes."
+    }
+  ]
+}

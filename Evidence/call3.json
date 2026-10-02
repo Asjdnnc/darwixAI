@@ -1,0 +1,69 @@
+{
+  "call_id": "ff62ecb5-8279-4459-a8d4-138ec02c2716",
+  "market": "en",
+  "history": [
+    {
+      "timestamp": "2026-10-02T17:57:57.894Z",
+      "role": "agent",
+      "text": "Hi, this is Austin, a virtual health insurance advisor with Darwix Health. This call is recorded for quality and compliance purposes. Is it okay if we continue?",
+      "citations": [
+        "docs/underwriting_policy_v2.txt#mandatory-disclosures"
+      ]
+    },
+    {
+      "timestamp": "2026-10-02T17:58:19.975Z",
+      "role": "customer",
+      "text": "Yes.",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T17:58:20.708Z",
+      "role": "agent",
+      "text": "Thank you. How can I help you today? I can answer questions about our health plans, or check which plan might fit you.",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T17:58:35.416Z",
+      "role": "customer",
+      "text": "Do you cover dental implants for adults?",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T17:58:36.096Z",
+      "role": "agent",
+      "text": "I\u2019m sorry, I don\u2019t have verified information on that. A licensed advisor can help you with dental implant coverage. Is there anything else I can help with, or would you like me to check which plans might fit you?",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T17:58:53.421Z",
+      "role": "customer",
+      "text": "Do you sell car insurance?",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T17:58:54.233Z",
+      "role": "agent",
+      "text": "I'm sorry, I don't have verified information about that, so I won't guess. A licensed advisor can help with that question. Is there anything else I can help with, or would you like me to check which plans might fit you?",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T17:59:14.902Z",
+      "role": "customer",
+      "text": "Can I just speak to a real person please?",
+      "citations": []
+    },
+    {
+      "timestamp": "2026-10-02T17:59:15.741Z",
+      "role": "agent",
+      "text": "Of course. I'll connect you with a licensed advisor. Our advisors are available Monday to Friday, 8 AM to 8 PM Central, and Saturday 9 AM to 2 PM Central. If no one is available right now, we'll call you back within 1 business day.",
+      "citations": [
+        "docs/underwriting_policy_v2.txt#human-escalation"
+      ]
+    },
+    {
+      "timestamp": "2026-10-02T17:59:33.726Z",
+      "role": "insight",
+      "text": "CRM summary: Outcome: escalated. Caller asked for a human advisor."
+    }
+  ]
+}
