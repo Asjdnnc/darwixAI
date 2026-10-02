@@ -16,6 +16,10 @@ class Settings(BaseSettings):
     openai_tts_model: str = "gpt-4o-mini-tts"
     openai_tts_voice: str = "ash"  # English fallback when the Groq TTS daily quota is exhausted
     nudge_min_confidence: float = 0.75
+    # Measured on data/eval/q4_chunks.json: the LLM second pass adds no recall and costs precision
+    # (1.00/1.00 rules only vs 1.00/0.875 with it), while adding ~215 ms per chunk. Off by default;
+    # see docs/Q4_REALTIME.md.
+    nudge_use_llm: bool = False
     crm_webhook_url: str | None = None  # optional: POST leads/callbacks/escalations here
 
 

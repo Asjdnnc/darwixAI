@@ -1,0 +1,438 @@
+{
+  "summary": {
+    "mode": "rules+llm",
+    "cases": 30,
+    "positives": 14,
+    "negatives": 16,
+    "true_positives": 14,
+    "false_negatives": 0,
+    "true_negatives": 14,
+    "false_positives": 2,
+    "recall": 1.0,
+    "precision": 0.875,
+    "false_positive_rate": 0.125
+  },
+  "rows": [
+    {
+      "id": "P-01",
+      "speaker": "agent",
+      "text": "Essential Care is $189 per month for someone your age.",
+      "expect": "compliance_gap",
+      "fired": [
+        "compliance_gap"
+      ],
+      "outcome": "true_positive",
+      "signals": [
+        {
+          "topic": "compliance_gap",
+          "confidence": 0.95,
+          "source": "rule"
+        }
+      ]
+    },
+    {
+      "id": "P-02",
+      "speaker": "agent",
+      "text": "That works out to about 520 dollars a month for the family.",
+      "expect": "compliance_gap",
+      "fired": [
+        "compliance_gap"
+      ],
+      "outcome": "true_positive",
+      "signals": [
+        {
+          "topic": "compliance_gap",
+          "confidence": 0.95,
+          "source": "rule"
+        }
+      ]
+    },
+    {
+      "id": "P-03",
+      "speaker": "agent",
+      "text": "Yes, you're definitely approved, don't worry about the medical questions.",
+      "expect": "risky_statement",
+      "fired": [
+        "risky_statement"
+      ],
+      "outcome": "true_positive",
+      "signals": [
+        {
+          "topic": "risky_statement",
+          "confidence": 0.92,
+          "source": "rule"
+        }
+      ]
+    },
+    {
+      "id": "P-04",
+      "speaker": "agent",
+      "text": "I can guarantee you'll be covered from day one.",
+      "expect": "risky_statement",
+      "fired": [
+        "risky_statement"
+      ],
+      "outcome": "true_positive",
+      "signals": [
+        {
+          "topic": "risky_statement",
+          "confidence": 0.92,
+          "source": "rule"
+        }
+      ]
+    },
+    {
+      "id": "P-05",
+      "speaker": "customer",
+      "text": "My wife just lost her employer plan too.",
+      "expect": "missed_cross_sell",
+      "fired": [
+        "missed_cross_sell",
+        "buying_signal"
+      ],
+      "outcome": "true_positive",
+      "signals": [
+        {
+          "topic": "missed_cross_sell",
+          "confidence": 0.86,
+          "source": "rule"
+        },
+        {
+          "topic": "buying_signal",
+          "confidence": 0.85,
+          "source": "llm"
+        }
+      ]
+    },
+    {
+      "id": "P-06",
+      "speaker": "customer",
+      "text": "I've got two kids who'd need covering as well.",
+      "expect": "missed_cross_sell",
+      "fired": [
+        "missed_cross_sell"
+      ],
+      "outcome": "true_positive",
+      "signals": [
+        {
+          "topic": "missed_cross_sell",
+          "confidence": 0.86,
+          "source": "rule"
+        }
+      ]
+    },
+    {
+      "id": "P-07",
+      "speaker": "customer",
+      "text": "We just bought a second vehicle last month.",
+      "expect": "missed_cross_sell",
+      "fired": [
+        "missed_cross_sell",
+        "buying_signal"
+      ],
+      "outcome": "true_positive",
+      "signals": [
+        {
+          "topic": "missed_cross_sell",
+          "confidence": 0.86,
+          "source": "rule"
+        },
+        {
+          "topic": "buying_signal",
+          "confidence": 0.85,
+          "source": "llm"
+        }
+      ]
+    },
+    {
+      "id": "P-08",
+      "speaker": "customer",
+      "text": "This is ridiculous, I've been waiting three weeks.",
+      "expect": "frustration",
+      "fired": [
+        "frustration"
+      ],
+      "outcome": "true_positive",
+      "signals": [
+        {
+          "topic": "frustration",
+          "confidence": 0.9,
+          "source": "rule"
+        }
+      ]
+    },
+    {
+      "id": "P-09",
+      "speaker": "customer",
+      "text": "Honestly this is unacceptable, nobody has called me back.",
+      "expect": "frustration",
+      "fired": [
+        "frustration",
+        "callback"
+      ],
+      "outcome": "true_positive",
+      "signals": [
+        {
+          "topic": "frustration",
+          "confidence": 0.9,
+          "source": "rule"
+        },
+        {
+          "topic": "callback",
+          "confidence": 0.85,
+          "source": "llm"
+        }
+      ]
+    },
+    {
+      "id": "P-10",
+      "speaker": "customer",
+      "text": "I can't pay the premium this month, I lost my job.",
+      "expect": "payment_difficulty",
+      "fired": [
+        "payment_difficulty"
+      ],
+      "outcome": "true_positive",
+      "signals": [
+        {
+          "topic": "payment_difficulty",
+          "confidence": 0.9,
+          "source": "rule"
+        }
+      ]
+    },
+    {
+      "id": "P-11",
+      "speaker": "customer",
+      "text": "Things are really tight right now.",
+      "expect": "payment_difficulty",
+      "fired": [
+        "payment_difficulty"
+      ],
+      "outcome": "true_positive",
+      "signals": [
+        {
+          "topic": "payment_difficulty",
+          "confidence": 0.9,
+          "source": "rule"
+        }
+      ]
+    },
+    {
+      "id": "P-12",
+      "speaker": "customer",
+      "text": "Can you call me back later? I'm driving.",
+      "expect": "callback",
+      "fired": [
+        "callback"
+      ],
+      "outcome": "true_positive",
+      "signals": [
+        {
+          "topic": "callback",
+          "confidence": 0.85,
+          "source": "rule"
+        }
+      ]
+    },
+    {
+      "id": "P-13",
+      "speaker": "customer",
+      "text": "Okay, how do I sign up?",
+      "expect": "buying_signal",
+      "fired": [
+        "buying_signal"
+      ],
+      "outcome": "true_positive",
+      "signals": [
+        {
+          "topic": "buying_signal",
+          "confidence": 0.88,
+          "source": "rule"
+        }
+      ]
+    },
+    {
+      "id": "P-14",
+      "speaker": "customer",
+      "text": "Sounds good, send me the application.",
+      "expect": "buying_signal",
+      "fired": [
+        "buying_signal"
+      ],
+      "outcome": "true_positive",
+      "signals": [
+        {
+          "topic": "buying_signal",
+          "confidence": 0.88,
+          "source": "rule"
+        }
+      ]
+    },
+    {
+      "id": "N-01",
+      "speaker": "customer",
+      "text": "Sorry, can you hear me? The line is breaking up.",
+      "expect": null,
+      "fired": [],
+      "outcome": "true_negative",
+      "signals": []
+    },
+    {
+      "id": "N-02",
+      "speaker": "customer",
+      "text": "Hello? Hello.",
+      "expect": null,
+      "fired": [],
+      "outcome": "true_negative",
+      "signals": []
+    },
+    {
+      "id": "N-03",
+      "speaker": "customer",
+      "text": "Mmm. Okay. Yeah, right.",
+      "expect": null,
+      "fired": [],
+      "outcome": "true_negative",
+      "signals": []
+    },
+    {
+      "id": "N-04",
+      "speaker": "customer",
+      "text": "Never mind, it's fine, nothing urgent.",
+      "expect": null,
+      "fired": [],
+      "outcome": "true_negative",
+      "signals": []
+    },
+    {
+      "id": "N-05",
+      "speaker": "agent",
+      "text": "Let me pull your record up, one moment please.",
+      "expect": null,
+      "fired": [],
+      "outcome": "true_negative",
+      "signals": []
+    },
+    {
+      "id": "N-06",
+      "speaker": "agent",
+      "text": "Could I take your date of birth to verify the account?",
+      "expect": null,
+      "fired": [],
+      "outcome": "true_negative",
+      "signals": []
+    },
+    {
+      "id": "N-07",
+      "speaker": "customer",
+      "text": "It's the fourth of March, nineteen eighty.",
+      "expect": null,
+      "fired": [],
+      "outcome": "true_negative",
+      "signals": []
+    },
+    {
+      "id": "N-08",
+      "speaker": "customer",
+      "text": "I was reading about your family plan on the website.",
+      "expect": null,
+      "why": "mentions 'family plan' as a product name, not a dependent who needs cover",
+      "fired": [
+        "buying_signal"
+      ],
+      "outcome": "FALSE POSITIVE",
+      "signals": [
+        {
+          "topic": "buying_signal",
+          "confidence": 0.85,
+          "source": "llm"
+        }
+      ]
+    },
+    {
+      "id": "N-09",
+      "speaker": "agent",
+      "text": "I can't guarantee approval; that depends on underwriting.",
+      "expect": null,
+      "why": "a denial of a guarantee, not a guarantee",
+      "fired": [],
+      "outcome": "true_negative",
+      "signals": []
+    },
+    {
+      "id": "N-10",
+      "speaker": "customer",
+      "text": "My wife says hello, she remembers your colleague.",
+      "expect": null,
+      "why": "a dependent is named but nothing suggests they need cover",
+      "fired": [],
+      "outcome": "true_negative",
+      "signals": []
+    },
+    {
+      "id": "N-11",
+      "speaker": "customer",
+      "text": "The weather has been terrible this week.",
+      "expect": null,
+      "why": "frustration vocabulary about something unrelated to the call",
+      "fired": [],
+      "outcome": "true_negative",
+      "signals": []
+    },
+    {
+      "id": "N-12",
+      "speaker": "customer",
+      "text": "I paid it already, last Tuesday.",
+      "expect": null,
+      "fired": [
+        "payment_difficulty"
+      ],
+      "outcome": "FALSE POSITIVE",
+      "signals": [
+        {
+          "topic": "payment_difficulty",
+          "confidence": 0.85,
+          "source": "llm"
+        }
+      ]
+    },
+    {
+      "id": "N-13",
+      "speaker": "agent",
+      "text": "Final coverage and premiums are subject to medical underwriting.",
+      "expect": null,
+      "fired": [],
+      "outcome": "true_negative",
+      "signals": []
+    },
+    {
+      "id": "N-14",
+      "speaker": "customer",
+      "text": "What time do your advisors work until?",
+      "expect": null,
+      "fired": [],
+      "outcome": "true_negative",
+      "signals": []
+    },
+    {
+      "id": "N-15",
+      "speaker": "customer",
+      "text": "No, I don't have any medical conditions.",
+      "expect": null,
+      "fired": [],
+      "outcome": "true_negative",
+      "signals": []
+    },
+    {
+      "id": "N-16",
+      "speaker": "agent",
+      "text": "Pertahankan istilah yang terbukukan hari ini.",
+      "expect": null,
+      "why": "ASR returned its own prompt on a silent chunk; nobody said this",
+      "fired": [],
+      "outcome": "true_negative",
+      "signals": []
+    }
+  ]
+}

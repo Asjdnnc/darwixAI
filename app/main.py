@@ -55,7 +55,9 @@ def _transcribe_chunk(audio: bytes, market: str) -> str:
 
 
 # Q4: one pipeline instance serves the API, the WebSocket dashboard and the replay harness.
-pipeline = RealtimePipeline(transcriber=_transcribe_chunk, classifier=groq, engine=nudge_engine)
+pipeline = RealtimePipeline(transcriber=_transcribe_chunk,
+                            classifier=groq if settings.nudge_use_llm else None,
+                            engine=nudge_engine)
 # call_id -> dashboards currently watching it
 watchers: dict[str, list[WebSocket]] = {}
 

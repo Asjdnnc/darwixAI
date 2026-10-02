@@ -101,14 +101,15 @@ def main() -> None:
     parser.add_argument("--scenario", choices=sorted(SCENARIOS), help="scripted text scenario instead")
     parser.add_argument("--market", default="en")
     parser.add_argument("--speed", type=float, default=1.0, help="1.0 is real time; higher is faster")
-    parser.add_argument("--no-llm", action="store_true", help="rules only, no LLM second pass")
+    parser.add_argument("--llm", action="store_true",
+                        help="add the LLM second pass (off by default: measured to cost precision)")
     args = parser.parse_args()
     if not args.audio and not args.scenario:
         parser.error("give an audio file or --scenario")
 
     pipeline = RealtimePipeline(
         transcriber=None if args.scenario else _make_transcriber(),
-        classifier=None if args.no_llm or not settings.groq_api_key else GroqService(),
+        classifier=GroqService() if (args.llm and settings.groq_api_key) else None,
         engine=NudgeEngine())
     name = args.scenario or Path(args.audio).stem
     call_id = f"replay-{name}"

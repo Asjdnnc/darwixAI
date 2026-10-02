@@ -68,12 +68,25 @@ DISCLOSURE_RE = r"subject to (medical )?underwriting|depends on verified medical
 PRICE_RE = r"\$\s?\d|\b\d+\s*(?:dollars|pesos|rupiah)\b|\bper month\b|\bpremium is\b|\bcosts?\s+\$?\d"
 RISKY_RE = (r"\bguarantee[sd]?\b|\byou(?:'re| are| will be) (?:definitely )?(?:approved|covered)\b|"
             r"\bno medical (?:exam|check)\b|\b100%\s*(?:approved|covered)\b|\bdon'?t worry about the\b")
-STRONG_FRUSTRATION_RE = (r"\b(?:ridiculous|unacceptable|terrible|awful|angry|furious|fed up)\b|"
-                         r"\bwaste of (?:my )?time\b")
+# "terrible"/"awful" are often about something other than the call ("the weather has been
+# terrible"), so they only count alongside a service complaint; the rest are unambiguous.
+STRONG_FRUSTRATION_RE = (r"\b(?:ridiculous|unacceptable|angry|furious|fed up)\b|"
+                         r"\bwaste of (?:my )?time\b|"
+                         r"\b(?:terrible|awful|appalling)\b(?=[^.!?]*\b(?:service|support|company|experience|"
+                         r"you|your|staff|team)\b)")
 MILD_FRUSTRATION_RE = (r"\bfrustrat\w+|annoyed\b|\b(?:i've|i have) (?:already )?(?:told you|explained)\b|"
                        r"\bthird time\b|\bagain and again\b|\bstill waiting\b")
-DEPENDENT_RE = (r"\b(?:my )?(?:wife|husband|spouse|partner|kids?|children|son|daughter|family|"
-                r"second (?:car|vehicle|house)|another (?:car|vehicle|policy))\b")
+# A *person* is only an opportunity when something suggests they need cover ("my wife says hello"
+# is not a lead). A second *asset* is the opportunity in itself — it is the brief's own example.
+DEPENDENT_RE = r"\b(?:my |our )?(?:wife|husband|spouse|partner|kids?|children|son|daughter|family)\b"
+ASSET_RE = (r"\b(?:second|another|a new|additional) (?:car|vehicle|house|home|property|bike|motorbike|"
+            r"policy|van|truck)\b")
+# A dependent is only an opportunity when something suggests they need cover. Without this,
+# "my wife says hello" and "I was reading about your family plan" both fired.
+COVER_NEED_RE = (r"\b(?:cover|covered|covering|coverage|insure[d]?|insurance|policy|plan|quote|premium|"
+                 r"add|include|protect|needs?|too|as well|also|lost (?:her|his|their))\b")
+# "family plan"/"Family Shield" is a product name, not a person who needs covering.
+PRODUCT_NAME_RE = r"\b(?:family (?:plan|shield|policy|cover)|senior secure|essential care)\b"
 BUYING_RE = (r"\b(?:how do i|how can i) (?:sign up|enrol|apply|start)\b|\bi'?m (?:ready|interested)\b|"
              r"\bsounds good\b|\blet'?s do it\b|\bsend me the (?:forms?|details|application)\b|\bwhen can i start\b")
 PAYMENT_RE = (r"\b(?:can'?t|cannot|can not) (?:afford|pay|make the payment)\b|\btoo expensive\b|\bno money\b|"
@@ -112,11 +125,15 @@ def detect_rules(text: str, speaker: str, state: CallState) -> list[Signal]:
         return found
 
     # ----- customer side
-    if match := _any(text, DEPENDENT_RE):
+    without_product = re.sub(PRODUCT_NAME_RE, " ", text, flags=re.I)
+    person = _any(without_product, DEPENDENT_RE)
+    asset = _any(without_product, ASSET_RE)
+    if asset or (person and _any(without_product, COVER_NEED_RE)):
         state.mentioned_dependents = True
         if not state.cross_sell_offered:
+            mention = (asset or person).group(0)
             found.append(Signal(topic="missed_cross_sell", confidence=0.86,
-                                evidence=f"Customer mentioned {match.group(0)!r}"))
+                                evidence=f"Customer mentioned {mention!r}"))
     # Explicit anger is actionable immediately; a repetition marker ("I've told you") only once it
     # actually repeats, which is what "rising" frustration means.
     if match := _any(text, STRONG_FRUSTRATION_RE):

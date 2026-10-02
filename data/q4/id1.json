@@ -1,66 +1,55 @@
 {
   "call_id": "replay-id1",
   "market": "id",
+  "asr_prompt_echoes_discarded": 7,
   "latency_ms": {
     "chunks": 24,
-    "nudges": 1,
+    "nudges": 0,
     "audio_seconds": 92.0,
     "asr_ms": {
-      "p50": 293.0,
-      "p95": 368.3,
-      "mean": 299.8,
-      "max": 380.2
+      "p50": 297.8,
+      "p95": 371.6,
+      "mean": 304.9,
+      "max": 399.4
     },
     "signal_ms": {
-      "p50": 0.1,
-      "p95": 2.7,
+      "p50": 0.0,
+      "p95": 1.7,
       "mean": 0.3,
-      "max": 2.9
+      "max": 3.2
     },
     "llm_ms": {
-      "p50": 173.1,
-      "p95": 232.3,
-      "mean": 161.8,
-      "max": 265.7
+      "p50": 0.0,
+      "p95": 0.0,
+      "mean": 0.0,
+      "max": 0.0
     },
     "nudge_ms": {
       "p50": 0.0,
-      "p95": 0.1,
+      "p95": 0.0,
       "mean": 0.0,
-      "max": 0.2
+      "max": 0.0
     },
     "delivery_ms": {
       "p50": 0.1,
-      "p95": 0.1,
+      "p95": 0.3,
       "mean": 0.1,
-      "max": 0.2
+      "max": 0.7
     },
     "total_ms": {
-      "p50": 471.5,
-      "p95": 542.7,
-      "mean": 462.0,
-      "max": 558.8
+      "p50": 298.0,
+      "p95": 371.7,
+      "mean": 305.3,
+      "max": 399.8
     }
   },
   "nudges": {
-    "fired": 1,
-    "suppressed": 1,
-    "suppression_reasons": {
-      "cooldown": 1
-    },
-    "topics": [
-      "payment_difficulty"
-    ]
+    "fired": 0,
+    "suppressed": 0,
+    "suppression_reasons": {},
+    "topics": []
   },
-  "suppressed": [
-    {
-      "topic": "payment_difficulty",
-      "confidence": 0.85,
-      "reason": "cooldown",
-      "evidence": "Pembayaran melalui Indomaret pada besok.",
-      "at": "2026-10-02T20:42:24+00:00"
-    }
-  ],
+  "suppressed": [],
   "transcript": [
     {
       "speaker": "agent",
@@ -69,7 +58,7 @@
     },
     {
       "speaker": "customer",
-      "text": "Pertahankan istilah yang terkait. Pangilan ini direkam untuk keperluan kualitas",
+      "text": "",
       "offset_seconds": 4.0
     },
     {
@@ -119,12 +108,12 @@
     },
     {
       "speaker": "customer",
-      "text": "Pertahankan istilahnya berapa kalau telat?",
+      "text": "",
       "offset_seconds": 44.0
     },
     {
       "speaker": "agent",
-      "text": "Pertahankan istilah hari dari angsuran tertunggap maksimal ke hari.",
+      "text": "",
       "offset_seconds": 48.0
     },
     {
@@ -134,12 +123,12 @@
     },
     {
       "speaker": "agent",
-      "text": "Pertahankan istilah yang berpindah di situ. Rencananya mau bayar lewat mana?",
+      "text": "",
       "offset_seconds": 56.0
     },
     {
       "speaker": "customer",
-      "text": "Pertahankan istilah yang terdapat di dalam periode penggunaan.",
+      "text": "",
       "offset_seconds": 60.0
     },
     {
@@ -159,12 +148,12 @@
     },
     {
       "speaker": "customer",
-      "text": "Pertahankan istilah yang terbukukan hari ini. Kira-kira kapan rencana pembayaran",
+      "text": "",
       "offset_seconds": 76.0
     },
     {
       "speaker": "agent",
-      "text": "Pertahankan istilahnya. Besok.",
+      "text": "",
       "offset_seconds": 80.0
     },
     {
