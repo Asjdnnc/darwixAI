@@ -79,14 +79,12 @@ Rules live in `data/rules/qualification_rules.json`, and each rule cites the rec
 | `POST /calls/{id}/end` | Finalise the call; returns the CRM summary |
 | `GET /retrieve?q=` | Operator search of the knowledge base |
 
-The full scenario catalogue, with example phrases, is in `docs/Q1_SCENARIOS.md`.
-
-Every call is saved to `test_logs/calls/<call_id>.json` after each turn, including the transcript with per-turn citations, the lead, the outcome, actions, and guard events.
+Every call is saved to `test_logs/calls/<call_id>.json` after each turn (written at run time, not committed), including the transcript with per-turn citations, the lead, the outcome, actions, and guard events.
 
 ## Testing
 
 - `pytest`: 126 offline tests across all four questions. A scripted fake LLM exercises every guard deterministically: grounded citations, unsupported questions, invented numbers, guarantees, the disclosure, conflicts, escalation, recording refusal, ineligibility, referral, LLM failure, and invented extractions.
-- `python scripts/run_test_calls.py`: 8 scripted calls through the live Groq model covering every scenario the assessment requires (cooperative, objection, incomplete or conflicting, out-of-scope, human request) plus ineligibility, referral, and recording refusal. The results go to `docs/Q1_TEST_CALLS.md`.
+- `python scripts/run_test_calls.py`: 12 scripted calls through the live Groq model covering every scenario the assessment requires (cooperative, objection, incomplete or conflicting, out-of-scope, human request) plus ineligibility, referral, and recording refusal. The results table is generated at `docs/Q1_TEST_CALLS.md`.
 - Voice recordings: run the browser UI and record the screen with audio for at least 3 of these scenarios.
 
 ## Known limitations

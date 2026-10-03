@@ -20,8 +20,7 @@ pytest                          # 126 offline tests, no network or credentials n
 | Knowledge-base design | [KB_DESIGN.md](KB_DESIGN.md) |
 | Retrieval evaluation (42 queries, verdicts) | [RETRIEVAL_EVAL.md](RETRIEVAL_EVAL.md) |
 | Voice-agent design | [VOICE_AGENT.md](VOICE_AGENT.md) |
-| Scenario catalogue | [Q1_SCENARIOS.md](Q1_SCENARIOS.md) |
-| Scripted call transcripts + results | [Q1_TEST_CALLS.md](Q1_TEST_CALLS.md) |
+| Scripted call transcripts + results | regenerate with `python scripts/run_test_calls.py` |
 | Recorded calls (audio + transcripts) | `Evidence/` and `Evidence/q3/` |
 | Q3 markets: localization, ASR, native TTS | [Q3_MARKETS.md](Q3_MARKETS.md) |
 | Q4 real time: signals, nudges, latency, false positives | [Q4_REALTIME.md](Q4_REALTIME.md) |
@@ -129,11 +128,11 @@ A mock CRM (`app/crm.py`) writes `data/crm/leads.json`, `callbacks.json` and `es
 
 Together these cover the required test coverage: cooperative customer, objection, incomplete/conflicting details, out-of-scope question, human-assistance request, and the bot stating when information is unavailable.
 
-**Scripted calls** — `python scripts/run_test_calls.py` drives 12 scenarios through the live model and the full pipeline, writing transcripts to `test_logs/calls/` and results to [Q1_TEST_CALLS.md](Q1_TEST_CALLS.md). Beyond the four above, these cover ineligibility, referral to a senior advisor, declined recording, existing-member requests, a caller outside the US, and "not interested".
+**Scripted calls** — `python scripts/run_test_calls.py` drives 12 scenarios through the live model and the full pipeline, writing per-turn transcripts to `test_logs/calls/` and a results table to `docs/Q1_TEST_CALLS.md`. Both are generated, so they are not kept in the repository. Beyond the four above, these cover ineligibility, referral to a senior advisor, declined recording, existing-member requests, a caller outside the US, and "not interested".
 
 **Automated tests** — `pytest`: 70 tests, fully offline (no credentials, no network). A scripted fake model exercises each safety control deterministically, and retrieval quality is a regression test that fails if either evaluation split degrades.
 
-Every call is persisted per turn to `test_logs/calls/<call_id>.json` with the transcript, citations, lead state, outcome, CRM actions and guard events.
+Every call is persisted per turn to `test_logs/calls/<call_id>.json` with the transcript, citations, lead state, outcome, CRM actions and guard events. That directory is written at run time and is not committed; the curated recordings in `Evidence/` are the submitted evidence.
 
 ---
 
