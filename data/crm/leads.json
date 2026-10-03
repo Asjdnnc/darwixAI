@@ -331,5 +331,26 @@
     "summary": "Outcome: escalated. Could not capture consent to contact over the phone. Details: age=48; state=Ohio; household size=not provided; tobacco use=no; medical conditions=none; current insurance=none; callback time=Honestly, this sound too expensive for me..",
     "updated_at": "2026-10-02T18:16:28+00:00",
     "created_at": "2026-10-02T18:16:28+00:00"
+  },
+  "lead_d77616e9": {
+    "call_id": "d77616e9-33ed-4fe1-9179-ff307fc57d0a",
+    "status": "in_progress",
+    "plans": [
+      "Essential Care",
+      "Family Shield"
+    ],
+    "reason": null,
+    "fields": {
+      "household_size": 2,
+      "age": 42,
+      "state": "TX",
+      "tobacco_use": false,
+      "medical_conditions": "none",
+      "current_insurance": "none",
+      "callback_time": "Weekend evening."
+    },
+    "summary": "Outcome: in progress. Possible plans: Essential Care, Family Shield. Details: household size=2; age=42; state=Texas; tobacco use=no; medical conditions=none; current insurance=none; callback time=Weekend evening..",
+    "updated_at": "2026-10-03T05:02:40+00:00",
+    "created_at": "2026-10-03T05:02:40+00:00"
   }
 }

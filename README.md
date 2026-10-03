@@ -50,8 +50,6 @@ Evidence scripts: `python scripts/eval_retrieval.py` (Q2 retrieval table) and `p
 | [ARCHITECTURE.md](docs/ARCHITECTURE.md) | System and ingestion diagrams, design decisions |
 | [architecture-simple.html](docs/architecture-simple.html) | One-screen diagram for the video (light) |
 | [architecture.html](docs/architecture.html) | Detailed diagram with endpoints and latencies (dark) |
-| [VIDEO_SCRIPT_5MIN.md](Evidence/VIDEO_SCRIPT_5MIN.md) | 5-minute walkthrough script, browser only |
-| [VIDEO_SCRIPT.md](Evidence/VIDEO_SCRIPT.md) | Longer 8-10 minute version with the measurement runs |
 | [KB_DESIGN.md](docs/KB_DESIGN.md) | Q2: schema, cleaning, chunking, versioning, citations |
 | [RETRIEVAL_EVAL.md](docs/RETRIEVAL_EVAL.md) | Q2: 42 queries with sources, explanations and verdicts |
 | [VOICE_AGENT.md](docs/VOICE_AGENT.md) | Q1: flow, qualification rules, safety guards, API |
