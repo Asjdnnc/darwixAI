@@ -5,136 +5,114 @@
 <title>Darwix AI — Architecture</title>
 <style>
   :root{
-    --bg:#0f172a; --panel:#1e293b; --line:#334155; --text:#e2e8f0; --muted:#94a3b8;
-    --q1:#3b82f6; --q2:#10b981; --q3:#f59e0b; --q4:#ef4444; --accent:#a78bfa;
+    --ink:#111827; --muted:#6b7280; --line:#e5e7eb; --bg:#ffffff; --soft:#f9fafb;
+    --q1:#2563eb; --q2:#059669; --q3:#d97706; --q4:#dc2626;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--text);font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:34px 40px}
-  h1{font-size:30px;letter-spacing:-.02em}
-  h1 span{color:var(--muted);font-weight:400;font-size:19px;margin-left:12px}
-  .legend{display:flex;gap:22px;margin:16px 0 26px;flex-wrap:wrap;font-size:14px}
-  .legend b{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:7px;vertical-align:middle}
-  .row{display:flex;gap:18px;align-items:stretch;margin-bottom:16px}
-  .box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;flex:1}
-  .box h3{font-size:15px;margin-bottom:9px;display:flex;align-items:center;gap:8px}
-  .tag{font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;color:#0b1220}
-  .t1{background:var(--q1)}.t2{background:var(--q2)}.t3{background:var(--q3)}.t4{background:var(--q4)}
-  .box ul{list-style:none;font-size:13.5px;color:var(--muted)}
-  .box li{padding:2px 0}
-  .box li code{color:var(--text);background:#0b1220;padding:1px 6px;border-radius:5px;font-size:12.5px}
-  .arrow{text-align:center;color:var(--accent);font-size:19px;margin:-4px 0 10px;letter-spacing:4px}
-  .pipe{background:#0b1220;border:1px dashed var(--line);border-radius:12px;padding:16px 18px;margin-bottom:16px}
-  .steps{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-  .step{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:9px 12px;font-size:13px;flex:1;min-width:132px}
-  .step b{display:block;font-size:12px;color:var(--accent);margin-bottom:3px;text-transform:uppercase;letter-spacing:.04em}
-  .step span{color:var(--muted);font-size:12.5px}
-  .lat{float:right;color:#34d399;font-weight:700;font-size:12px}
-  .foot{display:flex;gap:18px;margin-top:6px;flex-wrap:wrap}
-  .stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:11px 15px;font-size:13px;flex:1;min-width:175px}
-  .stat b{display:block;font-size:21px;color:#34d399;margin-bottom:1px}
-  .stat span{color:var(--muted);font-size:12.5px}
+  body{background:var(--bg);color:var(--ink);
+       font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif;
+       padding:40px 48px;max-width:1240px;margin:0 auto}
+  h1{font-size:32px;letter-spacing:-.02em;margin-bottom:4px}
+  .sub{color:var(--muted);font-size:17px;margin-bottom:30px}
+
+  .band{border:1px solid var(--line);border-radius:14px;padding:20px 24px;margin-bottom:14px;background:var(--bg)}
+  .band.soft{background:var(--soft)}
+  .band h2{font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+
+  .cols{display:flex;gap:16px}
+  .col{flex:1;border:1px solid var(--line);border-radius:11px;padding:15px 17px;background:var(--bg)}
+  .col h3{font-size:16px;margin-bottom:7px;display:flex;align-items:center;gap:8px}
+  .col p{color:var(--muted);font-size:14.5px}
+  .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+
+  .flow{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:4px}
+  .pill{border:1px solid var(--line);border-radius:999px;padding:7px 15px;font-size:14.5px;background:var(--bg);white-space:nowrap}
+  .pill b{font-weight:600}
+  .sep{color:#9ca3af;font-size:17px}
+
+  .arrows{text-align:center;color:#9ca3af;font-size:15px;margin:9px 0;letter-spacing:.03em}
+
+  .stats{display:flex;gap:14px;margin-top:20px;flex-wrap:wrap}
+  .stat{flex:1;min-width:160px;border:1px solid var(--line);border-radius:11px;padding:13px 16px;background:var(--soft)}
+  .stat b{display:block;font-size:24px;letter-spacing:-.01em}
+  .stat span{color:var(--muted);font-size:13.5px}
+  .note{color:var(--muted);font-size:14px;margin-top:16px}
 </style>
 </head>
 <body>
 
-<h1>Darwix AI <span>one FastAPI app · one browser UI · one knowledge pipeline</span></h1>
+<h1>Darwix AI — voice agents for insurance &amp; consumer finance</h1>
+<p class="sub">One application. Four capabilities. The market is chosen at the top and everything below follows.</p>
 
-<div class="legend">
-  <span><b class="t1" style="background:var(--q1)"></b>Q1 voice agent</span>
-  <span><b class="t2" style="background:var(--q2)"></b>Q2 knowledge base</span>
-  <span><b class="t3" style="background:var(--q3)"></b>Q3 native-language bots</span>
-  <span><b class="t4" style="background:var(--q4)"></b>Q4 live nudges</span>
-</div>
-
-<div class="row">
-  <div class="box">
-    <h3>Browser <span class="tag t1">UI</span></h3>
-    <ul>
-      <li>Market dropdown — 🇺🇸 US · 🇵🇭 PH · 🇮🇩 ID</li>
-      <li>Microphone with silence detection</li>
-      <li>Chat with <strong>inline source citations</strong></li>
-      <li>Lead / payment-commitment panel</li>
-      <li>Live nudge panel — priority, confidence, latency</li>
-    </ul>
+<div class="band">
+  <h2>What the caller sees</h2>
+  <div class="cols">
+    <div class="col">
+      <h3>Browser call</h3>
+      <p>Speak or type. Pick the market: 🇺🇸 US · 🇵🇭 Philippines · 🇮🇩 Indonesia</p>
+    </div>
+    <div class="col">
+      <h3>Answers with sources</h3>
+      <p>Every factual reply shows the document it came from</p>
+    </div>
+    <div class="col">
+      <h3>Live side panel</h3>
+      <p>Details captured so far, the outcome, and real-time nudges for the agent</p>
+    </div>
   </div>
 </div>
 
-<div class="arrow">▼ &nbsp; audio · text &nbsp;&nbsp;&nbsp;&nbsp; ▲ &nbsp; reply · citations · nudges</div>
+<div class="arrows">▼ &nbsp; voice &amp; text &nbsp;·&nbsp; replies, citations &amp; nudges &nbsp; ▲</div>
 
-<div class="row">
-  <div class="box">
-    <h3>Voice I/O</h3>
-    <ul>
-      <li><code>/voice/transcribe</code> Groq Whisper</li>
-      <li>en · tl · id, per-market prompts</li>
-      <li><code>/voice/speak</code></li>
-      <li>en → Groq Orpheus</li>
-      <li>ph·id → <strong>local MMS-TTS</strong></li>
-    </ul>
+<div class="band soft">
+  <h2>What the system does with one thing the caller says</h2>
+  <div class="flow">
+    <span class="pill"><b>1</b> &nbsp;Listen <span style="color:var(--muted)">speech → text</span></span>
+    <span class="sep">→</span>
+    <span class="pill"><b>2</b> &nbsp;Look it up <span style="color:var(--muted)">knowledge base</span></span>
+    <span class="sep">→</span>
+    <span class="pill"><b>3</b> &nbsp;Write the reply <span style="color:var(--muted)">language model</span></span>
+    <span class="sep">→</span>
+    <span class="pill"><b>4</b> &nbsp;Apply the rules <span style="color:var(--muted)">eligibility, outcome</span></span>
+    <span class="sep">→</span>
+    <span class="pill"><b>5</b> &nbsp;Check it <span style="color:var(--muted)">safety guards</span></span>
+    <span class="sep">→</span>
+    <span class="pill"><b>6</b> &nbsp;Speak</span>
   </div>
-  <div class="box">
-    <h3>Agents <span class="tag t1">Q1</span><span class="tag t3">Q3</span></h3>
-    <ul>
-      <li><code>/calls/start</code> · <code>/agent/turn</code></li>
-      <li><strong>en</strong> → LeadQualificationAgent<br><span style="font-size:12px">US health · lead qualification</span></li>
-      <li><strong>ph</strong> → ReminderAgent<br><span style="font-size:12px">life insurance · renewal + lapse</span></li>
-      <li><strong>id</strong> → ReminderAgent<br><span style="font-size:12px">multifinance · installment</span></li>
-    </ul>
-  </div>
-  <div class="box">
-    <h3>Knowledge <span class="tag t2">Q2</span></h3>
-    <ul>
-      <li><code>/retrieve</code> BM25 + expansion</li>
-      <li>per-market stop words &amp; gates</li>
-      <li>en 30 · ph 30 · id 32 records</li>
-      <li>every answer carries a <code>source_ref</code></li>
-    </ul>
+  <p class="note"><strong>The key decision:</strong> the language model writes the words; the code owns the decisions.
+  Eligibility, escalation and compliance wording are fixed in code, so neither the caller nor the model can talk the system out of them.</p>
+</div>
+
+<div class="band">
+  <h2>The four parts</h2>
+  <div class="cols">
+    <div class="col">
+      <h3><span class="dot" style="background:var(--q1)"></span> Q1 · Voice agent</h3>
+      <p>US health insurance. Qualifies a lead, handles objections, escalates to a human, writes to the CRM.</p>
+    </div>
+    <div class="col">
+      <h3><span class="dot" style="background:var(--q2)"></span> Q2 · Knowledge base</h3>
+      <p>Messy web pages, PDFs and forms cleaned into cited records. Personal data removed, source errors quarantined.</p>
+    </div>
+    <div class="col">
+      <h3><span class="dot" style="background:var(--q3)"></span> Q3 · Local markets</h3>
+      <p>Philippines in Taglish, Indonesia in Bahasa. Different sectors, flows and compliance rules — not a translation.</p>
+    </div>
+    <div class="col">
+      <h3><span class="dot" style="background:var(--q4)"></span> Q4 · Live nudges</h3>
+      <p>Watches the call as it happens and prompts the agent within a second: compliance, missed opportunity, frustration.</p>
+    </div>
   </div>
 </div>
 
-<div class="pipe">
-  <h3 style="font-size:15px">One turn of a call <span class="tag t1">Q1</span><span class="tag t3">Q3</span></h3>
-  <div class="steps">
-    <div class="step"><b>1 Intent</b><span>human request · recording refused · already paid</span></div>
-    <div class="step"><b>2 Retrieve</b><span>score + coverage gates, else "I don't know"</span></div>
-    <div class="step"><b>3 Brain</b><span>Groq JSON → prose recovery → rules fallback</span></div>
-    <div class="step"><b>4 Merge</b><span>caller's words win; changes read back</span></div>
-    <div class="step"><b>5 Rules</b><span>eligibility · promise · hardship · dispute</span></div>
-    <div class="step"><b>6 Action</b><span>CRM lead · callback · escalation</span></div>
-    <div class="step"><b>7 Guards</b><span>no invented numbers, no promises, no language drift</span></div>
-  </div>
+<div class="stats">
+  <div class="stat"><b>82%</b><span>retrieval accuracy on unseen questions</span></div>
+  <div class="stat"><b>298 ms</b><span>from spoken words to a nudge on screen</span></div>
+  <div class="stat"><b>0</b><span>false alarms on the labelled nudge set</span></div>
+  <div class="stat"><b>126</b><span>automated tests, no API keys needed</span></div>
 </div>
 
-<div class="pipe">
-  <h3 style="font-size:15px">One chunk of a live call <span class="tag t4">Q4</span>
-    <span style="float:right;font-size:12px;color:var(--muted)">released only when its moment arrives — 92&nbsp;s call takes 92&nbsp;s</span></h3>
-  <div class="steps">
-    <div class="step"><b>ASR</b><span>Whisper; prompt-echo chunks discarded</span><span class="lat">298 ms</span></div>
-    <div class="step"><b>Signals</b><span>stateful rules; LLM pass off by default</span><span class="lat">0.1 ms</span></div>
-    <div class="step"><b>Nudges</b><span>threshold · cooldown · grouping · priority · expiry</span><span class="lat">0.0 ms</span></div>
-    <div class="step"><b>Deliver</b><span>WebSocket · polling · per-call report</span><span class="lat">0.1 ms</span></div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="box">
-    <h3>Knowledge build — offline <span class="tag t2">Q2</span></h3>
-    <ul>
-      <li><code>data/raw/{en,ph,id}</code> web · PDF · CSV · forms · scanned PDF</li>
-      <li>extract → clean → <strong>redact PII</strong> → normalise → validate → dedupe → publish</li>
-      <li>per-market vocabularies: months, glossary, boilerplate, categories</li>
-      <li>failures flagged, source errors quarantined, old versions superseded</li>
-    </ul>
-  </div>
-</div>
-
-<div class="foot">
-  <div class="stat"><b>82%</b><span>retrieval top-1, held-out · 7/7 out-of-scope rejected</span></div>
-  <div class="stat"><b>0.056</b><span>Indonesian ASR word error rate · 13/13 terms kept</span></div>
-  <div class="stat"><b>298 ms</b><span>nudge end-to-end P50 on real audio</span></div>
-  <div class="stat"><b>1.00</b><span>nudge precision · 0.00 false-positive rate</span></div>
-  <div class="stat"><b>126</b><span>offline tests · no credentials needed</span></div>
-</div>
+<p class="note">All company names, policies, prices and customers are synthetic.</p>
 
 </body>
 </html>
